@@ -1,3 +1,4 @@
+#[derive(Debug, Clone)]
 pub enum ColumnType {
     String(u32),
     Bool(u8),

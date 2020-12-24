@@ -8,35 +8,39 @@ use tokio::io::ErrorKind;
 
 impl StorageManager {
     pub async fn new(l: &LoggingManager, os: &str) -> StorageManager {
-        let mut sman = StorageManager {
+        let mut storage_manager = StorageManager {
             databases: HashMap::new(),
             last_write: Instant::now(),
-        };
-
-        let data_dir = match os {
-            "linux" | "macos" => "/var/lib/kalavar",
-            "windows" => "C:",
-            _ => {
-                l.fatal("Unable to choose data directory for unknown operating system", 1);
-                "unknown"
+            dir: match os {
+                "linux" | "macos" => "/var/lib/kalavar".to_string(),
+                "windows" => "C:".to_string(),
+                _ => {
+                    l.fatal("Unable to choose data directory for unknown operating system", 1);
+                    "unknown".to_string()
+                }
             }
         };
 
 
-        let directory_test_result: io::Result<ReadDir> = read_dir(data_dir).await;
+        let directory_test_result: io::Result<ReadDir> = read_dir(&storage_manager.dir).await;
 
         if directory_test_result.is_ok() {
-
+            storage_manager = parse_incoming(storage_manager.clone()).await;
         } else {
-            handle_missing_data_dir(l, directory_test_result.unwrap_err().kind(), data_dir).await
+            handle_missing_data_dir(l, directory_test_result.unwrap_err().kind(), &storage_manager.dir).await;
+            storage_manager = parse_incoming(storage_manager.clone()).await;
         }
 
-        sman
+        storage_manager
     }
 }
 
+async fn parse_incoming(s: StorageManager) -> StorageManager {
+    s
+}
 
-async fn handle_missing_data_dir(l: &LoggingManager, e: ErrorKind, root: &str) {
+
+async fn handle_missing_data_dir(l: &LoggingManager, e: ErrorKind, root: &String) {
     match e {
         ErrorKind::NotFound => {
             l.warn("Data directory not located, attempting to generate core information...");
@@ -61,6 +65,27 @@ async fn handle_missing_data_dir(l: &LoggingManager, e: ErrorKind, root: &str) {
             } else {
                 // generate root files
             }
+
+            let core_files: [&str;4] = ["", "/", "/logs", "/data"];
+            for dir in core_files.iter() {
+                if !failed.0 {
+                    let result = File::create(format!("{}{}", root, dir)).await;
+                    if result.is_ok() {
+                        l.debug_message(format!("Generated: {}{}", root, dir));
+                    } else {
+                        l.error(format!("Failed to generate directory: {}{}", root, dir));
+                        failed = (true, result.unwrap_err().kind());
+                    }
+                }
+            }
+
+            if failed.0 {
+                l.error(format!("Error type: {:?}", failed.1));
+                l.fatal("Unable to create required base directories, please run the program as an administrator to generate them.", 1);
+            } else {
+                // generate root files
+            }
+
 
         }
         _ => {
