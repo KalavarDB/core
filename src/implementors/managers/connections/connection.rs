@@ -7,8 +7,8 @@ use tokio::sync::broadcast::{Receiver, Sender};
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 
 impl Connection {
-    pub fn new(logger: &LoggingManager, (stream, remote): (TcpStream, SocketAddr), receiver: Receiver<ConnectionProtocolMessage>, transmitter: Sender<ConnectionProtocolMessage>) -> Connection {
-        logger.debug_message(format!("Incoming connection from {}", remote.ip()));
+    pub async fn new(logger: &LoggingManager, (stream, remote): (TcpStream, SocketAddr), receiver: Receiver<ConnectionProtocolMessage>, transmitter: Sender<ConnectionProtocolMessage>) -> Connection {
+        logger.debug_message(format!("Incoming connection from {}", remote.ip())).await;
         Connection {
             remote,
             stream,

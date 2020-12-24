@@ -9,7 +9,7 @@ use crate::managers::connections::connection::Connection;
 use tokio::net::TcpListener;
 
 impl ConnectionManager {
-    pub async fn new(l: &LoggingManager, config: &ConfigManager, os: &str) -> ConnectionManager {
+    pub async fn new(l: &mut LoggingManager, config: &ConfigManager, os: &str) -> ConnectionManager {
         ConnectionManager {
             listener: None,
             port: config.bind_port,
@@ -21,7 +21,7 @@ impl ConnectionManager {
 
     pub async fn connect(&mut self, logger: &LoggingManager) {
         let (transmitter, mut receiver): (Sender<ConnectionProtocolMessage>, Receiver<ConnectionProtocolMessage>) = channel(100);
-        logger.debug_message(format!("Binding to {}:{}", &self.addr, &self.port));
+        logger.debug_message(format!("Binding to {}:{}", &self.addr, &self.port)).await;
         let x = TcpListener::bind(format!("{}:{}", &self.addr, &self.port)).await;
         if x.is_ok() {
             let log = logger.clone();
@@ -29,9 +29,9 @@ impl ConnectionManager {
                 loop {
                     let incoming = receiver.recv().await;
                     if incoming.is_ok() {
-                        log.debug(incoming.unwrap());
+                        log.debug(incoming.unwrap()).await;
                     } else {
-                        log.error(incoming.unwrap_err());
+                        log.error(incoming.unwrap_err()).await;
                     }
                 }
             });
@@ -39,13 +39,13 @@ impl ConnectionManager {
             loop {
                 let temp_transmitter: Sender<ConnectionProtocolMessage> = transmitter.clone();
                 let temp_receiver: Receiver<ConnectionProtocolMessage> = transmitter.subscribe();
-                let connection = Connection::new(&logger, stream.accept().await.unwrap(), temp_receiver, temp_transmitter);
+                let connection = Connection::new(&logger, stream.accept().await.unwrap(), temp_receiver, temp_transmitter).await;
                 tokio::spawn(async move {
                     crate::core::utils::connection_handling::handle(connection)
                 });
             }
         } else {
-            logger.fatal(x.unwrap_err(), 1);
+            logger.fatal(x.unwrap_err(), 1).await;
         }
     }
 }

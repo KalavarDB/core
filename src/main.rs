@@ -18,6 +18,6 @@ mod core;
 async fn main() {
     let mut logger = LoggingManager::new();
     let config_manager = ConfigManager::new(&mut logger, OS).await;
-    let mut connection_manager = ConnectionManager::new(&logger, &config_manager, OS).await;
+    let mut connection_manager = ConnectionManager::new(&mut logger, &config_manager, OS).await;
     connection_manager.connect(&logger).await;
 }

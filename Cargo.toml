@@ -10,3 +10,4 @@ edition = "2018"
 tokio-bincode = "0.1.0"
 tokio = { version = "1.0.0", features = ["full"] }
 chrono = "0.4.19"
+uuid = { version = "0.8", features = ["v4"] }

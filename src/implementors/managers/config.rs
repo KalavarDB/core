@@ -18,13 +18,13 @@ impl ConfigManager {
 
         match os {
             "linux" | "macos" => {
-                logger.debug_message("Readjusting configuration path directories for Linux");
+                logger.debug_message("Readjusting configuration path directories for Linux").await;
                 manager.config_path = "/etc/kalavar/server.conf".to_string()
             }
             _ => {
-                logger.debug_message(format!("OS: {} is un-recognized", os));
-                logger.error("Unknown operating system");
-                logger.fatal("Exiting gracefully", 1);
+                logger.debug_message(format!("OS: {} is un-recognized", os)).await;
+                logger.error("Unknown operating system").await;
+                logger.fatal("Exiting gracefully", 1).await;
             }
         }
 
@@ -37,7 +37,7 @@ impl ConfigManager {
             let err = file.unwrap_err();
             match err.kind() {
                 ErrorKind::NotFound => {
-                    logger.debug_message("Configuration file not found, generating...");
+                    logger.debug_message("Configuration file not found, generating...").await;
                     file = File::create(&manager.config_path).await;
                     if file.is_ok() {
                         let mut inner: File = file.unwrap();
@@ -45,12 +45,12 @@ impl ConfigManager {
                         if write_result.is_ok() {
                             manager = parse_config(logger, manager, &mut inner).await
                         } else {
-                            logger.error(format!("Unable to write to file '{}'", &manager.config_path))
+                            logger.error(format!("Unable to write to file '{}'", &manager.config_path)).await
                         }
                     } else {
                         match file.unwrap_err().kind() {
                             ErrorKind::NotFound => {
-                                logger.warn(format!("Directory not found: \"{}\"", manager.config_path));
+                                logger.warn(format!("Directory not found: \"{}\"", manager.config_path)).await;
                                 let mut path: Vec<&str> = (&manager.config_path).split("/").collect();
                                 path.pop();
                                 let result: io::Result<()> = create_dir_all(path.join("/")).await;
@@ -64,11 +64,11 @@ impl ConfigManager {
                                         let e = result.unwrap_err();
                                         match e.kind() {
                                             ErrorKind::PermissionDenied => {
-                                                logger.info("You can fix the problem below by running the program using Super User (sudo)");
-                                                logger.fatal(e, 1);
+                                                logger.info("You can fix the problem below by running the program using Super User (sudo)").await;
+                                                logger.fatal(e, 1).await;
                                             }
                                             _ => {
-                                                logger.fatal(e, 1);
+                                                logger.fatal(e, 1).await;
                                             }
                                         }
                                     }
@@ -76,23 +76,23 @@ impl ConfigManager {
                                     let e = result.unwrap_err();
                                     match e.kind() {
                                         ErrorKind::PermissionDenied => {
-                                            logger.info("You can fix the problem below by running the program using Super User (sudo)");
-                                            logger.fatal(e, 1);
+                                            logger.info("You can fix the problem below by running the program using Super User (sudo)").await;
+                                            logger.fatal(e, 1).await;
                                         }
                                         _ => {
-                                            logger.fatal(e, 1);
+                                            logger.fatal(e, 1).await;
                                         }
                                     }
                                 }
                             }
                             _ => {
-                                logger.error(err);
+                                logger.error(err).await;
                             }
                         }
                     }
                 }
                 _ => {
-                    logger.error(err);
+                    logger.error(err).await;
                 }
             }
         }
@@ -120,13 +120,13 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                             match key {
                                 "connections" => {
                                     if value.to_lowercase() == "infinite" {
-                                        l.warn("Using 'infinite' connection mode is not advisable, it may lead to severe slowdowns during large queries");
+                                        l.warn("Using 'infinite' connection mode is not advisable, it may lead to severe slowdowns during large queries").await;
                                     } else {
                                         let port = value.parse();
                                         if port.is_ok() {
                                             m.max_connections = port.unwrap();
                                         } else {
-                                            l.warn("Invalid value specified for the \"connections\" configuration. Should be an integer or 'infinite'")
+                                            l.warn("Invalid value specified for the \"connections\" configuration. Should be an integer or 'infinite'").await;
                                         }
                                     }
                                 }
@@ -135,7 +135,7 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                                     if port.is_ok() {
                                         m.connections_per_thread = port.unwrap();
                                     } else {
-                                        l.warn("Invalid value specified for the \"thread\" configuration. Should be an integer")
+                                        l.warn("Invalid value specified for the \"thread\" configuration. Should be an integer").await;
                                     }
                                 }
                                 "threadcount" => {
@@ -143,7 +143,7 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                                     if port.is_ok() {
                                         m.max_threads = port.unwrap();
                                     } else {
-                                        l.warn("Invalid value specified for the \"threadcount\" configuration. Should be an integer")
+                                        l.warn("Invalid value specified for the \"threadcount\" configuration. Should be an integer").await;
                                     }
                                 }
                                 "port" => {
@@ -151,7 +151,7 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                                     if port.is_ok() {
                                         m.bind_port = port.unwrap();
                                     } else {
-                                        l.warn("Invalid value specified for the \"port\" configuration. Should be an integer")
+                                        l.warn("Invalid value specified for the \"port\" configuration. Should be an integer").await;
                                     }
                                 }
                                 "address" => {
@@ -189,9 +189,9 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                 }
             }
         } else {
-            l.error(text_result.unwrap_err());
-            l.debug_message(&m.config_path);
-            l.fatal("Invalid config file content, exiting gracefully", 1);
+            l.error(text_result.unwrap_err()).await;
+            l.debug_message(&m.config_path).await;
+            l.fatal("Invalid config file content, exiting gracefully", 1).await;
         }
     }
 
