@@ -37,7 +37,7 @@ impl StorageManager {
     }
 }
 
-async fn parse_incoming(s: StorageManager, l: &LoggingManager) -> StorageManager {
+async fn parse_incoming(mut s: StorageManager, l: &LoggingManager) -> StorageManager {
     let mut failed: (bool, ErrorKind) = (false, ErrorKind::Other);
     let core_files: [&str;3] = ["/data/core/map.kgb", "/data/core/map.kdb", l.log_file.as_str()];
     for dir in core_files.iter() {
@@ -55,6 +55,8 @@ async fn parse_incoming(s: StorageManager, l: &LoggingManager) -> StorageManager
     if failed.0 {
         l.error(format!("Error type: {:?}", failed.1)).await;
         l.fatal("Unable to create required core files, please run the program as an administrator to generate them.", 1).await;
+    } else {
+
     }
     s
 }
