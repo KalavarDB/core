@@ -27,10 +27,10 @@ impl StorageManager {
 
         if directory_test_result.is_ok() {
             handle_missing_data_dir(l, ErrorKind::NotFound, &storage_manager.dir).await;
-            storage_manager = parse_incoming(storage_manager.clone(), l).await;
+            storage_manager = parse_incoming(storage_manager, l).await;
         } else {
             handle_missing_data_dir(l, directory_test_result.unwrap_err().kind(), &storage_manager.dir).await;
-            storage_manager = parse_incoming(storage_manager.clone(), l).await;
+            storage_manager = parse_incoming(storage_manager, l).await;
         }
 
         storage_manager

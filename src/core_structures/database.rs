@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use crate::core_structures::table::Table;
 use tokio::fs::File;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Database {
     pub backing: File,
     pub name: String,

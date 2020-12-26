@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use tokio::fs::File;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct DatabaseRecord {
     pub name: String,
     pub tables: HashMap<String, (u32, u64)>,
