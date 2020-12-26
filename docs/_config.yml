@@ -4,7 +4,7 @@ color_scheme: dark
 title: Kalavar
 description: A powerful database system, written using pure Rust
 baseurl: "/kalavar-core" # the subpath of your site, e.g. /blog
-url: "https://fatalcenturion.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
 permalink: pretty
 search_enabled: true
 search:
@@ -43,10 +43,17 @@ collections:
   protocol:
     permalink: "/protocol"
     output: true
+  queries:
+    permalink: "/protocol/queries"
+    output: true
 
 just_the_cods:
   collections:
     protocol:
       name: "Protocol Documentation"
+      nav_exclude: false
+      search_exclude: false
+    queries:
+      name: "Query Documentation"
       nav_exclude: false
       search_exclude: false

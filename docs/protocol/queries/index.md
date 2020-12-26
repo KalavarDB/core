@@ -1,5 +1,5 @@
 ---
-has_children: false
+has_children: true
 layout: default
 title: Querying Data
 parent: Protocol
@@ -19,17 +19,11 @@ nav_order: 3
 - [Responses](#responses)
 
 
-## Get
-In order to query values from a given database/table, the following example query should be used as reference. All fields in this query are required:
-```
-GET my_database.A
-FIELDS: "name", "email", "pass"
-```
 
-#### Joins
+### Joins
 With the internal query protocol for kalavar, there are four types of join to choose from, `Inner`, `Outer` (`Full`), `Left`, and `Right`. The differences between these join types will be explained below.
 
-__Inner join__ returns all rows matching the filter criteria, where the row in table `A`, has a partnering row in table `B`.
+###Inner join### returns all rows matching the filter criteria, where the row in table `A`, has a partnering row in table `B`.
 An inner join is represented by the presence of 2 `FIELDS` keys, and an `I-JOIN` key
 ```
 GET my_database.A
@@ -125,7 +119,4 @@ John Doe|email@provider.tld|abc123
 John Doe|email@provider.tld|abc123
 ```
 
-[Previous](Authentication.md)
-
-[Next](Data-Types.md)
 

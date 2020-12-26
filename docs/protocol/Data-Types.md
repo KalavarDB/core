@@ -9,8 +9,3 @@ nav_order: 4
 
 > ## ⚠️ Warning ⚠️
 > #### The documentation you are reading is neither implemented, nor finalised. please do not begin an inplementation of the protocol until this message has been removed. Thank you.
-
-
-[Previous](Queries.md)
-
-~~Next~~

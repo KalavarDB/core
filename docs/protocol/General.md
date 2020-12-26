@@ -91,8 +91,3 @@ If a payload is modified in transmission, the client will be notified, by receiv
 Payload Invalid
 ```
 If the client receives such a payload from the server, they should immediately drop the payload they sent, and report a "Tamper" error to the end user, to let them know someone may be snooping in on their queries.
-
-
-~~Previous~~
-
-[Next](Authentication.md)

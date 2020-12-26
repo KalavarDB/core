@@ -4,12 +4,19 @@ title: Home
 nav_order: 1
 ---
 # Kalavar
-Welcome to the documentation for the core of the Kalavar data storage system.
-In this documentation, you will find information on the following contents.
 
-This documentation is by no means complete, and much of it is still un-implemented, rendering it subject to change at a moment's notice. Should you have any questions, please post them [here](https://github.com/fatalcenturion/kalavar-core/discussions/new?category=q-a).
+Kalavar is a project attempting to bring a fast, efficient, secure, and __asynchronous__ query model to the modern database system. It is designed to be quick, and secure, from the very beginning without any of that additional configuration mess.
 
-Thanks for taking an interest
+## Why Asynchronous?
+Frankly, SQL is old, and outdate, it has been in need of a refresh for a long time, and we decided to refresh it. So, we developed KQL. An exciting refreshment of the Structured Query Language used by the biggest databases, modeled to be used in an asynchronous environment with minimal pick up time.
 
-### Contents
-- [Protocol](protocol/index.md)
+## What is KQL?
+KQL is our in-house query language. It is designed to be __asynchronous__ and provide a powerful, yet efficient, and easy to follow query structure.
+
+## How can i use Kalavar?
+Currently, Kalavar is under heavy development, most of the information on this page is a placeholder, providing an optimistic goal of the project, but until it is publicly released, this page is a goal page.
+
+TL;DR: You cannot, it is still being developed and is not publicly available at this time.
+
+## Im a developer, how do i write a library for Kalavar?
+Again, due to us being in early development, no 3rd party library development is being encouraged, whilst we flesh out our transmission protocol. But, should you choose to begin work anyway, the [Documentation](protocol) might be a good place to look.
