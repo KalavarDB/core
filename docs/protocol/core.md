@@ -1,3 +1,9 @@
+---
+has_children: false
+layout: default
+title: Customization
+nav_order: 1
+---
 # Core Documentation
 This page represents some core information about the protocol. It is strongly recommended that you read this page in its entirety before implementing the Kalavar protocol
 
