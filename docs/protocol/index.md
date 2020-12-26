@@ -9,7 +9,7 @@ Welcome to the documentation for the protocol used by the Kalavar data storage s
 In this documentation, you will find information on the following contents.
 
 ### Contents
-- [Core](core.md)
-- [Authentication](auth.md)
-- [Queries](query.md)
-- [Data Types](data-types.md)
+- [Core](General.md)
+- [Authentication](Authentication.md)
+- [Queries](Queries.md)
+- [Data Types](Data-Types.md)

@@ -1,3 +1,4 @@
+#theme: "just-the-docs"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: dark
 title: Kalavar
@@ -34,7 +35,7 @@ compress_html:
   clippings: all
   comments: all
   endings: all
-  startings: []
+  startings: [ ]
   blanklines: false
   profile: false
 

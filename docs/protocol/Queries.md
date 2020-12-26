@@ -2,6 +2,7 @@
 has_children: false
 layout: default
 title: Querying Data
+parent: Protocol
 nav_order: 3
 ---
 # Queries
@@ -124,7 +125,7 @@ John Doe|email@provider.tld|abc123
 John Doe|email@provider.tld|abc123
 ```
 
-[Previous](auth.md)
+[Previous](Authentication.md)
 
-[Next](data-types.md)
+[Next](Data-Types.md)
 

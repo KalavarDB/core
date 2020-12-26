@@ -1,5 +1,4 @@
 ---
-has_children: false
 layout: default
 title: Home
 nav_order: 1
@@ -13,4 +12,4 @@ This documentation is by no means complete, and much of it is still un-implement
 Thanks for taking an interest
 
 ### Contents
-- [Protocol](protocol/README.md)
+- [Protocol](protocol/index.md)
