@@ -5,6 +5,6 @@
 
 
 
-Previous
+[Previous](core.md)
 
-[Next](ops.md)
+[Next](query.md)

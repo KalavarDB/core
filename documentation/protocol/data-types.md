@@ -3,6 +3,6 @@
 
 # Data Types Documentation
 
-[Previous](ops.md)
+[Previous](query.md)
 
-Next
+~~Next~~
