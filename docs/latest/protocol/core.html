@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style>html{background-color:#282a36;scroll-behavior:smooth;width:100%;height:100%}.container{margin:2em 4em}body{padding:20px;color:#fff;font-size:15px;font-family:"Lucida Grande","Lucida Sans Unicode","Lucida Sans",AppleSDGothicNeo-Medium,'Segoe UI','Malgun Gothic',Verdana,Tahoma,sans-serif;-webkit-font-smoothing:antialiased}a{color:#b97ec4}a:hover{color:#8bb156}h2{border-bottom:1px solid #21232d;line-height:1.7em}h6{color:#a4a296}hr{border:1px solid #21232d}pre>code{font-size:.9em;font-family:Consolas,Inconsolata,Courier,monospace}blockquote{border-left:4px solid #121319;padding:0 15px;font-style:italic}img{max-width:100%}table{width:100%;margin:0;border:.2em solid #4b4e65;border-radius:.4em;background-color:#333442}table tr td,table tr th{padding:1em}table tr:nth-child(2n){background-color:#494d63}.hljs-comment,.hljs-quote{color:#8d8687}.hljs-link,.hljs-meta,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#ef6155}.hljs-built_in,.hljs-builtin-name,.hljs-deletion,.hljs-literal,.hljs-number,.hljs-params,.hljs-type{color:#f99b15}.hljs-attribute,.hljs-section,.hljs-title{color:#fec418}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:#48b685}.hljs-keyword,.hljs-selector-tag{color:#815ba4}.hljs{display:block;overflow-x:auto;background:#1e2029;color:#a39e9b;padding:.5em;border-radius:.2em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+<blockquote>
+<h2><a href=".html#️-warning-️"></a>⚠️ Warning ⚠️</h2>
+<h4><a href=".html#the-documentation-you-are-reading-is-neither-implemented-nor-finalised-please-do-not-begin-an-inplementation-of-the-protocol-until-this-message-has-been-removed-thank-you"></a>The documentation you are reading is neither implemented, nor finalised. please do not begin an inplementation of the protocol until this message has been removed. Thank you.</h4>
+</blockquote>
+<h1><a href=".html#core-documentation"></a>Core Documentation</h1>
+<p>This page represents some core information about the protocol. It is strongly recommended that you read this page in its entirety before implementing the Kalavar protocol</p>
+<h1><a href=".html#contents"></a>Contents</h1>
+<ul>
+<li>
+<p><a href=".html#connection">Connection</a></p>
+<ul>
+<li><a href=".html#domains">Domains</a></li>
+</ul>
+</li>
+<li>
+<p><a href=".html#opcodes">Operation Codes</a></p>
+</li>
+<li>
+<p><a href=".html#payload">Payload</a></p>
+<ul>
+<li><a href=".html#payload-structure">Payload Structure</a></li>
+<li><a href=".html#payload-order">Payload Order</a></li>
+</ul>
+</li>
+</ul>
+<h1><a href=".html#connection"></a>Connection</h1>
+<p>Kalavar uses TCP to transfer data to and from the client. The</p>
+<h2><a href=".html#domains"></a>Domains</h2>
+<p>Kalavar will bind itself by default to port <code>1234</code> of <code>localhost</code>, should the client attempt a connection to any other port, it might be worth attempting a connection here as well. Kalavar will listen for incoming data on any port specified by the user, Or, if enabled in config, the current IP address of the system it is running on</p>
+<p>An example connection URL would just be <code>localhost:1234</code></p>
+<h1><a href=".html#opcodes"></a>Opcodes</h1>
+<blockquote>
+<p>Operation codes (opcodes) are the integers that are always the first component of the payload. These range from 0 to 20 currently and a breakdown can be found below</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">Opcode</th>
+<th align="center">Name</th>
+<th align="center">Source</th>
+<th align="center">Destination</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">Normal Payload</td>
+<td align="center">Either</td>
+<td align="center">Either</td>
+<td align="left">Any normal payload transmitted from the client to the server, or vice versa. Normally these are general <code>Query</code> payloads</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">Ping</td>
+<td align="center">Server</td>
+<td align="center">Client</td>
+<td align="left">Used to check for stale or dead connections and close them. Sent once every 42500 milliseconds</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">Pong</td>
+<td align="center">Client</td>
+<td align="center">Server</td>
+<td align="left">Sent by the client, upon the request of a Ping by the server.</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">Disconnect</td>
+<td align="center">Server</td>
+<td align="center">Client</td>
+<td align="left">A request to the client to close the connection, <del>see here</del></td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">Reconnect</td>
+<td align="center">Server</td>
+<td align="center">Client</td>
+<td align="left">A request to the client to re-initiate the connection. Usually sent in order to re-negotiate an encryption key</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">Shutdown</td>
+<td align="center">Client</td>
+<td align="center">Server</td>
+<td align="left">A request to the server to close the connection. Requests will be answered by an Opcode 3 Disconnect</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">Status</td>
+<td align="center">Client</td>
+<td align="center">Server</td>
+<td align="left">A request to the server to provide state information to the client. Only trusted clients are accepted. <del>see what this means</del></td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">Hello</td>
+<td align="center">Server</td>
+<td align="center">Client</td>
+<td align="left">A payload defining the key and iv to use to encrypt the user credentials of the Opcode 8 payload</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">Authenticate</td>
+<td align="center">Client</td>
+<td align="center">Server</td>
+<td align="left">A payload defining the username and password of the user attempting to log into the database. should be encrypted using the information provided through Opcode 7</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">Ready</td>
+<td align="center">Server</td>
+<td align="center">Client</td>
+<td align="left">Information pertaining to the logged in user. Sent upon the accepting of a valid Opcode 8 payload</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">17</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">18</td>
+<td align="center">Reserved</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="left">N/A</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td align="center">Terminate</td>
+<td align="center">Either</td>
+<td align="center">Either</td>
+<td align="left">Used to signal that this connection will not be receiving on the opposite end, and should be closed immediately. Also sent if an invalid Opcode 8 payload is provided to the server</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="center">Payload Tamper</td>
+<td align="center">Either</td>
+<td align="center">Either</td>
+<td align="left">This opcode should only be sent, or received if there has been evidence of payload tampering. It will immediately be responded to with an Opcode 19 Terminate payload</td>
+</tr>
+</tbody>
+</table>
+<h1><a href=".html#payload"></a>Payload</h1>
+<p>Each transmission of data between the client and the server, is referred to as a &quot;payload&quot;. This term is used throughout the documentation so please keep it in mind.</p>
+<h2><a href=".html#payload-structure"></a>Payload Structure</h2>
+<p>All payloads have a specific structure, that they must follow for the payload to be processed. That structure can be seen below:</p>
+<pre><code>&lt;Operation Code&gt; &lt;SHA-1 Checksum&gt;
+&lt;body&gt;
+&lt;empty line&gt;
+</code></pre>
+<p>An example of a fully qualified <code>QUERY</code> payload, is below:</p>
+<pre><code>0 E97AD0AFA9C157357F9EFC6E3EE1D29687385FCB
+GET my_database.A
+FIELDS: &quot;name&quot;, &quot;email&quot;, &quot;pass&quot;
+I-JOIN my_database.B
+FIELDS: &quot;banned&quot;, &quot;two_factor&quot;, &quot;admin&quot;
+
+</code></pre>
+<p>The above payload consists of an <code>Operation Code</code> or <code>OpCode</code>, followed by an SHA-1 hash of the payload <code>body</code> simple <code>GET</code> query as the payload <code>body</code>.</p>
+<p>In order to verify that the payload has not been tampered with during transmission, the server will parse the <code>OpCode</code>, and then verify the <code>checksum</code>, if the <code>checksum</code> matches the body, the payload will be accepted as genuine and processed according to it's <code>OpCode</code> automatically.</p>
+<p>If a payload is modified in transmission, the client will be notified, by receiving the following payload:</p>
+<pre><code>20 9ACEE9D9B4EE5C370A7732B5118293744D0106F8
+Payload Invalid
+</code></pre>
+<p>If the client receives such a payload from the server, they should immediately drop the payload they sent, and report a &quot;Tamper&quot; error to the end user, to let them know someone may be snooping in on their queries.</p>
+<p><del>Previous</del></p>
+<p><a href="authhtml">Next</a></p>
+
+</div>
+<div style="text-align: center; padding: 1em; color: #aaa"><h4>Powered by <a href="https://github.com/fatalcenturion/Iridium">Iridium</a><h4></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+	    document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(element => {
+		    element.innerHTML += `<div class="anchor" style="display:none;" id="${(element.innerText.toLowerCase().replace(/[^\w]/gmi, "")).split(" ").join("-")}">Anchor point</div>`;
+		    element.children[0].onclick = () => {let em = document.getElementById(window.location.hash.split(/#|\?[^\s]*/g).join("")); console.log(`Navigating to: ${window.location.hash.split(/#|\?[^\s]*/g).join("")}`); if(em !== null && em !== undefined) em.parentElement.scrollIntoView({ behavior: 'instant', block: 'start' })}
+		    })
+	let em = document.getElementById(window.location.hash.replace(/#|\?[^\s]*/g, ""));
+	console.log(`Navigating to: ${window.location.hash.replace(/#|\?[^\s]*/g, "")}`);
+	if(em !== null && em !== undefined) em.parentElement.scrollIntoView({ behavior: 'instant', block: 'start' })
+}, false);</script></body>
+<html>

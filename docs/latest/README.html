@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style>html{background-color:#282a36;scroll-behavior:smooth;width:100%;height:100%}.container{margin:2em 4em}body{padding:20px;color:#fff;font-size:15px;font-family:"Lucida Grande","Lucida Sans Unicode","Lucida Sans",AppleSDGothicNeo-Medium,'Segoe UI','Malgun Gothic',Verdana,Tahoma,sans-serif;-webkit-font-smoothing:antialiased}a{color:#b97ec4}a:hover{color:#8bb156}h2{border-bottom:1px solid #21232d;line-height:1.7em}h6{color:#a4a296}hr{border:1px solid #21232d}pre>code{font-size:.9em;font-family:Consolas,Inconsolata,Courier,monospace}blockquote{border-left:4px solid #121319;padding:0 15px;font-style:italic}img{max-width:100%}table{width:100%;margin:0;border:.2em solid #4b4e65;border-radius:.4em;background-color:#333442}table tr td,table tr th{padding:1em}table tr:nth-child(2n){background-color:#494d63}.hljs-comment,.hljs-quote{color:#8d8687}.hljs-link,.hljs-meta,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#ef6155}.hljs-built_in,.hljs-builtin-name,.hljs-deletion,.hljs-literal,.hljs-number,.hljs-params,.hljs-type{color:#f99b15}.hljs-attribute,.hljs-section,.hljs-title{color:#fec418}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:#48b685}.hljs-keyword,.hljs-selector-tag{color:#815ba4}.hljs{display:block;overflow-x:auto;background:#1e2029;color:#a39e9b;padding:.5em;border-radius:.2em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+<h1><a href=".html#kalavar-docs"></a>Kalavar Docs</h1>
+<p>Welcome to the documentation for the core of the Kalavar data storage system.
+In this documentation, you will find information on the following contents.</p>
+<p>This documentation is by no means complete, and much of it is still un-implemented, rendering it subject to change at a moment's notice. Should you have any questions, please post them <a href="https://github.com/fatalcenturion/kalavar-core/discussions/new?category=q-a">here</a>.</p>
+<p>Thanks for taking an interest</p>
+<h3><a href=".html#contents"></a>Contents</h3>
+<ul>
+<li><a href="protocol/READMEhtml">Protocol</a></li>
+</ul>
+
+</div>
+<div style="text-align: center; padding: 1em; color: #aaa"><h4>Powered by <a href="https://github.com/fatalcenturion/Iridium">Iridium</a><h4></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+	    document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(element => {
+		    element.innerHTML += `<div class="anchor" style="display:none;" id="${(element.innerText.toLowerCase().replace(/[^\w]/gmi, "")).split(" ").join("-")}">Anchor point</div>`;
+		    element.children[0].onclick = () => {let em = document.getElementById(window.location.hash.split(/#|\?[^\s]*/g).join("")); console.log(`Navigating to: ${window.location.hash.split(/#|\?[^\s]*/g).join("")}`); if(em !== null && em !== undefined) em.parentElement.scrollIntoView({ behavior: 'instant', block: 'start' })}
+		    })
+	let em = document.getElementById(window.location.hash.replace(/#|\?[^\s]*/g, ""));
+	console.log(`Navigating to: ${window.location.hash.replace(/#|\?[^\s]*/g, "")}`);
+	if(em !== null && em !== undefined) em.parentElement.scrollIntoView({ behavior: 'instant', block: 'start' })
+}, false);</script></body>
+<html>
