@@ -1,5 +1,5 @@
 has_children: true
-# Protocol Docs
+# Protocol
 Welcome to the documentation for the protocol used by the Kalavar data storage system.
 In this documentation, you will find information on the following contents.
 
