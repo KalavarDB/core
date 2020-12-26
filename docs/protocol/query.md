@@ -1,3 +1,4 @@
+has_children: true
 # Operation Documentation
 
 > ## ⚠️ Warning ⚠️
