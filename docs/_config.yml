@@ -14,6 +14,7 @@ search:
   tokenizer_separator: /[\s/]+/
   rel_url: true
   button: false
+
 heading_anchors: true
 
 aux_links:
@@ -36,3 +37,15 @@ compress_html:
   startings: []
   blanklines: false
   profile: false
+
+collections:
+  protocol:
+    permalink: "/protocol"
+    output: true
+
+just_the_cods:
+  collections:
+    protocol:
+      name: "Protocol Documentation"
+      nav_exclude: false
+      search_exclude: false
