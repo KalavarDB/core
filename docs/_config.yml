@@ -1,2 +1,38 @@
 remote_theme: pmarsceill/just-the-docs
 color_scheme: dark
+title: Kalavar
+description: A powerful database system, written using pure Rust
+baseurl: "/kalavar-core" # the subpath of your site, e.g. /blog
+url: "https://fatalcenturion.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+permalink: pretty
+search_enabled: true
+search:
+  heading_level: 4
+  previews: 2
+  preview_words_before: 3
+  preview_words_after: 3
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+heading_anchors: true
+
+aux_links:
+  "View Repository":
+    - "//github.com/fatalcenturion/kalavar-core"
+
+aux_links_new_tab: true
+
+nav_sort: case_sensitive
+
+back_to_top: true
+back_to_top_text: "Back to top"
+
+footer_content: "Copyright &copy; 2020 Thomas Bardsley. Distributed under the <a href=\"https://github.com/fatalcenturion/kalavar-core/tree/master/LICENSE.txt\">The Mozilla Public License V2.0</a>"
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
