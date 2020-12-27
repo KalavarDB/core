@@ -22,6 +22,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: TODO and commented out code checker
-        uses: nickssmith/TODO_and_CommentedCode_Check@1.4.1
+      - name: TODO 
+        uses: fatalcenturion/TODO_and_CommentedCode_Check@1.4.1
 
