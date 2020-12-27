@@ -4,6 +4,7 @@ color_scheme: dark
 title: Kalavar
 description: A powerful database system, written using pure Rust
 baseurl: "/kalavar-core" # the subpath of your site, e.g. /blog
+logo: "/assets/images/logo.png"
 
 permalink: pretty
 search_enabled: true
