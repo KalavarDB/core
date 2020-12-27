@@ -22,5 +22,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: TODO-2-gh-issue
-        uses: Jamminroot/todo-2-gh-issue@1.2.1
+      - name: TODO and commented out code checker
+        uses: nickssmith/TODO_and_CommentedCode_Check@1.4.1
+
