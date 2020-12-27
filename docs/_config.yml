@@ -1,6 +1,6 @@
 theme: "just-the-docs"
 remote_theme: pmarsceill/just-the-docs
-color_scheme: dark
+color_scheme: light
 title: Kalavar
 description: A powerful database system, written using pure Rust
 baseurl: "/kalavar-core" # the subpath of your site, e.g. /blog
