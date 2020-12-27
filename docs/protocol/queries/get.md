@@ -3,6 +3,7 @@ has_children: false
 layout: default
 title: Fetching Data
 parent: Querying Data
+grand_parent: Protocol
 nav_order: 1
 ---
 
