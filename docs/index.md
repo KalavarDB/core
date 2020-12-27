@@ -3,7 +3,7 @@ layout: default
 title: Home
 nav_order: 1
 ---
-# Kalavar
+![Discord](https://img.shields.io/discord/792527699771129856) ![GitHub issues](https://img.shields.io/github/issues-raw/fatalcenturion/kalavar-core) ![GitHub](https://img.shields.io/github/license/fatalcenturion/kalavar-core) ![GitHub Repo stars](https://img.shields.io/github/stars/fatalcenturion/kalavar-core) ![GitHub watchers](https://img.shields.io/github/watchers/fatalcenturion/kalavar-core) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/fatalcenturion/kalavar-core/latest?sort=semver)
 
 Kalavar is a project attempting to bring a fast, efficient, secure, and __asynchronous__ query model to the modern database system. It is designed to be quick, and secure, from the very beginning without any of that additional configuration mess.
 
