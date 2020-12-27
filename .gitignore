@@ -4,5 +4,5 @@ Cargo.lock
 chatlogs.md
 /_site
 /.jekyll-cache
-
+/--watch
 /docs/.jekyll-cache

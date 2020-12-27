@@ -10,16 +10,3 @@ This page represents some core information about the protocol. It is strongly re
 
 > ## ⚠️ Warning ⚠️
 > #### The documentation you are reading is neither implemented, nor finalised. please do not begin an inplementation of the protocol until this message has been removed. Thank you.
-
-
-# Contents
-
-- [Operation Codes](#opcodes)
-
-- [Connection](#connection)
-    - [Domains](#domains)
-
-- [Payload](#payload)
-    - [Payload Structure](#payload-structure)
-    - [Payload Order](#payload-order)
-
