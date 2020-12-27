@@ -5,13 +5,13 @@ title: EXXX
 parent: Errors
 nav_order: 1
 ---
-## Error 101
+## Error Unknown
 
 ### Description:
-An error occurred connecting to the database.
+An error occurred, but we dont have a definition for it.
 
 ### Type:
-Connection
+Unknown
 
 ### Solutions:
-- Ensure that you are connecting to the right host or port
+Not available
