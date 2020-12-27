@@ -4,7 +4,7 @@ layout: default
 title: Arrays
 parent: Data Types
 grand_parent: Protocol
-nav_order: 5
+nav_order: 15
 ---
 # Arrays
 A growable object, capable of holding a huge number of entries, of a single data type at a time. Can handle all other data types.

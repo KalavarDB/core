@@ -15,13 +15,9 @@ Strings are formatted by wrapping string content within the `"` (double quote) c
 ### Information
 - Max Length: infinite\*
 - Encoding: UTF-8
-
+- Category: Text
 
 ### Errors
-
-|Error|Description|
-|:---:|:---:|
-|UnescapedDoubleQuote|Thrown by the server whenever a query contains a string that is not ended before the end of the payload body|
-
+N/A
 
 *A string may be infinite length, but the true length of the string is dependant on the limitations of the hardware the system is running on

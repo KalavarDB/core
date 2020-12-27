@@ -1,8 +1,8 @@
 ---
 has_children: false
 layout: default
-title: Booleans
+title: RGBA
 parent: Data Types
 grand_parent: Protocol
-nav_order: 3
+nav_order: 11
 ---

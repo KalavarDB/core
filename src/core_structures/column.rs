@@ -17,8 +17,8 @@ pub enum ColumnType {
     SignedInteger16,
     SignedInteger32,
     SignedInteger64,
-    SignedBigInteger(i64),
     BigInteger(u64),
+    SignedBigInteger(i64),
 
     // Identifier Types
     Snowflake(u64),
@@ -27,7 +27,7 @@ pub enum ColumnType {
     // Color Types
     RGB,
     RGBA,
-    CYMK,
+    CMYK,
     PMS, // Pantone
     Pantone, // PMS
     Hex,
