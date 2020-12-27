@@ -1,8 +1,14 @@
 #[derive(Debug, Clone)]
 pub enum ColumnType {
-    String(u32),
+    // Text Types
+    String(u64),
+    JSON(u64),
+
+    // Byte Types
     Bool(u8),
     // Bytea,
+
+    // Numeric Types
     Integer8,
     Integer16,
     Integer32,
@@ -11,8 +17,21 @@ pub enum ColumnType {
     SignedInteger16,
     SignedInteger32,
     SignedInteger64,
-    // JSON(u32),
+    SignedBigInteger(i64),
+    BigInteger(u64),
+
+    // Identifier Types
+    Snowflake(u64),
+    UUID,
+
+    // Color Types
+    RGB,
+    RGBA,
+    CYMK,
+    PMS, // Pantone
+    Pantone, // PMS
+    Hex,
+
+    // Boundless Types
     Array(Box<ColumnType>, u64),
-    // SignedBigInteger(u64),
-    // BigInteger(u64),
 }

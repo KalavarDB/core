@@ -7,6 +7,7 @@ use tokio::sync::broadcast::{Sender, Receiver, channel};
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 use crate::managers::connections::connection::Connection;
 use tokio::net::TcpListener;
+use crate::errors::ErrorMap::*;
 
 impl ConnectionManager {
     pub async fn new(l: &mut LoggingManager, config: &ConfigManager, os: &str) -> ConnectionManager {
@@ -31,7 +32,7 @@ impl ConnectionManager {
                     if incoming.is_ok() {
                         log.debug(incoming.unwrap()).await;
                     } else {
-                        log.error(incoming.unwrap_err()).await;
+                        log.error(incoming.unwrap_err(), EXXX).await;
                     }
                 }
             });
@@ -45,7 +46,7 @@ impl ConnectionManager {
                 });
             }
         } else {
-            logger.fatal(x.unwrap_err(), 1).await;
+            logger.fatal(x.unwrap_err(), EXXX, 1).await;
         }
     }
 }

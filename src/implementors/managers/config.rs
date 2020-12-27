@@ -4,6 +4,7 @@ use tokio::fs::{File, create_dir_all};
 use tokio::io;
 use tokio::io::{AsyncReadExt, ErrorKind, AsyncWriteExt};
 use std::string::FromUtf8Error;
+use crate::errors::ErrorMap::*;
 
 impl ConfigManager {
     pub async fn new(logger: &mut LoggingManager, os: &str) -> ConfigManager {
@@ -23,8 +24,8 @@ impl ConfigManager {
             }
             _ => {
                 logger.debug_message(format!("OS: {} is un-recognized", os)).await;
-                logger.error("Unknown operating system").await;
-                logger.fatal("Exiting gracefully", 1).await;
+                logger.error("Unknown operating system", E202).await;
+                logger.fatal("Exiting gracefully", E202, 1).await;
             }
         }
 
@@ -45,7 +46,7 @@ impl ConfigManager {
                         if write_result.is_ok() {
                             manager = parse_config(logger, manager, &mut inner).await
                         } else {
-                            logger.error(format!("Unable to write to file '{}'", &manager.config_path)).await
+                            logger.error(format!("Unable to write to file '{}'", &manager.config_path), E201).await
                         }
                     } else {
                         match file.unwrap_err().kind() {
@@ -65,10 +66,10 @@ impl ConfigManager {
                                         match e.kind() {
                                             ErrorKind::PermissionDenied => {
                                                 logger.info("You can fix the problem below by running the program using Super User (sudo)").await;
-                                                logger.fatal(e, 1).await;
+                                                logger.fatal(e, E201, 1).await;
                                             }
                                             _ => {
-                                                logger.fatal(e, 1).await;
+                                                logger.fatal(e, EXXX, 1).await;
                                             }
                                         }
                                     }
@@ -77,22 +78,22 @@ impl ConfigManager {
                                     match e.kind() {
                                         ErrorKind::PermissionDenied => {
                                             logger.info("You can fix the problem below by running the program using Super User (sudo)").await;
-                                            logger.fatal(e, 1).await;
+                                            logger.fatal(e, E201, 1).await;
                                         }
                                         _ => {
-                                            logger.fatal(e, 1).await;
+                                            logger.fatal(e, EXXX, 1).await;
                                         }
                                     }
                                 }
                             }
                             _ => {
-                                logger.error(err).await;
+                                logger.error(err, EXXX).await;
                             }
                         }
                     }
                 }
                 _ => {
-                    logger.error(err).await;
+                    logger.error(err, EXXX).await;
                 }
             }
         }
@@ -189,10 +190,14 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                 }
             }
         } else {
-            l.error(text_result.unwrap_err()).await;
+            l.error(text_result.unwrap_err(), EXXX).await;
             l.debug_message(&m.config_path).await;
-            l.fatal("Invalid config file content, exiting gracefully", 1).await;
+            l.fatal("Invalid config file content, exiting gracefully", EXXX, 1).await;
         }
+    } else {
+        l.error(read_result.unwrap_err(), EXXX).await;
+        l.debug_message(&m.config_path).await;
+        l.fatal("Unable to locate config file, exiting gracefully", EXXX, 1).await;
     }
 
     m

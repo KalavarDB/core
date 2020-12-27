@@ -37,14 +37,14 @@ impl LoggingManager {
         man
     }
 
-    pub async fn fatal<A: Display>(&self, content: A, code: i32) {
-        println!(" {}FATAL{} > {}{}{} > {}{}{}", FG_RED, RESET, FG_MAG, format_date().await, RESET, FG_RED, content, RESET);
+    pub async fn fatal<A: Display>(&self, content: A, error: crate::errors::ErrorMap, code: i32) {
+        println!(" {}FATAL{} > {:?} > {}{}{} > {}{}{}", FG_RED, RESET, error, FG_MAG, format_date().await, RESET, FG_RED, content, RESET);
 
         let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
 
         match file {
             Ok(mut f) => {
-                f.write_all(format!(" FATAL > {} > {}\n", format_date().await, content).as_bytes()).await;
+                f.write_all(format!(" FATAL > {:?} > {} > {}\n", error, format_date().await, content).as_bytes()).await;
             }
             _ => {}
         }
@@ -54,11 +54,11 @@ impl LoggingManager {
     pub async fn debug_message<A: Into<String>>(&self, content: A) {
         if self.levels.get("DEBUG").is_some() {
             let c = content.into();
-            println!(" {}DEBUG{} > {}{}{} > {}{}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, c, RESET);
+            println!(" {}DEBUG{} >      > {}{}{} > {}{}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, c, RESET);
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" DEBUG > {} > {}\n", format_date().await, c).as_bytes()).await;
+                    f.write_all(format!(" DEBUG >      > {} > {}\n", format_date().await, c).as_bytes()).await;
                 }
                 _ => {}
             }
@@ -67,11 +67,11 @@ impl LoggingManager {
 
     pub async fn debug<A: Debug>(&self, content: A) {
         if self.levels.get("DEBUG").is_some() {
-            println!(" {}DEBUG{} > {}{}{} > {}{:?}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, content, RESET);
+            println!(" {}DEBUG{} >      > {}{}{} > {}{:?}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, content, RESET);
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" DEBUG > {} > {:?}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" DEBUG >      > {} > {:?}\n", format_date().await, content).as_bytes()).await;
                 }
                 _ => {}
             }
@@ -82,11 +82,11 @@ impl LoggingManager {
         if self.levels.get("DEBUG").is_some() {
             let l = format!("{:#?}", content);
             for line in l.split("\n").collect::<Vec<&str>>() {
-                println!(" {}DEBUG{} > {}{}{} > {}{}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, line, RESET);
+                println!(" {}DEBUG{} >      > {}{}{} > {}{}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, line, RESET);
                 let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
                 match file {
                     Ok(mut f) => {
-                        f.write_all(format!(" DEBUG > {} > {}\n", format_date().await, line).as_bytes()).await;
+                        f.write_all(format!(" DEBUG >      > {} > {}\n", format_date().await, line).as_bytes()).await;
                     }
                     _ => {}
                 }
@@ -96,11 +96,11 @@ impl LoggingManager {
 
     pub async fn info<A: Display>(&self, content: A) {
         if self.levels.get("INFO").is_some() {
-            println!(" {}INFO {} > {}{}{} > {}", FG_CYA, RESET, FG_MAG, format_date().await, RESET, content);
+            println!(" {}INFO {} >      > {}{}{} > {}", FG_CYA, RESET, FG_MAG, format_date().await, RESET, content);
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" INFO  > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" INFO  >      > {} > {}\n", format_date().await, content).as_bytes()).await;
                 }
                 _ => {}
             }
@@ -108,11 +108,11 @@ impl LoggingManager {
     }
     pub async fn log<A: Display>(&self, content: A) {
         if self.levels.get("LOG").is_some() {
-            println!(" {} LOG {} > {}{}{} > {}", FG_GRY, RESET, FG_MAG, format_date().await, RESET, content);
+            println!(" {} LOG {} >      > {}{}{} > {}", FG_GRY, RESET, FG_MAG, format_date().await, RESET, content);
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!("  LOG  > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!("  LOG  >      > {} > {}\n", format_date().await, content).as_bytes()).await;
                 }
                 _ => {}
             }
@@ -121,24 +121,24 @@ impl LoggingManager {
 
     pub async fn warn<A: Display>(&self, content: A) {
         if self.levels.get("WARN").is_some() {
-            println!(" {}WARN {} > {}{}{} > {}{}{}", FG_YEL, RESET, FG_MAG, format_date().await, RESET, FG_YEL, content, RESET);
+            println!(" {}WARN {} >      > {}{}{} > {}{}{}", FG_YEL, RESET, FG_MAG, format_date().await, RESET, FG_YEL, content, RESET);
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" WARN  > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" WARN  >      > {} > {}\n", format_date().await, content).as_bytes()).await;
                 }
                 _ => {}
             }
         }
     }
 
-    pub async fn error<A: Display>(&self, content: A) {
+    pub async fn error<A: Display>(&self, content: A, error: crate::errors::ErrorMap) {
         if self.levels.get("ERROR").is_some() {
-            println!(" {}ERROR{} > {}{}{} > {}{}{}", FG_RED, RESET, FG_MAG, format_date().await, RESET, FG_RED, content, RESET);
+            println!(" {}ERROR{} > {:?} > {}{}{} > {}{}{}", FG_RED, RESET, error, FG_MAG, format_date().await, RESET, FG_RED, content, RESET);
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" ERROR > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" ERROR > {:?} > {} > {}\n", error, format_date().await, content).as_bytes()).await;
                 }
                 _ => {}
             }

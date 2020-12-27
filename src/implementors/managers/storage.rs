@@ -5,6 +5,7 @@ use crate::managers::logging::LoggingManager;
 use tokio::fs::{create_dir_all, read_dir, File, ReadDir};
 use tokio::io;
 use tokio::io::ErrorKind;
+use crate::errors::ErrorMap::*;
 
 impl StorageManager {
     pub async fn new(l: &mut LoggingManager, os: &str) -> StorageManager {
@@ -15,7 +16,7 @@ impl StorageManager {
                 "linux" | "macos" => "/var/lib/kalavar".to_string(),
                 "windows" => "C:".to_string(),
                 _ => {
-                    l.fatal("Unable to choose data directory for unknown operating system", 1).await;
+                    l.fatal("Unable to choose data directory for unknown operating system", EXXX, 1).await;
                     "unknown".to_string()
                 }
             }
@@ -46,15 +47,15 @@ async fn parse_incoming(mut s: StorageManager, l: &LoggingManager) -> StorageMan
             if result.is_ok() {
                 l.debug_message(format!("Generated: {}{}", &s.dir, dir)).await;
             } else {
-                l.error(format!("Failed to generate file: {}{}", &s.dir, dir)).await;
+                l.error(format!("Failed to generate file: {}{}", &s.dir, dir), E201).await;
                 failed = (true, result.unwrap_err().kind());
             }
         }
     }
 
     if failed.0 {
-        l.error(format!("Error type: {:?}", failed.1)).await;
-        l.fatal("Unable to create required core files, please run the program as an administrator to generate them.", 1).await;
+        l.error(format!("Error type: {:?}", failed.1), E201).await;
+        l.fatal("Unable to create required core files, please run the program as an administrator to generate them.", E201, 1).await;
     } else {
 
     }
@@ -75,20 +76,20 @@ async fn handle_missing_data_dir(l: &LoggingManager, e: ErrorKind, root: &String
                     if result.is_ok() {
                         l.debug_message(format!("Generated: {}{}", root, dir)).await;
                     } else {
-                        l.error(format!("Failed to generate directory: {}{}", root, dir)).await;
+                        l.error(format!("Failed to generate directory: {}{}", root, dir), E201).await;
                         failed = (true, result.unwrap_err().kind());
                     }
                 }
             }
 
             if failed.0 {
-                l.error(format!("Error type: {:?}", failed.1)).await;
-                l.fatal("Unable to create required base directories, please run the program as an administrator to generate them.", 1).await;
+                l.error(format!("Error type: {:?}", failed.1), E201).await;
+                l.fatal("Unable to create required base directories, please run the program as an administrator to generate them.", E201, 1).await;
             }
 
         }
         _ => {
-            l.error(format!("Error type: {:?}", e)).await;
+            l.error(format!("Error type: {:?}", e), EXXX).await;
         }
     }
 
