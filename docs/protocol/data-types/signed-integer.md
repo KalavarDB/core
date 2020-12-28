@@ -3,7 +3,7 @@ has_children: false
 layout: default
 title: Signed Integers
 parent: Data Types
-grand_parent: Protocol
+grand_parent: Documentation
 nav_order: 5
 ---
 # Signed Integers

@@ -3,7 +3,7 @@ has_children: false
 layout: default
 title: Pruning Data
 parent: Querying Data
-grand_parent: Protocol
+grand_parent: Documentation
 nav_order: 5
 ---
 # Prune

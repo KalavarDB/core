@@ -2,7 +2,7 @@
 has_children: true
 layout: default
 title: Querying Data
-parent: Protocol
+parent: Documentation
 nav_order: 3
 ---
 # Queries

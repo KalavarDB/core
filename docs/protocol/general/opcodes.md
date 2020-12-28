@@ -2,8 +2,8 @@
 has_children: false
 layout: default
 title: Operation Codes
-parent: General
-grand_parent: Protocol
+parent: Protocol
+grand_parent: Documentation
 nav_order: 1
 ---
 # Opcodes

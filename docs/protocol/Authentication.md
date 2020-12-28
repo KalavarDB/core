@@ -2,7 +2,7 @@
 has_children: false
 layout: default
 title: Authentication
-parent: Protocol
+parent: Documentation
 nav_order: 2
 ---
 # Authentication

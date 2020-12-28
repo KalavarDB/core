@@ -3,6 +3,7 @@ has_children: false
 layout: default
 title: EXXX
 parent: Errors
+grand_parent: Documentation
 nav_order: 1
 ---
 ## Error Unknown

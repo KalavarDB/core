@@ -3,7 +3,7 @@ has_children: false
 layout: default
 title: Signed Big Integers
 parent: Data Types
-grand_parent: Protocol
+grand_parent: Documentation
 nav_order: 7
 ---
 # Signed Big Integer

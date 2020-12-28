@@ -2,7 +2,7 @@
 has_children: true
 layout: default
 title: Data Types
-parent: Protocol
+parent: Documentation
 nav_order: 4
 ---
 # Data Types

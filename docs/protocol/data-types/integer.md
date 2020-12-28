@@ -3,7 +3,7 @@ has_children: false
 layout: default
 title: Unsigned Integers
 parent: Data Types
-grand_parent: Protocol
+grand_parent: Documentation
 nav_order: 4
 ---
 # Unsigned Integers
