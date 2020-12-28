@@ -6,3 +6,4 @@ parent: Data Types
 grand_parent: Protocol
 nav_order: 10
 ---
+[//]: # (TODO: Write RGB docs)
