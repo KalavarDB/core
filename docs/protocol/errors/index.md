@@ -3,7 +3,7 @@ has_children: true
 layout: default
 title: Errors
 parent: Documentation
-nav_order: 3
+nav_order: 4
 ---
 
 # Errors
