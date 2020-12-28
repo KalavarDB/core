@@ -21,4 +21,4 @@ JSON values are formatted by wrapping their content content within the `'` (sing
 N/A
 
 
-*A string may be infinite length, but the true length of the string is dependant on the limitations of the hardware the system is running on
+*A JSON field may be infinite length, but the true length of the field is dependant on the limitations of the hardware the system is running on

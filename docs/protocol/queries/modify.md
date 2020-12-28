@@ -11,8 +11,8 @@ nav_order: 4
 Should the client wish to update the values of a table:
 ```
 MODIFY my_database.A
-FILTERS: "name"=="John Doe"
-"pass"=="abc123"
-LOGIC: AND/OR
+FILTERS: 1:"name"=="John Doe"
+AND 1:"pass"=="abc123"
+OR 2:"pass"==NUll
 VALUES: "abc122", "abc133", "abc321"
 ```
