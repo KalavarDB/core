@@ -19,3 +19,7 @@ jobs:
         id: "todo"
         with:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LABEL: "// TODO:"
+          COMMENT_MARKER: "//"
+          CLOSE_ISSUES: true
+          AUTO_P: true
