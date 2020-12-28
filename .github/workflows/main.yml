@@ -29,5 +29,3 @@ jobs:
           COMMENT_MARKER: "\\[//\\]\\: \\# \\("
           CLOSE_ISSUES: true
           AUTO_P: true
-          BEFORE: "39377f181bf015844ee60b60203269402e7dbd79"
-          SHA: "d3d6bdaa62a577b687514291bc7769bf09ea5915"
