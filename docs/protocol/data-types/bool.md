@@ -7,7 +7,7 @@ grand_parent: Protocol
 nav_order: 3
 ---
 
-# Arrays
+# Boolean
 A binary value used to represent true (1) or false (0).
 
 
