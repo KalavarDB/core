@@ -13,3 +13,6 @@ Information:
 - Bits: 128
 - Encoding: Hexadecimal
 - Signature: None
+
+> ### Note from the devs
+> We are currently unable to promise anything in terms of collision resistance, however the plan is to implement cross-reboot collission resistance in this system.
