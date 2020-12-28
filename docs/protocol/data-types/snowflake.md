@@ -12,7 +12,8 @@ A 64 bit unsigned integer, comprising multiple datapoints ensuring guaranteed un
 
 ### Information
 - Bits: 64
-- Signature: none
+- Encoding: Denary/Decimal
+- Signature: None
 
 
 ### Breakdown

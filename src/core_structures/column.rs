@@ -28,8 +28,6 @@ pub enum ColumnType {
     RGB,
     RGBA,
     CMYK,
-    PMS, // Pantone
-    Pantone, // PMS
     Hex,
 
     // Boundless Types
