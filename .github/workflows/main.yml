@@ -11,12 +11,21 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@master"
-      - name: "TODO to Issue"
+      - name: "TODO to Issue (Rust)"
         uses: "alstr/todo-to-issue-action@v2.4.1"
-        id: "todo"
+        id: "todo-rs"
         with:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABEL: "// TODO:"
           COMMENT_MARKER: "//"
+          CLOSE_ISSUES: true
+          AUTO_P: true
+      - name: "TODO to Issue (Markdown)"
+        uses: "alstr/todo-to-issue-action@v2.4.1"
+        id: "todo-md"
+        with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LABEL: "[//]: # (TODO:"
+          COMMENT_MARKER: "[//]: # ("
           CLOSE_ISSUES: true
           AUTO_P: true
