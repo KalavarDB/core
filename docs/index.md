@@ -19,4 +19,4 @@ Currently, Kalavar is under heavy development, most of the information on this p
 TL;DR: You cannot, it is still being developed and is not publicly available at this time.
 
 ## Im a developer, how do i write a library for Kalavar?
-Again, due to us being in early development, no 3rd party library development is being encouraged, whilst we flesh out our transmission protocol. But, should you choose to begin work anyway, the [Documentation](docyumentation) might be a good place to look.
+Again, due to us being in early development, no 3rd party library development is being encouraged, whilst we flesh out our transmission protocol. But, should you choose to begin work anyway, the [Documentation](documentation) might be a good place to look.

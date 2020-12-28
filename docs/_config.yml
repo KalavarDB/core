@@ -43,10 +43,10 @@ compress_html:
 
 collections:
   protocol:
-    permalink: "/docyumentation"
+    permalink: "/documentation"
     output: true
   queries:
-    permalink: "/docyumentation/queries"
+    permalink: "/documentation/queries"
     output: true
 
 just_the_cods:
