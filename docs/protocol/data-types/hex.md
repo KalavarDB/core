@@ -13,4 +13,4 @@ A 6 character string which contains Hexadecimal (base 16) encoded RGB values
 ### Information
 
 - Maximum Value: (FF, FF, FF) (White)
-- Allowed Types: String(8)
+- Allowed Types: String(6)
