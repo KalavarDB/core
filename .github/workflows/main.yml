@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: TODO -> Issue
 
 # Controls when the action will run. 
 on:
@@ -26,4 +26,4 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: TODO -> Issue
-        uses: fatalcenturion/TODO_and_CommentedCode_Check 
+        uses: fatalcenturion/TODO_and_CommentedCode_Check@1.5
