@@ -3,7 +3,7 @@ remote_theme: pmarsceill/just-the-docs
 color_scheme: light
 title: Kalavar
 description: A powerful database system, written using pure Rust
-logo: "/assets/images/k_transparent.png"
+logo: "/assets/images/word_banner_transparent.png"
 image: "/assets/images/word_banner_transparent.png"
 
 permalink: pretty
