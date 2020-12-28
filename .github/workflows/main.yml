@@ -25,7 +25,7 @@ jobs:
         id: "todo-md"
         with:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LABEL: "\[//\]\: \# \(TODO\:"
-          COMMENT_MARKER: "\[//\]\: \# \("
+          LABEL: "\\[//\\]\\: \\# \\(TODO\\:"
+          COMMENT_MARKER: "\\[//\\]\\: \\# \\("
           CLOSE_ISSUES: true
           AUTO_P: true
