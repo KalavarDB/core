@@ -12,5 +12,10 @@ A binary value used to represent true (1) or false (0).
 
 
 ### Information
+- Maximum Length: 1 word
+- Encoding: binary
+- Accepted Values: `True`, `False`
 
-- Maximum Length: 1
+### Dangers:
+#### Typecasting:
+Casting a boolean value to an integer can be dangerous, some languages treat 1 and 0 as true and false respectively within logic gates, and this can cause unexpected logic errors when you cast to an integer of any kind.

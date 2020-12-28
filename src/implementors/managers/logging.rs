@@ -39,7 +39,8 @@ impl LoggingManager {
 
     pub async fn fatal<A: Display>(&self, content: A, error: crate::errors::ErrorMap, code: i32) {
         println!(" {}FATAL{} > {:?} > {}{}{} > {}{}{}", FG_RED, RESET, error, FG_MAG, format_date().await, RESET, FG_RED, content, RESET);
-
+        self.info(format!("You can see more information about error {} by going to", error)).await;
+        self.info(format!("https://kalavar.cf/documentation/errors/{}", error)).await;
         let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
 
         match file {
@@ -135,6 +136,8 @@ impl LoggingManager {
     pub async fn error<A: Display>(&self, content: A, error: crate::errors::ErrorMap) {
         if self.levels.get("ERROR").is_some() {
             println!(" {}ERROR{} > {:?} > {}{}{} > {}{}{}", FG_RED, RESET, error, FG_MAG, format_date().await, RESET, FG_RED, content, RESET);
+            self.info(format!("You can see more information about error {} by going to", error)).await;
+            self.info(format!("https://kalavar.cf/documentation/errors/{}", error)).await;
             let file = OpenOptions::new().write(true).append(true).open(&self.log_file_full).await;
             match file {
                 Ok(mut f) => {
