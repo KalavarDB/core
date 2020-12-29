@@ -32,7 +32,7 @@ nav_sort: case_sensitive
 back_to_top: true
 back_to_top_text: "Back to top"
 
-footer_content: "Copyright &copy; 2020 Thomas Bardsley. Distributed under the <a href=\"https://github.com/fatalcenturion/kalavar-core/tree/master/LICENSE.txt\">Mozilla Public License V2.0</a><br>By using this site you agree to our [privacy policy](/privacy/)"
+footer_content: "Copyright &copy; 2020 Thomas Bardsley. Distributed under the <a href=\"https://github.com/fatalcenturion/kalavar-core/tree/master/LICENSE.txt\">Mozilla Public License V2.0</a><br>By using this site you agree to our <a href=\"/privacy/\">privacy policy</a>"
 
 compress_html:
   clippings: all
