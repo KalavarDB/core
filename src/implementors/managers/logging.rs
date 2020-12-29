@@ -1,14 +1,13 @@
 use std::fmt::{Debug, Display};
+use std::collections::HashMap;
+use std::io::Write;
+use std::process::exit;
 
+use tokio::{fs::OpenOptions, io::AsyncWriteExt};
 use uuid::Uuid;
 use chrono::{DateTime, Local};
 
 use crate::managers::logging::LoggingManager;
-use std::collections::HashMap;
-use std::process::exit;
-use tokio::fs::{File, OpenOptions};
-use tokio::io::{Error, AsyncWriteExt};
-use std::io::Write;
 
 const RESET: &str = "\x1b[0m";
 const FG_RED: &str = "\x1b[31m";

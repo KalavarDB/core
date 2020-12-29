@@ -1,16 +1,18 @@
-use crate::managers::connections::connection_manager::ConnectionManager;
-use crate::managers::config::ConfigManager;
-use std::collections::HashMap;
-use crate::managers::logging::LoggingManager;
-use crate::managers::storage::StorageManager;
-use tokio::sync::broadcast::{Sender, Receiver, channel};
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
-use crate::managers::connections::connection::Connection;
-use tokio::net::TcpListener;
 use crate::errors::ErrorMap::*;
+use crate::core::utils::connection_handling::api::opcode_parser::OpCodes::*;
+use crate::managers::{
+    connections::connection_manager::ConnectionManager,
+    config::ConfigManager,
+    logging::LoggingManager,
+    storage::StorageManager,
+    connections::connection::Connection
+};
+
+use tokio::sync::broadcast::{Sender, Receiver, channel};
+use tokio::net::TcpListener;
 use tokio::time::{Instant, Duration};
 use jemalloc_ctl::{epoch, stats};
-use crate::core::utils::connection_handling::api::opcode_parser::OpCodes::*;
 
 impl ConnectionManager {
     pub async fn new(l: &mut LoggingManager, config: &ConfigManager, os: &str) -> ConnectionManager {
