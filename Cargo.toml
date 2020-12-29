@@ -3,13 +3,18 @@ name = "kalavar-core"
 version = "0.1.0"
 authors = ["fatalcenturion <tom.b.2k2@gmail.com>"]
 edition = "2018"
+description = "A fast, secure, and asynchrnous database system written in Rust"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tokio-bincode = "0.1.0"
 tokio = { version = "1.0.0", features = ["full"] }
 chrono = "0.4.19"
 uuid = { version = "0.8", features = ["v4"] }
 tokio-rustls = "0.22.0"
 ring = "0.16.19"
+jemalloc-ctl = "0.3.3"
+
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+jemallocator = "0.3.2"
+
