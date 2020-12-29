@@ -8,7 +8,6 @@ impl AsBytes for String {
     }
 }
 
-
 impl AsBytes for u8 {
     fn as_kv_bytes(&self) -> Vec<u8> {
         self.to_le_bytes().to_vec()
