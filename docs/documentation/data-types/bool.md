@@ -13,7 +13,7 @@ A binary value used to represent true (1) or false (0).
 
 ### Information
 - Maximum Length: 1 word
-- Encoding: binary
+- Encoding: Binary
 - Accepted Values: `True`, `False`
 
 ### Dangers:
