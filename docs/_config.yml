@@ -50,7 +50,7 @@ collections:
     permalink: "/documentation/queries"
     output: true
 
-just_the_cods:
+just_the_docs:
   collections:
     protocol:
       name: "Protocol Documentation"
@@ -60,3 +60,7 @@ just_the_cods:
       name: "Query Documentation"
       nav_exclude: false
       search_exclude: false
+
+
+ga_tracking: G-BCP5QK4JZY
+ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true by default)

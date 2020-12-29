@@ -6,7 +6,8 @@ pub enum ColumnType {
 
     // Byte Types
     Bool(u8),
-    // Bytea,
+    Byte,
+    BLOB(u64),
 
     // Numeric Types
     Integer8,
@@ -32,4 +33,14 @@ pub enum ColumnType {
 
     // Boundless Types
     Array(Box<ColumnType>, u64),
+
+    // Network Types
+    IPv4,
+    IPv6,
+    Mac,
+    Mac8,
+
+    // Timestamps
+    Timestamp,
+    NaiveTimestamp
 }
