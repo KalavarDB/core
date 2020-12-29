@@ -13,7 +13,7 @@ pub struct Database {
 }
 
 impl Database {
-    pub fn new<A: Into<String>>(name: A, self_backing: File, record_backing: File, tables: Vec<(String, Table)>) -> Database {
+    pub fn new<A: Into<String>>(name: A, self_backing: File, record_backing: File) -> Database {
         let n = name.into();
         Database {
             backing: self_backing,

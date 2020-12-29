@@ -33,6 +33,7 @@ pub enum ColumnType {
 
     // Boundless Types
     Array(Box<ColumnType>, u64),
+    Enum(String),
 
     // Network Types
     IPv4,
@@ -44,3 +45,4 @@ pub enum ColumnType {
     Timestamp,
     NaiveTimestamp
 }
+

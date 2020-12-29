@@ -6,3 +6,4 @@ pub mod query_result;
 pub mod column;
 pub mod row;
 pub mod connection_protocol;
+pub mod as_bytes;

@@ -8,6 +8,7 @@ use crate::managers::{
     connections::connection_manager::ConnectionManager,
     config::ConfigManager,
 };
+use crate::core_structures::as_bytes::AsBytes;
 
 mod managers;
 mod implementors;
@@ -21,5 +22,8 @@ async fn main() {
     let mut logger = LoggingManager::new();
     let config_manager = ConfigManager::new(&mut logger, OS).await;
     let mut connection_manager = ConnectionManager::new(&mut logger, &config_manager, OS).await;
+    let test_string = "Hello, World!".to_string();
+    logger.debug_message(&test_string).await;
+    logger.debug(&test_string.as_kv_bytes()).await;
     connection_manager.connect(&logger).await;
 }

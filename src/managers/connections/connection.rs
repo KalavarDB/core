@@ -13,3 +13,9 @@ pub struct Connection {
     pub receiver: Receiver<ConnectionProtocolMessage>,
     pub transmitter: Sender<ConnectionProtocolMessage>
 }
+
+impl Connection {
+    pub async fn read_incoming(&mut self) /*-> Result<ConnectionProtocolMessage>*/ {
+
+    }
+}
