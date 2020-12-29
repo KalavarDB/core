@@ -21,7 +21,7 @@ nav_order: 1
 |7|Hello|Server|Client|A payload defining the key and iv to use to encrypt the user credentials of the Opcode 8 payload|
 |8|Authenticate|Client|Server|A payload defining the username and password of the user attempting to log into the database. should be encrypted using the information provided through Opcode 7|
 |9|Ready|Server|Client|Information pertaining to the logged in user. Sent upon the accepting of a valid Opcode 8 payload|
-|10|Connect||Server|Server|Sent internally to the server to inform it that a new connection has been received and accepted, and that it should provide details accordingly|
+|10|Connect|Server|Server|Sent internally to the server to inform it that a new connection has been received and accepted, and that it should provide details accordingly|
 |11|Reserved|N/A|N/A|N/A|
 |12|Reserved|N/A|N/A|N/A|
 |13|Reserved|N/A|N/A|N/A|
