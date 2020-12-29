@@ -6,6 +6,7 @@ use tokio::sync::broadcast::{Receiver, Sender};
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 
 pub struct Connection {
+    pub id: usize,
     pub remote: SocketAddr,
     pub stream: TcpStream,
     pub logger: LoggingManager,

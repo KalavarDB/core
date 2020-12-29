@@ -10,14 +10,14 @@ pub enum OpCodes {
     Hello,           // 07
     Authenticate,    // 09
     Ready,           // 10
-    // Reserved      // 11
+    Connect,         // 11
     // Reserved      // 12
     // Reserved      // 13
     // Reserved      // 14
     // Reserved      // 15
     // Reserved      // 16
     // Reserved      // 17
-    // Reserved      // 18
+    MemUse,          // 18
     Terminate,       // 19
     PayloadTamper,   // 20
 }

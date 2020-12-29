@@ -7,8 +7,11 @@ pub async fn handle(mut con: Connection) {
     loop {
         let response = con.receiver.recv().await;
         if response.is_ok() {
-            let incoming = con.read_incoming().await;
-            // con.transmitter.send(ConnectionProtocolMessage::pong());
+            con.logger.debug_pretty(response.unwrap).await;
+            //
+            // let incoming = con.read_incoming().await;
+            //
+            // // con.transmitter.send(ConnectionProtocolMessage::pong());
         } else {
             println!("error: {}", response.unwrap_err())
         }

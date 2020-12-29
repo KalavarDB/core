@@ -7,6 +7,6 @@ pub struct ConnectionManager{
     pub listener: Option<TcpListener>,
     pub port: u32,
     pub addr: String,
-    pub connections: HashMap<usize, Connection>,
+    pub connections: usize,
     pub dbm: StorageManager
 }
