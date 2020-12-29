@@ -4,14 +4,14 @@ layout: default
 title: Timestamp
 parent: Data Types
 grand_parent: Documentation
-nav_order: 19
+nav_order: 20
 ---
 
 # Timestamp
 Stores a timestamp for future reference
 
 ### Information
-- Format: `TZ-YYYYMM DD-HH:MM:SS.xxx`
+- Format: `TZ-YYYY MM DD-HH:MM:SS.xxx`
 - Encoding: Binary
 
 ### Breakdown
