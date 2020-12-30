@@ -1,3 +1,5 @@
+use orion::aead::*;
+
 pub trait AsBytes {
     fn as_kv_bytes(&self) -> Vec<u8>;
 }
@@ -89,5 +91,12 @@ impl<T: AsBytes> AsBytes for Vec<T> {
         }
 
         bytes
+    }
+}
+
+
+impl AsBytes for SecretKey {
+    fn as_kv_bytes(&self) -> Vec<u8> {
+        self.unprotected_as_bytes().to_vec()
     }
 }

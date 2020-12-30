@@ -6,13 +6,16 @@ use crate::managers::{
     config::ConfigManager,
     logging::LoggingManager,
     storage::StorageManager,
-    connections::connection::Connection
+    connections::connection::Connection,
 };
 
 use tokio::sync::broadcast::{Sender, Receiver, channel};
 use tokio::net::TcpListener;
 use tokio::time::{Instant, Duration};
 use jemalloc_ctl::{epoch, stats};
+use std::collections::HashMap;
+use tokio::task::JoinHandle;
+use std::sync::Arc;
 
 impl ConnectionManager {
     pub async fn new(l: &mut LoggingManager, config: &ConfigManager, os: &str) -> ConnectionManager {
@@ -44,6 +47,8 @@ impl ConnectionManager {
                                         let used = payload.inner.2.unwrap().2;
                                         proclog.debug_message(format!("Memory usage: {:.1$}%", used, 3)).await;
                                     }
+                                    Disconnect => {}
+                                    Connect => {}
                                     _ => {
                                         proclog.debug_pretty(&payload).await;
                                     }
@@ -75,9 +80,10 @@ impl ConnectionManager {
                 let temp_transmitter: Sender<ConnectionProtocolMessage> = transmitter.clone();
                 let temp_receiver: Receiver<ConnectionProtocolMessage> = transmitter.subscribe();
                 self.connections += 1;
-                let connection = Connection::new(self.connections, &logger, stream.accept().await.unwrap(), temp_receiver, temp_transmitter).await;
-                tokio::spawn(async move {
+                let mut connection = Connection::new(self.connections, &logger, stream.accept().await.unwrap(), temp_receiver, temp_transmitter).await;
+                let task = tokio::spawn(async move {
                     connection.transmitter.send(ConnectionProtocolMessage::new_con(&connection.id));
+                    connection.stream.init().await;
                     crate::core::utils::connection_handling::handle(connection).await
                 });
             }

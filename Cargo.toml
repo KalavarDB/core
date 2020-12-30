@@ -12,7 +12,7 @@ tokio = { version = "1.0.0", features = ["full"] }
 chrono = "0.4.19"
 uuid = { version = "0.8", features = ["v4"] }
 tokio-rustls = "0.22.0"
-ring = "0.16.19"
+orion = "0.15.5"
 jemalloc-ctl = "0.3.3"
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]
