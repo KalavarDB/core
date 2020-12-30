@@ -11,12 +11,13 @@ impl Connection {
         logger.debug_message(format!("Incoming connection from {}", remote.ip())).await;
         Connection {
             id,
+            opened: Instant::now(),
             remote,
             stream,
             logger: logger.clone(),
             last_ping: Instant::now(),
             receiver,
-            transmitter
+            transmitter,
         }
     }
 }

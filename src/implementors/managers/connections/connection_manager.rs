@@ -78,7 +78,7 @@ impl ConnectionManager {
                 let connection = Connection::new(self.connections, &logger, stream.accept().await.unwrap(), temp_receiver, temp_transmitter).await;
                 tokio::spawn(async move {
                     connection.transmitter.send(ConnectionProtocolMessage::new_con(&connection.id));
-                    crate::core::utils::connection_handling::handle(connection)
+                    crate::core::utils::connection_handling::handle(connection).await
                 });
             }
         } else {
