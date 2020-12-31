@@ -2,7 +2,7 @@
 has_children: false
 layout: default
 parent: Dev Logs
-title: Latest 
+title: Posts 
 nav_order: 1
 ---
 # Devlog #1
