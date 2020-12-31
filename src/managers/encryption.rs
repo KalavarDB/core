@@ -11,9 +11,8 @@ pub struct EncryptionManager {
 
 impl EncryptionManager {
     pub fn new(stream: TcpStream) -> EncryptionManager {
-        let key = SecretKey::default();
         EncryptionManager {
-            key,
+            key: SecretKey::default(),
             stream
         }
     }
@@ -22,8 +21,12 @@ impl EncryptionManager {
         let k = self.key.as_kv_bytes();
         let ciphertext = seal(&self.key, k.as_slice());
         if ciphertext.is_ok() {
+            let payload = ciphertext.unwrap();
+            println!("key transmitted");
+
             let mut writer = BufWriter::new(&mut self.stream);
-            writer.write_all(ciphertext.unwrap().as_slice()).await;
+            writer.write_all(payload.as_slice()).await;
+            writer.write_all(b"\n").await;
             writer.flush().await;
         }
     }
@@ -36,7 +39,7 @@ impl EncryptionManager {
             writer.flush().await;
         }
     }
-    // pub fn read(&mut self, reader: &mut BufReader<TcpStream>) {
-    //     // let data = open(&self.key, )
-    // }
+    pub fn read(&mut self, reader: &mut BufReader<TcpStream>) {
+        // let data = open(&self.key, )
+    }
 }
