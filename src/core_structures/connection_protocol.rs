@@ -30,7 +30,7 @@ impl ConnectionProtocolMessage {
     pub fn new_con(id:&usize ) -> ConnectionProtocolMessage {
         ConnectionProtocolMessage {
             recipient: 0,
-            sender: id.clone(),
+            sender: *id,
             inner_type: DataType::String,
             inner: (None, None, None),
             opcode: OpCodes::Connect,

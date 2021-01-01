@@ -24,6 +24,7 @@ pub enum ColumnType {
     // Identifier Types
     Snowflake(u64),
     UUID,
+    SonyFlake(u64),
 
     // Color Types
     RGB,

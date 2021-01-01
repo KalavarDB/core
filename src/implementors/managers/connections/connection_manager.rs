@@ -8,12 +8,9 @@ use crate::managers::{
 };
 
 use jemalloc_ctl::{epoch, stats};
-use std::collections::HashMap;
-use std::sync::Arc;
 use tokio::net::TcpListener;
 use tokio::sync::broadcast::{channel, Receiver, Sender};
-use tokio::task::JoinHandle;
-use tokio::time::{Duration, Instant};
+use tokio::time::Duration;
 
 impl ConnectionManager {
     pub async fn new(

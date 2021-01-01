@@ -112,8 +112,7 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
             let text: String = text_result.unwrap();
             let lines: Vec<&str> = text.split(LINE_ENDING).collect();
             for line in lines {
-                if line.len() > 0 {
-                    if line.as_bytes()[0] != b"#"[0] && line.contains("=") {
+                    if line.len() > 0 && line.as_bytes()[0] != b"#"[0] && line.contains("=") {
                         let parts: Vec<&str> = line.split("=").collect();
                         if parts.len() == 2 {
                             let key = parts[0];
@@ -186,7 +185,7 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                                 _ => {}
                             }
                         }
-                    }
+                    
                 }
             }
         } else {
@@ -210,6 +209,6 @@ const BASE_CONFIG: &str = "# This is the default, automatically generated config
 threadcount=10";
 
 #[cfg(windows)]
-const LINE_ENDING: &'static str = "\r\n";
+const LINE_ENDING: &str = "\r\n";
 #[cfg(not(windows))]
-const LINE_ENDING: &'static str = "\n";
+const LINE_ENDING: &str = "\n";
