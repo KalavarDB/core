@@ -22,7 +22,7 @@ pub async fn handle(mut con: Connection) {
             let mut m = ConnectionProtocolMessage::new_con(&con.id);
             m.opcode = OpCodes::Disconnect;
             con.transmitter.send(m);
-            con.stream.stream.shutdown();
+            con.stream.stream.shutdown().await;
             break;
         }
 

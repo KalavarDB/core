@@ -22,12 +22,13 @@ impl EncryptionManager {
         let ciphertext = seal(&self.key, k.as_slice());
         if ciphertext.is_ok() {
             let payload = ciphertext.unwrap();
-            println!("key transmitted");
+            // println!("{:#?}", payload);
+            println!("{} bytes", payload.len());
 
             let mut writer = BufWriter::new(&mut self.stream);
             writer.write_all(payload.as_slice()).await;
-            writer.write_all(b"\n").await;
             writer.flush().await;
+            println!("key transmitted");
         }
     }
 
