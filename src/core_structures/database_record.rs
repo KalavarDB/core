@@ -16,9 +16,16 @@ impl DatabaseRecord {
     pub fn new(name: String, backing: String) -> DatabaseRecord {
         DatabaseRecord {
             name,
-            tables: Default::default(),
+            tables: HashMap::new(),
             backing,
             backing_is_dir: false
         }
     }
+
+    pub fn read_table(&self, name: &str) {
+        if self.tables.contains_key(name) {
+
+        }
+    }
+
 }

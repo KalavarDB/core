@@ -62,7 +62,7 @@ impl ConnectionManager {
                             //Payload is not for the protocol handler, thus should be ignored
                         }
                     } else {
-                        proclog.error(incoming.unwrap_err(), EXXX).await;
+                        proclog.error(incoming.unwrap_err(), GXXX).await;
                     }
                 }
             });
@@ -98,7 +98,7 @@ impl ConnectionManager {
                 });
             }
         } else {
-            logger.fatal(x.unwrap_err(), EXXX, 1).await;
+            logger.fatal(x.unwrap_err(), GXXX, 1).await;
         }
     }
 }

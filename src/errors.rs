@@ -1,18 +1,49 @@
-use std::fmt::{Display, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 use std::fmt;
+use std::error::Error;
 
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorMap {
-    EXXX, // Unknown error, needs to be mapped to error code
-    E101, // Error connecting to database
-    E201, // Failed to generate required files (permissions error)
-    E202, // Failed to determine config directory
-    E203, // Failed to determine log directory
+    // General Errors
+    GXXX, // Unknown error, needs to be mapped to error code
+    G101, // Error connecting to database
+    G201, // Failed to generate required files (permissions error)
+    G202, // Failed to determine config directory
+    G203, // Failed to determine log directory
     E204, // Invalid configuration file
+
+    // Connection Errors
+
+
+    // Query Errors
+
+
+    // Drive Errors
+
 }
 
 impl Display for ErrorMap {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "{:?}", self)
     }
+}
+
+
+struct GeneralError {
+   code: ErrorMap,
+}
+
+impl Display for GeneralError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let msg = match self.code
+    }
+}
+
+impl Debug for GeneralError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    }
+}
+
+impl Error for GeneralError {
+
 }

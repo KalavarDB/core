@@ -24,8 +24,8 @@ impl ConfigManager {
             }
             _ => {
                 logger.debug_message(format!("OS: {} is un-recognized", os)).await;
-                logger.error("Unknown operating system", E202).await;
-                logger.fatal("Exiting gracefully", E202, 1).await;
+                logger.error("Unknown operating system", G202).await;
+                logger.fatal("Exiting gracefully", G202, 1).await;
             }
         }
 
@@ -46,7 +46,7 @@ impl ConfigManager {
                         if write_result.is_ok() {
                             manager = parse_config(logger, manager, &mut inner).await
                         } else {
-                            logger.error(format!("Unable to write to file '{}'", &manager.config_path), E201).await
+                            logger.error(format!("Unable to write to file '{}'", &manager.config_path), G201).await
                         }
                     } else {
                         match file.unwrap_err().kind() {
@@ -66,10 +66,10 @@ impl ConfigManager {
                                         match e.kind() {
                                             ErrorKind::PermissionDenied => {
                                                 logger.info("You can fix the problem below by running the program using Super User (sudo)").await;
-                                                logger.fatal(e, E201, 1).await;
+                                                logger.fatal(e, G201, 1).await;
                                             }
                                             _ => {
-                                                logger.fatal(e, EXXX, 1).await;
+                                                logger.fatal(e, GXXX, 1).await;
                                             }
                                         }
                                     }
@@ -78,22 +78,22 @@ impl ConfigManager {
                                     match e.kind() {
                                         ErrorKind::PermissionDenied => {
                                             logger.info("You can fix the problem below by running the program using Super User (sudo)").await;
-                                            logger.fatal(e, E201, 1).await;
+                                            logger.fatal(e, G201, 1).await;
                                         }
                                         _ => {
-                                            logger.fatal(e, EXXX, 1).await;
+                                            logger.fatal(e, GXXX, 1).await;
                                         }
                                     }
                                 }
                             }
                             _ => {
-                                logger.error(err, EXXX).await;
+                                logger.error(err, GXXX).await;
                             }
                         }
                     }
                 }
                 _ => {
-                    logger.error(err, EXXX).await;
+                    logger.error(err, GXXX).await;
                 }
             }
         }
@@ -189,14 +189,14 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
                 }
             }
         } else {
-            l.error(text_result.unwrap_err(), EXXX).await;
+            l.error(text_result.unwrap_err(), GXXX).await;
             l.debug_message(&m.config_path).await;
-            l.fatal("Invalid config file content, exiting gracefully", EXXX, 1).await;
+            l.fatal("Invalid config file content, exiting gracefully", GXXX, 1).await;
         }
     } else {
-        l.error(read_result.unwrap_err(), EXXX).await;
+        l.error(read_result.unwrap_err(), GXXX).await;
         l.debug_message(&m.config_path).await;
-        l.fatal("Unable to locate config file, exiting gracefully", EXXX, 1).await;
+        l.fatal("Unable to locate config file, exiting gracefully", GXXX, 1).await;
     }
 
     m
