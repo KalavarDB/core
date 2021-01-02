@@ -14,6 +14,8 @@ uuid = { version = "0.8", features = ["v4"] }
 tokio-rustls = "0.22.0"
 orion = "0.15.5"
 jemalloc-ctl = "0.3.3"
+serde = "1.0.118"
+bincode = "1.3.1"
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]
 jemallocator = "0.3.2"
