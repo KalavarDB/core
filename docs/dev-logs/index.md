@@ -6,7 +6,7 @@ nav_order: 2
 ---
 # Development Log - Week 2 {#week-2}
 
-## This post was written by <img src="https://avatars3.githubusercontent.com/u/63651404?s=60&v=4" width="20px" style="border-radius:25px;">  [Thomas B.](https://github.com/fatalcenturion) 
+## This post was written by [<img src="https://avatars3.githubusercontent.com/u/63651404?s=60&v=4" width="20px" style="border-radius:25px;">  Thomas B.](https://github.com/fatalcenturion) 
 ### Posted on Monday, January 4th 2021
 
 ## A busy week, and a few important milestones {#week-2-a-buys-week}
@@ -29,7 +29,7 @@ Like what you see? Star us on [GitHub](https://github.com/fatalcenturion/kalavar
 
 # Development Log - Week 1 {#week-1}
 
-## This post was written by <img src="https://avatars3.githubusercontent.com/u/63651404?s=60&v=4" width="20px" style="border-radius:25px;">  [Thomas B.](https://github.com/fatalcenturion) 
+## This post was written by [<img src="https://avatars3.githubusercontent.com/u/63651404?s=60&v=4" width="20px" style="border-radius:25px;">  Thomas B.](https://github.com/fatalcenturion) 
 ### Posted on Monday, December 28th 2020
 
 ## Meet Kalavar {#week-1-meet-kalavar}
