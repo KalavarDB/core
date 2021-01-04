@@ -15,6 +15,7 @@ Stores a timestamp for future reference
 - Encoding: Binary
 
 ### Breakdown
+
 |Example|Timezone|Year|Month|Day|Hour|Min|Sec|extended|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |UTC+0-2021 01 01-00:00:00.000 |UTC+0|2021|Jan|01|0|0|0|000|
