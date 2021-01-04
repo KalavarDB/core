@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 use crate::core_structures::row::Row;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct RowRecord {
     pub inner: Row,
     pub start: u64,
