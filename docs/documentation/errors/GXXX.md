@@ -1,7 +1,7 @@
 ---
 has_children: false
 layout: default
-title: EXXX
+title: GXXX
 parent: Errors
 grand_parent: Documentation
 nav_order: 1
@@ -12,7 +12,7 @@ nav_order: 1
 An error occurred, but we dont have a definition for it.
 
 ### Type:
-Unknown
+General/Unknown
 
 ### Solutions:
 Not available

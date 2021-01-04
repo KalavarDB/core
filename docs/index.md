@@ -3,12 +3,12 @@ layout: default
 title: Home
 nav_order: 1
 ---
-![Discord](https://img.shields.io/discord/792527699771129856) ![GitHub issues](https://img.shields.io/github/issues-raw/fatalcenturion/kalavar-core) ![GitHub](https://img.shields.io/github/license/fatalcenturion/kalavar-core) ![GitHub Repo stars](https://img.shields.io/github/stars/fatalcenturion/kalavar-core) ![GitHub watchers](https://img.shields.io/github/watchers/fatalcenturion/kalavar-core) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/fatalcenturion/kalavar-core/latest?sort=semver)
+[![Discord](https://img.shields.io/discord/792527699771129856)](https://discord.gg/jUGS8UsgUF) [![GitHub issues](https://img.shields.io/github/issues-raw/fatalcenturion/kalavar-core)](https://github.com/fatalcenturion/kalavar-core/issues) ![GitHub](https://img.shields.io/github/license/fatalcenturion/kalavar-core) [![GitHub Repo stars](https://img.shields.io/github/stars/fatalcenturion/kalavar-core)](https://github.com/fatalcenturion/kalavar-core/stargazers) [![GitHub watchers](https://img.shields.io/github/watchers/fatalcenturion/kalavar-core)](https://github.com/fatalcenturion/kalavar-core/watchers) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/fatalcenturion/kalavar-core/latest?sort=semver)
 
 Kalavar is a project attempting to bring a fast, efficient, secure, and __asynchronous__ query model to the modern database system. It is designed to be quick, and secure, from the very beginning without any of that additional configuration mess.
 
 ## Why Asynchronous?
-Frankly, SQL is old, and outdate, it has been in need of a refresh for a long time, and we decided to refresh it. So, we developed KQL. An exciting refreshment of the Structured Query Language used by the biggest databases, modeled to be used in an asynchronous environment with minimal pick up time.
+Frankly, SQL is old, and outdated, it has been in need of a refresh for a long time, and we decided to refresh it. So, we developed KQL. An exciting refreshment of the Structured Query Language used by the biggest databases, modeled to be used in an asynchronous environment with minimal pick up time.
 
 ## What is KQL?
 KQL is our in-house query language. It is designed to be __asynchronous__ and provide a powerful, yet efficient, and easy to follow query structure.
