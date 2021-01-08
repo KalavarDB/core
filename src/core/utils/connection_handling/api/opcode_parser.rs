@@ -1,3 +1,5 @@
+// The enumerator defining the different operation codes, and their respective identifiers
+// Format: Name // ID
 #[derive(Debug, Clone)]
 pub enum OpCodes {
     Normal,          // 00

@@ -1,9 +1,13 @@
+// Bit count definitions, used in storage calculations
 const BIT: u64 = 1;
 const BYTE: u64 = 8 * BIT;
 const KB: u64 = 1024 * BYTE;
 const MB: u64 = 1024 * KB;
 const GB: u64 = 1024 * MB;
 
+// An enumerator which defines the available column types
+// I recommend reading the documentation at the link below for details on them all:
+// https://kalavar.cf/documentation/data-types/
 #[derive(Debug, Clone)]
 pub enum ColumnTypeEnum {
     // Text Types
@@ -53,6 +57,7 @@ pub enum ColumnTypeEnum {
     NaiveTimestamp,
 }
 
+// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type
 #[derive(Debug, Clone)]
 pub struct ColumnType {
     inner_type: ColumnTypeEnum,
@@ -61,8 +66,11 @@ pub struct ColumnType {
     value_type: Option<ColumnTypeEnum>,
 }
 
+
 impl ColumnType {
+    // Helper method to generate a new column
     pub fn new(inner: ColumnTypeEnum, value_type: Option<ColumnTypeEnum>, length: u64) -> ColumnType {
+        // Build a default column entry
         let mut t = ColumnType {
             inner_type: inner.clone(),
             min_len: 0,
@@ -70,6 +78,7 @@ impl ColumnType {
             value_type,
         };
 
+        // Set the values of that entry, as well as returning it to the caller automatically
         return match inner {
             ColumnTypeEnum::String | ColumnTypeEnum::JSON | ColumnTypeEnum::BLOB => {
                 t.min_len = BYTE;

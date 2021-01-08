@@ -6,6 +6,9 @@ use crate::core::utils::connection_handling::api::opcode_parser::OpCodes;
 
 pub mod api;
 
+// Utility function to handle the incoming connections and their appropriate methods
+/// # The following content is undocumented due to not being ready for documentation at this time.
+/// # You are welcome to attempt to make sense of it though.
 pub async fn handle(mut con: Connection) {
     let broken = false;
     let mut status = con.stream.stream.readable().await;
