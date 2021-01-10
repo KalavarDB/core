@@ -22,12 +22,11 @@ use crate::managers::{
 // The primary function of the program, called at runtime to start the server
 #[tokio::main]
 async fn main() {
-    // Print the headers for the log table to the system
-    println!(" LEVEL > CODE >       TIME STAMP       > MESSAGE");
-
     // Instantiate a new instance of the logging manager
     // This is important as the program requires this at all levels for debugging
     let mut logger = LoggingManager::new();
+
+    logger.init();
 
     // Instantiate a new instance of the config manager
     // Used to parse the configuration file into something the server can make use of
