@@ -35,12 +35,31 @@ struct GeneralError {
 
 impl Display for GeneralError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        let msg = match self.code
+        let msg = match self.code {
+            ErrorMap::GXXX => "GXXX",
+            ErrorMap::G101 => "G101",
+            ErrorMap::G201 => "G201",
+            ErrorMap::G202 => "G202",
+            ErrorMap::G203 => "G203",
+            ErrorMap::E204 => "G204",
+        };
+
+        write!(f, "{}", msg)
     }
 }
 
 impl Debug for GeneralError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let msg = match self.code {
+            ErrorMap::GXXX => "GXXX",
+            ErrorMap::G101 => "G101",
+            ErrorMap::G201 => "G201",
+            ErrorMap::G202 => "G202",
+            ErrorMap::G203 => "G203",
+            ErrorMap::E204 => "G204",
+        };
+
+        write!(f, "{}", msg)
     }
 }
 

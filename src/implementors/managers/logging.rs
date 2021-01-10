@@ -51,6 +51,11 @@ impl LoggingManager {
         man
     }
 
+    // Prints headers for log table
+    pub async fn init(&self) {
+        // Print the headers for the log table to the system
+        println!(" LEVEL > CODE >       TIME STAMP       > MESSAGE");
+    }
 
     // Log data to the console and the log file with the appropriate escapes and modifications for a FATAL ERROR
     // Forces all ongoing tasks to exit, and quits the program itself
