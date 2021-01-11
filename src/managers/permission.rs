@@ -1,4 +1,6 @@
 use std::collections::HashMap;
+use std::fmt::Display;
+use serde::export::Formatter;
 
 // Describes the permissions <user> has for any given database or table
 pub struct PermissionManager {
@@ -30,4 +32,19 @@ pub struct TablePermissions {
     pub remove_columns: bool,
     pub change_columns: bool,
     pub read: bool,
+}
+
+impl Display for PermissionManager {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+
+        for (name, db) in self.inner {
+            write!(f, "{}", name);
+
+            for (name, table) in db.access {
+                write
+            }
+        }
+
+        write!(f, "\n")
+    }
 }
