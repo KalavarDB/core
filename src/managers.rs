@@ -4,3 +4,5 @@ pub(crate) mod connections;
 pub(crate) mod storage;
 pub(crate) mod encryption;
 pub(crate) mod analytics;
+pub(crate) mod authentication;
+pub(crate) mod permission;
