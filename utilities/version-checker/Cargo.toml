@@ -12,3 +12,5 @@ semver = "0.11.0"
 regex = "1.4.3"
 serde = "1.0.118"
 reqwest = { version = "0.11", features = ["blocking", "json"] }
+toml = "0.5.8"
+zip = "0.5.9"
