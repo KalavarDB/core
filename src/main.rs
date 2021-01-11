@@ -2,13 +2,11 @@
 /// # That also means that this code should not be taken as final, and any content within is subject to change without notice.
 /// # For further information, I recommend looking at the documentation at the link below.
 /// # Docs: https://kalavar.cf/documentation
-
 // Used by many structures and methods within the program to determine where files are located
 use std::env::consts::OS;
 
+
 // The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.
-// If a target is not supported by jemalloc we cant compile for it
-#[cfg(not(target_env = "msvc"))]
 #[global_allocator]
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
