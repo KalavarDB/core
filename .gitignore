@@ -7,3 +7,4 @@ chatlogs.md
 /--watch
 /docs/.jekyll-cache
 /keys
+/utilities/*/target
