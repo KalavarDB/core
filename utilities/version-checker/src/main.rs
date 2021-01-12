@@ -62,16 +62,22 @@ fn main() {
                     if parts.len() > 1 {
                         let file = parts[1];
                         if file != "" {
-                            println!("crate: {} - Advisory: {}", crate_name, file);
+                            if advisories.contains_key(crate_name) {
+                                advisories.get_mut(crate_name).unwrap().push(file);
+                            } else {
+                                advisories.insert(crate_name, vec![file]);
+                            }
                         }
                     }
                 }
                 // advisories.
             }
 
+            println!("Total advisories: {}", advisories.len());
+
             let client = crates_io_api::SyncClient::new(
                 "my_bot (help@my_bot.com)",
-                std::time::Duration::from_millis(200),
+                std::time::Duration::from_millis(100),
             ).unwrap();
             let handle = File::open("./Cargo.toml");
 
@@ -90,7 +96,7 @@ fn main() {
                         } else if found_deps == true {
                             if line.contains("{") {
                                 let components: Vec<&str> = line.split(" = ").collect();
-                                let container = components[0];
+                                let mut container = components[0].to_string();
 
                                 let pattern = Regex::new(r#"[\d.]+"#).unwrap();
 
@@ -103,36 +109,66 @@ fn main() {
 
                                 let vfull: String = pieces.join(".");
 
-                                let version = Version::from_str(vfull.as_str()).unwrap();
+                                let version = Version::parse(vfull.as_str()).unwrap();
 
-                                let crate_res: Result<CrateResponse, Error> = client.get_crate(container);
+                                let crate_res: Result<CrateResponse, Error> = client.get_crate(container.as_str());
                                 if crate_res.is_ok() {
                                     let response = crate_res.unwrap();
-                                    let rcore = response.versions.first().unwrap().clone().num;
+                                    let mut rcore = "0.0.0".to_string();
+                                    for ver in response.versions {
+                                        let mut vnum = ver.num;
+
+                                        let mut rpieces = vnum.split(".").collect::<Vec<&str>>();
+
+                                        if rpieces.len() < 3 {
+                                            rpieces.push("0");
+                                        }
+                                        vnum = rpieces.join(".");
+                                        let parsed = Version::parse(vnum.as_str()).unwrap();
+                                        let core = Version::parse(rcore.as_str()).unwrap();
+
+                                        if parsed > core {
+                                            rcore = vnum;
+                                        }
+                                    }
                                     let mut rpieces = rcore.split(".").collect::<Vec<&str>>();
 
                                     if rpieces.len() < 3 {
                                         rpieces.push("0");
                                     }
-                                    let rfull: String = pieces.join(".");
-                                    let remote = Version::from_str(rfull.as_str()).unwrap();
+                                    let rfull: String = rpieces.join(".");
+                                    let remote = Version::parse(rfull.as_str()).unwrap();
 
-                                    let mut color = "\x1b[0m";
-
-                                    if remote > version {
-                                        color = "\x1b[31m";
-                                        ood += 1
-                                    } else {
-                                        utd += 1;
+                                    while container.len() < 44 {
+                                        container = format!("{} ", container);
                                     }
 
-                                    println!("{} - {}{}\x1b[0m", container, color, version);
+                                    let mut color = "\x1b[32m";
+                                    if remote > version {
+                                        color = "\x1b[31m";
+                                        if advisories.contains_key(container.as_str()) {
+                                            println!("Δ{} {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version, remote);
+                                        } else {
+                                            println!("Δ0 {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", container, color, version, remote);
+                                        }
+                                        ood += 1
+                                    } else {
+                                        if advisories.contains_key(container.as_str()) {
+                                            println!("Δ{} {} - {}{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version);
+                                        } else {
+                                            println!("Δ0 {} - {}{}\x1b[0m", container, color, version);
+                                        }
+                                        if advisories.contains_key(container.as_str()) {
+                                            println!("{} - {}{}\x1b[0m", container, color, version);
+                                        }
+                                        utd += 1;
+                                    }
                                 } else {
                                     println!("{}* - \x1b[35m{}\x1b[0m", container, version);
                                 }
                             } else {
                                 let components: Vec<&str> = line.split(" = ").collect();
-                                let container = components[0];
+                                let mut container = components[0].to_string();
 
                                 let vcore = components[1].split("\"").collect::<Vec<&str>>();
                                 let mut pieces = vcore[1].split(".").collect::<Vec<&str>>();
@@ -143,29 +179,60 @@ fn main() {
 
                                 let vfull: String = pieces.join(".");
 
-                                let version = Version::from_str(vfull.as_str()).unwrap();
-                                let crate_res: Result<CrateResponse, Error> = client.get_crate(container);
+                                let version = Version::parse(vfull.as_str()).unwrap();
+                                let crate_res: Result<CrateResponse, Error> = client.get_crate(container.as_str());
                                 if crate_res.is_ok() {
                                     let response = crate_res.unwrap();
-                                    let rcore = response.versions.first().unwrap().clone().num;
+                                    let mut rcore = "0.0.0".to_string();
+                                    for ver in response.versions {
+                                        let mut vnum = ver.num;
+
+                                        let mut rpieces = vnum.split(".").collect::<Vec<&str>>();
+
+                                        if rpieces.len() < 3 {
+                                            rpieces.push("0");
+                                        }
+                                        vnum = rpieces.join(".");
+                                        let parsed = Version::parse(vnum.as_str()).unwrap();
+                                        let core = Version::parse(rcore.as_str()).unwrap();
+
+                                        if parsed > core {
+                                            rcore = vnum;
+                                        }
+                                    }
                                     let mut rpieces = rcore.split(".").collect::<Vec<&str>>();
 
                                     if rpieces.len() < 3 {
                                         rpieces.push("0");
                                     }
-                                    let rfull: String = pieces.join(".");
-                                    let remote = Version::from_str(rfull.as_str()).unwrap();
+                                    let rfull: String = rpieces.join(".");
+                                    let remote = Version::parse(rfull.as_str()).unwrap();
 
-                                    let mut color = "\x1b[0m";
 
-                                    if remote > version {
-                                        color = "\x1b[31m";
-                                        ood += 1
-                                    } else {
-                                        utd += 1;
+                                    while container.len() < 44 {
+                                        container = format!("{} ", container);
                                     }
 
-                                    println!("{} - {}{}\x1b[0m", container, color, version);
+                                    let mut color = "\x1b[32m";
+                                    if remote > version {
+                                        color = "\x1b[31m";
+                                        if advisories.contains_key(container.as_str()) {
+                                            println!("Δ{} {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version, remote);
+                                        } else {
+                                            println!("Δ0 {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", container, color, version, remote);
+                                        }
+                                        ood += 1
+                                    } else {
+                                        if advisories.contains_key(container.as_str()) {
+                                            println!("Δ{} {} - {}{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version);
+                                        } else {
+                                            println!("Δ0 {} - {}{}\x1b[0m", container, color, version);
+                                        }
+                                        if advisories.contains_key(container.as_str()) {
+                                            println!("{} - {}{}\x1b[0m", container, color, version);
+                                        }
+                                        utd += 1;
+                                    }
                                 } else {
                                     println!("{}* - \x1b[35m{}\x1b[0m", container, version);
                                 }
