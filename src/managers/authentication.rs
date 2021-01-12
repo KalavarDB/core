@@ -1,5 +1,6 @@
 use crate::managers::permission::PermissionManager;
 
+// A utility structure for managing authentication with the client
 pub struct AuthManager {
     pub permissions: PermissionManager,
     pub remote: String,

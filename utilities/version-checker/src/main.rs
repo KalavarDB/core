@@ -1,11 +1,9 @@
 use std::fs::{File, OpenOptions};
-use std::io::{Read, BufReader, Write};
+use std::io::{Read, Write};
 
 use reqwest::blocking::ClientBuilder;
 use regex::Regex;
 use semver::Version;
-use std::str::FromStr;
-use std::io::ErrorKind;
 use crates_io_api::{CrateResponse, Error};
 use std::process::exit;
 use std::collections::HashMap;
@@ -19,10 +17,10 @@ const LINE_ENDING: &str = "\n";
 // mod reference;
 
 fn main() {
-    let mut query = ClientBuilder::new().user_agent("Kalavar Version Utility v1.0 <Thomas B. | tom.b.2k2@gmail.com>").build().unwrap();
+    let query = ClientBuilder::new().user_agent("Kalavar Version Utility v1.0 <Thomas B. | tom.b.2k2@gmail.com>").build().unwrap();
 
     let mut dirbytes: Vec<u8> = Vec::new();
-    query.get("https://github.com/RustSec/advisory-db/archive/master.zip").send().unwrap().read_to_end(&mut dirbytes);
+    let _ = query.get("https://github.com/RustSec/advisory-db/archive/master.zip").send().unwrap().read_to_end(&mut dirbytes);
 
     let exe_dir = std::env::current_exe().unwrap().as_os_str().to_str().unwrap().to_string();
 
@@ -30,7 +28,7 @@ fn main() {
     home_dir_vec.pop();
     let path = format!("{}/security.zip", home_dir_vec.join("/"));
 
-    let mut e = OpenOptions::new().write(true).read(true).create(true).open(path.as_str());
+    let e = OpenOptions::new().write(true).read(true).create(true).open(path.as_str());
 
     if e.is_err() {
         match e.unwrap_err().kind() {
@@ -45,7 +43,7 @@ fn main() {
 
     let write_status = db.write_all(dirbytes.as_slice());
     if write_status.is_ok() {
-        db.flush();
+        let _ = db.flush();
 
         let repo = zip::read::ZipArchive::new(&mut db);
 
@@ -73,7 +71,7 @@ fn main() {
                 // advisories.
             }
 
-            println!("Total advisories: {}", advisories.len());
+            println!("\n");
 
             let client = crates_io_api::SyncClient::new(
                 "my_bot (help@my_bot.com)",
@@ -85,9 +83,11 @@ fn main() {
                 let (mut utd, mut ood, mut sav) = (0, 0, 0);
                 let mut file = handle.unwrap();
                 let mut buf = Vec::<u8>::new();
-                file.read_to_end(&mut buf);
+                let _ = file.read_to_end(&mut buf);
                 let content = String::from_utf8(buf).unwrap();
-
+                println!("======================> Crate Version Checker 0.1 <======================");
+                println!("Advisories  Crate                                        Version         ");
+                println!("=========================================================================");
                 let mut found_deps = false;
                 for line in content.split(LINE_ENDING) {
                     if line != "" {
@@ -100,7 +100,7 @@ fn main() {
 
                                 let pattern = Regex::new(r#"[\d.]+"#).unwrap();
 
-                                let mut vcore = pattern.captures(line).unwrap().iter().last().unwrap().unwrap().as_str();
+                                let vcore = pattern.captures(line).unwrap().iter().last().unwrap().unwrap().as_str();
                                 let mut pieces = vcore.split(".").collect::<Vec<&str>>();
 
                                 if pieces.len() < 3 {
@@ -139,6 +139,8 @@ fn main() {
                                     let rfull: String = rpieces.join(".");
                                     let remote = Version::parse(rfull.as_str()).unwrap();
 
+                                    let base_crate = container.clone();
+
                                     while container.len() < 44 {
                                         container = format!("{} ", container);
                                     }
@@ -146,20 +148,29 @@ fn main() {
                                     let mut color = "\x1b[32m";
                                     if remote > version {
                                         color = "\x1b[31m";
-                                        if advisories.contains_key(container.as_str()) {
-                                            println!("Δ{} {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version, remote);
+                                        if advisories.contains_key(base_crate.as_str()) {
+                                            let adv_tot = advisories.get(base_crate.as_str()).unwrap().len();
+                                            sav += adv_tot;
+                                            let mut adv_count = format!("\x1b[41m{}\x1b[0m", adv_tot.to_string());
+                                            while adv_count.len() < 19 {
+                                                adv_count = format!(" {}", adv_count);
+                                            }
+                                            println!("{}  {} {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", adv_count, container, color, version, remote);
                                         } else {
-                                            println!("Δ0 {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", container, color, version, remote);
+                                            println!("         \x1b[32m0\x1b[0m  {} {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", container, color, version, remote);
                                         }
                                         ood += 1
                                     } else {
-                                        if advisories.contains_key(container.as_str()) {
-                                            println!("Δ{} {} - {}{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version);
+                                        if advisories.contains_key(base_crate.as_str()) {
+                                            let adv_tot = advisories.get(base_crate.as_str()).unwrap().len();
+                                            sav += adv_tot;
+                                            let mut adv_count = format!("\x1b[41m{}\x1b[0m", adv_tot.to_string());
+                                            while adv_count.len() < 19 {
+                                                adv_count = format!(" {}", adv_count);
+                                            }
+                                            println!("{}  {} {}{}\x1b[0m", adv_count, container, color, version);
                                         } else {
-                                            println!("Δ0 {} - {}{}\x1b[0m", container, color, version);
-                                        }
-                                        if advisories.contains_key(container.as_str()) {
-                                            println!("{} - {}{}\x1b[0m", container, color, version);
+                                            println!("         \x1b[32m0\x1b[0m  {} {}{}\x1b[0m", container, color, version);
                                         }
                                         utd += 1;
                                     }
@@ -208,6 +219,7 @@ fn main() {
                                     let rfull: String = rpieces.join(".");
                                     let remote = Version::parse(rfull.as_str()).unwrap();
 
+                                    let base_crate = container.clone();
 
                                     while container.len() < 44 {
                                         container = format!("{} ", container);
@@ -216,20 +228,29 @@ fn main() {
                                     let mut color = "\x1b[32m";
                                     if remote > version {
                                         color = "\x1b[31m";
-                                        if advisories.contains_key(container.as_str()) {
-                                            println!("Δ{} {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version, remote);
+                                        if advisories.contains_key(base_crate.as_str()) {
+                                            let adv_tot = advisories.get(base_crate.as_str()).unwrap().len();
+                                            sav += adv_tot;
+                                            let mut adv_count = format!("\x1b[41m{}\x1b[0m", adv_tot.to_string());
+                                            while adv_count.len() < 19 {
+                                                adv_count = format!(" {}", adv_count);
+                                            }
+                                            println!("{}  {} {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", adv_count, container, color, version, remote);
                                         } else {
-                                            println!("Δ0 {} - {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", container, color, version, remote);
+                                            println!("         \x1b[32m0\x1b[0m  {} {}{}\x1b[0m -> \x1b[32m{}\x1b[0m", container, color, version, remote);
                                         }
                                         ood += 1
                                     } else {
-                                        if advisories.contains_key(container.as_str()) {
-                                            println!("Δ{} {} - {}{}\x1b[0m", advisories.get(container.as_str()).unwrap().len(), container, color, version);
+                                        if advisories.contains_key(base_crate.as_str()) {
+                                            let adv_tot = advisories.get(base_crate.as_str()).unwrap().len();
+                                            sav += adv_tot;
+                                            let mut adv_count = format!("\x1b[41m{}\x1b[0m", adv_tot.to_string());
+                                            while adv_count.len() < 19 {
+                                                adv_count = format!(" {}", adv_count);
+                                            }
+                                            println!("{}  {} {}{}\x1b[0m", adv_count, container, color, version);
                                         } else {
-                                            println!("Δ0 {} - {}{}\x1b[0m", container, color, version);
-                                        }
-                                        if advisories.contains_key(container.as_str()) {
-                                            println!("{} - {}{}\x1b[0m", container, color, version);
+                                            println!("         \x1b[32m0\x1b[0m  {} {}{}\x1b[0m", container, color, version);
                                         }
                                         utd += 1;
                                     }
@@ -240,10 +261,12 @@ fn main() {
                         }
                     }
                 }
-                println!("* Crate failed to return a version result");
-
+                println!("=========================================================================");
                 println!("Results: Up to date: {}   Updates available: {}   Security Advisories: {}", utd, ood, sav);
+                println!("=========================================================================");
                 println!("Total: {}", utd + ood);
+                println!("=========================================================================");
+                println!("* Crate failed to return a version result");
             } else {
                 println!("\x1b[41mFATAL ERROR\x1b[0m: Unable to locate Cargo.toml file")
             }

@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use std::fmt::Display;
-use serde::export::Formatter;
+use std::fmt::{Display, Formatter};
 
 // Describes the permissions <user> has for any given database or table
 pub struct PermissionManager {
