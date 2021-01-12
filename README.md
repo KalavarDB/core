@@ -10,18 +10,20 @@ You can view the current specifications and documentation [here](https://kalavar
 
 Whilst there are currently no active testing events ongoing at this time, you are welcome to clone this repository and launch the dev kit in your terminal. You can do so by running `bash test.sh`, where you will be greeted with the following menu:
 ```
+---------------------------------
        Kalavar Dev Kit V0.1      
 ---------------------------------
-1.   Show Dependencies
+1.   Check Dependencies
 2.   Build and run
 3. Δ Build and run as super user
 4.   Build and run tests
 5. Δ Purge target directory
-6.   Exit
+6.   Install Dependency Checker
+7.   Exit
 ---------------------------------
  Δ - requires SUDO priveleges
 ---------------------------------
-Enter your choice [1-6] : 
+Enter your choice [1-7] : 
 ```
 This dev kit is intended for use on unix systems, as that is what I use to develop and test Kalavar on, and this kit is primarily meant to make my life easier.
 
