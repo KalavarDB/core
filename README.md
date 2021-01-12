@@ -25,4 +25,6 @@ Enter your choice [1-6] :
 ```
 This dev kit is intended for use on unix systems, as that is what I use to develop and test Kalavar on, and this kit is primarily meant to make my life easier.
 
+> Note: The dev kit requires that you have Cargo in your PATH, and that you have Rust and all of it's dependencies installed correctly.
+
 If you have any feedback about the developer kit, or you want to ask for new commands, please open an issue with the "dev kit" tag.
