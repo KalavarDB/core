@@ -77,7 +77,8 @@ pub enum ColumnTypeEnum {
     IPv6,
     /// Simple MAC address type
     Mac,
-    // Mac8,
+    /// Mac8, currently unknown but PostgreSQL has it so it must be needed by *someone*
+    Mac8,
 
     // Timestamps
     /// A timestamp, prefixed with information about the timezone it is for to allow for conversion
