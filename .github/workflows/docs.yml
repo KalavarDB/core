@@ -17,20 +17,15 @@ jobs:
       RUSTDOCFLAGS: -Dbroken_intra_doc_links
       OPENVINO_SKIP_LINKING: 1
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
       with:
+        ref: main
         submodules: true
-    # Note that we use nightly Rust here to get intra-doc links which are a
-    # nightly-only feature right now.
     - uses: ./.github/actions/install-rust
       with:
-        # TODO (rust-lang/rust#79661): We are seeing an internal compiler error when
-        # building with the latest (2020-12-06) nightly; pin on a slightly older
-        # version for now.
-        toolchain: nightly-2020-11-29
-    - run: cargo doc --no-deps --all --exclude wasmtime-cli --exclude test-programs --exclude cranelift-codegen-meta
-    - run: cargo doc --package cranelift-codegen-meta --document-private-items
+        toolchain: nightly
+    - run: cargo doc --no-deps --document-private-items
     - uses: actions/upload-artifact@v1
       with:
         name: doc-api
-        path: target/doc
+        path: doc
