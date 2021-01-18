@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DatabasePermissions",""],["PermissionManager",""],["TablePermissions",""]]});
