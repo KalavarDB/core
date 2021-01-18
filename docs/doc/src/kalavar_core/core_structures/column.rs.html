@@ -202,6 +202,26 @@
 <span id="199">199</span>
 <span id="200">200</span>
 <span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Bit count definitions, used in storage calculations</span>
 <span class="kw">const</span> <span class="ident">BIT</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1</span>;
@@ -265,10 +285,11 @@
 <span class="comment">// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnType</span> {
-    <span class="ident">inner_type</span>: <span class="ident">ColumnTypeEnum</span>,
-    <span class="ident">min_len</span>: <span class="ident">u64</span>,
-    <span class="ident">max_len</span>: <span class="ident">u128</span>,
-    <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">is_private</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">inner_type</span>: <span class="ident">ColumnTypeEnum</span>,
+    <span class="kw">pub</span> <span class="ident">min_len</span>: <span class="ident">u64</span>,
+    <span class="kw">pub</span> <span class="ident">max_len</span>: <span class="ident">u128</span>,
+    <span class="kw">pub</span> <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>,
 }
 
 
@@ -277,6 +298,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">inner</span>: <span class="ident">ColumnTypeEnum</span>, <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>, <span class="ident">length</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColumnType</span> {
         <span class="comment">// Build a default column entry</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">ColumnType</span> {
+            <span class="ident">is_private</span>: <span class="bool-val">false</span>,
             <span class="ident">inner_type</span>: <span class="ident">inner</span>.<span class="ident">clone</span>(),
             <span class="ident">min_len</span>: <span class="number">0</span>,
             <span class="ident">max_len</span>: <span class="number">0</span>,
@@ -284,124 +306,142 @@
         };
 
         <span class="comment">// Set the values of that entry, as well as returning it to the caller automatically</span>
-        <span class="kw">return</span> <span class="kw">match</span> <span class="ident">inner</span> {
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">String</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">JSON</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">BLOB</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">u128</span>::<span class="ident">max_value</span>();
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Bool</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BIT</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">BIT</span> <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Byte</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger8</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger16</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer16</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">2</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">2</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger32</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer32</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger64</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer64</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedBigInteger</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">BigInteger</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">KB</span> <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Snowflake</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">UUID</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">32</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">SonyFlake</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">RGB</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">6</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">6</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">RGBA</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">CMYK</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Hex</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">3</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Array</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">length</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Enum</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">IPv4</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">4</span>)<span class="op">+</span><span class="number">3</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> ((<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">4</span>)<span class="op">+</span><span class="number">3</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">IPv6</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">16</span>)<span class="op">+</span><span class="number">7</span>;
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> ((<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">16</span>)<span class="op">+</span><span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Mac</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BIT</span><span class="kw-2">*</span><span class="number">48</span>);
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BIT</span><span class="kw-2">*</span><span class="number">48</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Mac8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="comment">// TODO: check bit length of MAC8 addresses</span>
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BIT</span><span class="kw-2">*</span><span class="number">48</span>);
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BIT</span><span class="kw-2">*</span><span class="number">48</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">Timestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">10</span>);
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">10</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-            <span class="ident">ColumnTypeEnum</span>::<span class="ident">NaiveTimestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">9</span>);
-                <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span><span class="kw-2">*</span><span class="number">9</span>) <span class="kw">as</span> <span class="ident">u128</span>;
-                <span class="ident">t</span>
-            }
-        };
+        <span class="kw">return</span> <span class="ident">process_column</span>(<span class="ident">t</span>, <span class="ident">inner</span>, <span class="ident">length</span>);
     }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_prv</span>(<span class="ident">inner</span>: <span class="ident">ColumnTypeEnum</span>, <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>, <span class="ident">length</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColumnType</span> {
+        <span class="comment">// Build a default column entry</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">ColumnType</span> {
+            <span class="ident">is_private</span>: <span class="bool-val">true</span>,
+            <span class="ident">inner_type</span>: <span class="ident">inner</span>.<span class="ident">clone</span>(),
+            <span class="ident">min_len</span>: <span class="number">0</span>,
+            <span class="ident">max_len</span>: <span class="number">0</span>,
+            <span class="ident">value_type</span>,
+        };
+
+        <span class="comment">// Set the values of that entry, as well as returning it to the caller automatically</span>
+        <span class="kw">return</span> <span class="ident">process_column</span>(<span class="ident">t</span>, <span class="ident">inner</span>, <span class="ident">length</span>);
+    }
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">process_column</span>(<span class="kw-2">mut</span> <span class="ident">t</span>: <span class="ident">ColumnType</span>, <span class="ident">inner</span>: <span class="ident">ColumnTypeEnum</span>, <span class="ident">length</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColumnType</span> {
+    <span class="kw">return</span> <span class="kw">match</span> <span class="ident">inner</span> {
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">String</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">JSON</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">BLOB</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">u128</span>::<span class="ident">max_value</span>();
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Bool</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BIT</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">BIT</span> <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Byte</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger8</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer8</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger16</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer16</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">2</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">2</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger32</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer32</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedInteger64</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">Integer64</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">SignedBigInteger</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">BigInteger</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> <span class="ident">KB</span> <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Snowflake</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">UUID</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">32</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">SonyFlake</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">BYTE</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">RGB</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">6</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">6</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">RGBA</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">CMYK</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Hex</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span> <span class="op">*</span> <span class="number">3</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Array</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="ident">length</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Enum</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> <span class="ident">BYTE</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">IPv4</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>) <span class="op">+</span> <span class="number">3</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> ((<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">4</span>) <span class="op">+</span> <span class="number">3</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">IPv6</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">16</span>) <span class="op">+</span> <span class="number">7</span>;
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> ((<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">16</span>) <span class="op">+</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Mac</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BIT</span> <span class="op">*</span> <span class="number">48</span>);
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BIT</span> <span class="op">*</span> <span class="number">48</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Mac8</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="comment">// TODO: check bit length of MAC8 addresses</span>
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BIT</span> <span class="op">*</span> <span class="number">48</span>);
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BIT</span> <span class="op">*</span> <span class="number">48</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">Timestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">10</span>);
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">10</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+        <span class="ident">ColumnTypeEnum</span>::<span class="ident">NaiveTimestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">t</span>.<span class="ident">min_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">9</span>);
+            <span class="ident">t</span>.<span class="ident">max_len</span> <span class="op">=</span> (<span class="ident">BYTE</span> <span class="op">*</span> <span class="number">9</span>) <span class="kw">as</span> <span class="ident">u128</span>;
+            <span class="ident">t</span>
+        }
+    };
 }</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "kalavar_core";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

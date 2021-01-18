@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["as_bytes",""],["column",""],["connection_protocol",""],["database",""],["database_record",""],["query",""],["query_result",""],["row",""],["row_record",""],["table",""],["table_record",""]]});
+initSidebarItems({"mod":[["as_bytes",""],["column",""],["connection_protocol",""],["database_record",""],["query",""],["query_result",""],["row",""],["row_record",""],["table",""],["table_record",""]]});

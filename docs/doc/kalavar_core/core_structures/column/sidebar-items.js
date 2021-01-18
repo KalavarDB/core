@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["BIT",""],["BYTE",""],["GB",""],["KB",""],["MB",""]],"enum":[["ColumnTypeEnum",""]],"struct":[["ColumnType",""]]});
+initSidebarItems({"constant":[["BIT",""],["BYTE",""],["GB",""],["KB",""],["MB",""]],"enum":[["ColumnTypeEnum",""]],"fn":[["process_column",""]],"struct":[["ColumnType",""]]});

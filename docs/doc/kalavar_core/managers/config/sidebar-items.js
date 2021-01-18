@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["ConfigManager",""]]});
+initSidebarItems({"struct":[["Config","A structure containing the root keys of the config.toml file"],["ConfigManager","A utility structure designed to parse the content of the configuration files used to make Kalavar work."],["LanguageConfig",""],["NetConfig","Network configuration option utility structure"],["ProcessingConfig",""]]});

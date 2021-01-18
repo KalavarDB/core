@@ -22,26 +22,70 @@
 <span id="19">19</span>
 <span id="20">20</span>
 <span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="comment">// A utility structure designed to parse the content of the configuration files used to make Kalavar work.</span>
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>;
+
+<span class="doccomment">/// A utility structure designed to parse the content of the configuration files used to make Kalavar work.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConfigManager</span> {
-    <span class="comment">// (Platform dependant) path to the configuration file</span>
+    <span class="doccomment">/// (Platform dependant) path to the configuration file</span>
     <span class="kw">pub</span> <span class="ident">config_path</span>: <span class="ident">String</span>,
 
-    <span class="comment">// The port which the server should attempt to bind itself to</span>
+    <span class="doccomment">/// The actual configuration of the software</span>
+    <span class="kw">pub</span> <span class="ident">config</span>: <span class="ident">Config</span>,
+}
+
+<span class="doccomment">/// A structure containing the root keys of the config.toml file</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Config</span> {
+    <span class="doccomment">/// Network configuration options</span>
+    <span class="kw">pub</span> <span class="ident">network</span>: <span class="ident">NetConfig</span>,
+    <span class="kw">pub</span> <span class="ident">processing</span>: <span class="ident">ProcessingConfig</span>,
+    <span class="kw">pub</span> <span class="ident">language</span>: <span class="ident">LanguageConfig</span>,
+}
+
+<span class="doccomment">/// Network configuration option utility structure</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NetConfig</span> {
+    <span class="doccomment">/// The port which the server should attempt to bind itself to</span>
     <span class="kw">pub</span> <span class="ident">bind_port</span>: <span class="ident">u32</span>,
 
-    <span class="comment">// The IP address which the server should attempt to bind to</span>
+    <span class="doccomment">/// The IP address which the server should attempt to bind to</span>
     <span class="kw">pub</span> <span class="ident">bind_addr</span>: <span class="ident">String</span>,
 
-    <span class="comment">// The maximum number of connections the server should accept and handle at any given time</span>
+    <span class="doccomment">/// The maximum number of connections the server should accept and handle at any given time</span>
     <span class="kw">pub</span> <span class="ident">max_connections</span>: <span class="ident">u32</span>,
 
-    <span class="comment">// The maximum number of connections that the server should run on each thread</span>
+    <span class="doccomment">/// The maximum number of connections that the server should run on each thread</span>
     <span class="kw">pub</span> <span class="ident">connections_per_thread</span>: <span class="ident">u8</span>,
+}
 
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ProcessingConfig</span> {
     <span class="comment">// The maximum number of threads the server should run at a time</span>
     <span class="kw">pub</span> <span class="ident">max_threads</span>: <span class="ident">u8</span>,
+}
+
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LanguageConfig</span> {
+    <span class="comment">// The</span>
 }</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "kalavar_core";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
