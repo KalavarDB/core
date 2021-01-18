@@ -35,6 +35,11 @@ jobs:
           cp target/$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
           git add -A
           git commit -m "build ($USE_TOOLCHAIN) complete"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
   build-linux-64:
     if: |
       contains(github.event.head_commit.message, '[release]')
@@ -60,3 +65,8 @@ jobs:
           cp target/$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
           git add -A
           git commit -m "build ($USE_TOOLCHAIN) complete"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
