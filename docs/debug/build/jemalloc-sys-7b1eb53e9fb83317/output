@@ -293,11 +293,11 @@ nm -a src/malloc_io.sym.o | gawk -f include/jemalloc/internal/private_symbols.aw
 nm -a src/mutex.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/mutex.sym
 nm -a src/mutex_pool.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/mutex_pool.sym
 nm -a src/nstime.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/nstime.sym
-nm -a src/prng.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/prng.sym
 nm -a src/pages.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/pages.sym
+nm -a src/prng.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/prng.sym
 nm -a src/prof.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/prof.sym
-nm -a src/stats.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/stats.sym
 nm -a src/rtree.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/rtree.sym
+nm -a src/stats.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/stats.sym
 nm -a src/sz.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/sz.sym
 nm -a src/tcache.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/tcache.sym
 nm -a src/ticker.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/ticker.sym
@@ -305,8 +305,8 @@ nm -a src/tsd.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > sr
 nm -a src/witness.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/witness.sym
 nm -a src/jemalloc.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/jemalloc.sym
 /bin/sh ../jemalloc/include/jemalloc/internal/private_namespace.sh src/jemalloc.sym src/arena.sym src/background_thread.sym src/base.sym src/bin.sym src/bitmap.sym src/ckh.sym src/ctl.sym src/div.sym src/extent.sym src/extent_dss.sym src/extent_mmap.sym src/hash.sym src/hooks.sym src/large.sym src/log.sym src/malloc_io.sym src/mutex.sym src/mutex_pool.sym src/nstime.sym src/pages.sym src/prng.sym src/prof.sym src/rtree.sym src/stats.sym src/sz.sym src/tcache.sym src/ticker.sym src/tsd.sym src/witness.sym > include/jemalloc/internal/private_namespace.gen.h
-cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -o src/arena.pic.o ../jemalloc/src/arena.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -o src/jemalloc.pic.o ../jemalloc/src/jemalloc.c
+cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -o src/arena.pic.o ../jemalloc/src/arena.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -o src/background_thread.pic.o ../jemalloc/src/background_thread.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -o src/base.pic.o ../jemalloc/src/base.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -o src/bin.pic.o ../jemalloc/src/bin.c
@@ -371,9 +371,9 @@ ar crus lib/libjemalloc.a src/jemalloc.o src/arena.o src/background_thread.o src
 ln -sf libjemalloc.so.2 lib/libjemalloc.so
 running: "make" "srcroot=../jemalloc/" "install_lib_static" "install_include" "-j" "2"
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
-/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 /usr/bin/install -c -m 755 lib/libjemalloc.a /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
+/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -m 755 lib/libjemalloc_pic.a /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 cargo:root=/home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out
 cargo:rustc-link-lib=static=jemalloc_pic
