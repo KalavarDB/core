@@ -5,17 +5,17 @@
 // Used by many structures and methods within the program to determine where files are located
 use std::env::consts::OS;
 
+use crate::managers::{
+    logging::LoggingManager,
+    connections::connection_manager::ConnectionManager,
+    config::ConfigManager,
+};
 
 // The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.
 #[global_allocator]
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 
-use crate::managers::{
-    logging::LoggingManager,
-    connections::connection_manager::ConnectionManager,
-    config::ConfigManager,
-};
 
 // The primary function of the program, called at runtime to start the server
 #[tokio::main]
@@ -39,10 +39,13 @@ async fn main() {
 }
 
 // Sub-modules
+/// Structure definitions for all of the management structures used within the program
 mod managers;
-mod implementors;
+/// Structure definitions for things like databases and tables
 mod core_structures;
+/// A selection of utilities and helper methods to ensure that the program runs smoothyl
 mod core;
+/// Custom defined error types used by the program to report clear, concise error messages back to the user so they can get their database up and running ASAP
 mod errors;
 
 #[cfg(test)]

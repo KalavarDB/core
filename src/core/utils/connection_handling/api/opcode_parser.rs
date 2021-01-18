@@ -1,4 +1,4 @@
-/// The enumerator defining the different operation codes, and their respective identifiers
+/// The enumerator defining the different operation codes, and their respective identifiers, see [here](https://kalavar.cf/documentation/general/opcodes/)
 // Format: Name // ID
 #[derive(Debug, Clone)]
 pub enum OpCodes {
