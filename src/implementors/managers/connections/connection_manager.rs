@@ -22,8 +22,8 @@ impl ConnectionManager {
         // Directly return an initialized connection manager
         ConnectionManager {
             listener: None,
-            port: config.bind_port,
-            addr: config.bind_addr.clone(),
+            port: config.config.network.bind_port,
+            addr: config.config.network.bind_addr.clone(),
             dbm: StorageManager::new(l, os).await,
             connections: 0,
         }

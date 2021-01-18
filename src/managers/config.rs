@@ -11,6 +11,7 @@ pub struct ConfigManager {
 }
 
 /// A structure containing the root keys of the config.toml file
+#[derive(Debug, Clone)]
 pub struct Config {
     /// Network configuration options
     pub network: NetConfig,
@@ -20,6 +21,7 @@ pub struct Config {
 }
 
 /// Network configuration option utility structure
+#[derive(Debug, Clone)]
 pub struct NetConfig {
     /// The port which the server should attempt to bind itself to
     pub bind_port: u32,
@@ -35,6 +37,7 @@ pub struct NetConfig {
 }
 
 /// Utility structure to define things relating to language used within the system
+#[derive(Debug, Clone)]
 pub struct LanguageConfig {
     /// The naming convention against which to validate the names of all databases, tables, columns, and procedures
     pub convention: Option<String>,
