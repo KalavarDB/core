@@ -32,7 +32,7 @@ jobs:
           git pull --rebase
           mkdir -p binaries/$USE_TOOLCHAIN
           echo Files inside of target/$USE_TOOLCHAIN
-          ls target/$USE_TOOLCHAIN
+          ls target/$USE_TOOLCHAIN/release
           echo =====================================
           cp target/$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
           git add -A
