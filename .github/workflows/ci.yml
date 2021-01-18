@@ -4,7 +4,14 @@
 # for simplicity we are compiling and testing everything on the Ubuntu environment only.
 # For multi-OS testing see the `cross.yml` workflow.
 
-on: [push, pull_request]
+on: 
+  events: 
+    push:
+      branches: ['main']
+      paths-ignore: ['docs/*', 'binaries/*']
+    pull_request:
+      branches: ['main']
+      paths-ignore: ['docs/*', 'binaries/*']
 
 name: Continuous-Integration
 
