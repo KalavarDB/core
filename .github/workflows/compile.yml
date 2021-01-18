@@ -15,7 +15,7 @@ jobs:
       contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-latest
     env:
-      USE_TOOLCHAIN: "i686-uknown-linux-gnu"
+      USE_TOOLCHAIN: "i686-unknown-linux-gnu"
     name: Build Linux x32
     steps:
       - uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
       contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-latest
     env:
-      USE_TOOLCHAIN: "x86_64-uknown-linux-gnu"
+      USE_TOOLCHAIN: "x86_64-unknown-linux-gnu"
     name: Build Linux x64
     steps:
       - uses: actions/checkout@v2
