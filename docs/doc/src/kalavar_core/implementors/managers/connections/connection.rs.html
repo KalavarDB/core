@@ -25,6 +25,7 @@
 <span id="22">22</span>
 <span id="23">23</span>
 <span id="24">24</span>
+<span id="25">25</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">connections</span>::<span class="ident">connection</span>::<span class="ident">Connection</span>;
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
@@ -36,6 +37,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">encryption</span>::<span class="ident">EncryptionManager</span>;
 
 <span class="kw">impl</span> <span class="ident">Connection</span> {
+    <span class="doccomment">/// Utility method to instantiate a new Connection structure on behalf of the connection manager</span>
     <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">id</span>: <span class="ident">usize</span>, <span class="ident">logger</span>: <span class="kw-2">&amp;</span><span class="ident">LoggingManager</span>, (<span class="ident">stream</span>, <span class="ident">remote</span>): (<span class="ident">TcpStream</span>, <span class="ident">SocketAddr</span>), <span class="ident">receiver</span>: <span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">ConnectionProtocolMessage</span><span class="op">&gt;</span>, <span class="ident">transmitter</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">ConnectionProtocolMessage</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Connection</span> {
         <span class="ident">logger</span>.<span class="ident">debug_message</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Incoming connection from {}&quot;</span>, <span class="ident">remote</span>.<span class="ident">ip</span>())).<span class="ident">await</span>;
         <span class="ident">Connection</span> {

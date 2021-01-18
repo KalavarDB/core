@@ -73,20 +73,20 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">table_record</span>::<span class="ident">TableRecord</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">column</span>::<span class="ident">ColumnType</span>;
 
-<span class="comment">// Helper structure used to locate specific data entries for each of the tables assigned to a database</span>
+<span class="doccomment">/// Helper structure used to locate specific data entries for each of the tables assigned to a database</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DatabaseRecord</span> {
-    <span class="comment">// The name of the database this record represents</span>
+    <span class="doccomment">/// The name of the database this record represents</span>
     <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">String</span>,
 
-    <span class="comment">// A HashMap containing the name of each table the database can locate,</span>
-    <span class="comment">// as well as a way of seeing the location of all of it&#39;s data</span>
+    <span class="doccomment">/// A HashMap containing the name of each table the database can locate,</span>
+    <span class="doccomment">/// as well as a way of seeing the location of all of it&#39;s data</span>
     <span class="kw">pub</span> <span class="ident">tables</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">TableRecord</span><span class="op">&gt;</span>,
 
-    <span class="comment">// The file that is backing this database&#39;s data</span>
+    <span class="doccomment">/// The file that is backing this database&#39;s data</span>
     <span class="kw">pub</span> <span class="ident">backing</span>: <span class="ident">String</span>,
 
-    <span class="comment">// If that file is actually a directory, or just a file</span>
+    <span class="doccomment">/// If that file is actually a directory, or just a file</span>
     <span class="kw">pub</span> <span class="ident">backing_is_dir</span>: <span class="ident">bool</span>,
 }
 

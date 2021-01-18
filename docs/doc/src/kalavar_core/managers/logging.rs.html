@@ -16,22 +16,20 @@
 <span id="13">13</span>
 <span id="14">14</span>
 <span id="15">15</span>
-<span id="16">16</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
 
-<span class="comment">// A structure designed for managing the debugging of the program.</span>
-<span class="comment">// It will automatically write to a file and the terminal if it has permission to modify and create files</span>
+<span class="doccomment">/// A utility structure designed to assist in the processing of log messages across the entire system.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LoggingManager</span> {
-    <span class="comment">// Used to define the differnt log levels, auto populated at generation time</span>
+    <span class="doccomment">/// Defines the different log levels, auto populated at generation time</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">levels</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">bool</span><span class="op">&gt;</span>,
 
-    <span class="comment">// Used to show the relative path to the log file</span>
+    <span class="doccomment">/// Defines the relative path to the log file</span>
     <span class="kw">pub</span> <span class="ident">log_file</span>: <span class="ident">String</span>,
 
-    <span class="comment">// Used to show the distinctive path to the log file</span>
+    <span class="doccomment">/// Defines the distinctive path to the log file</span>
     <span class="kw">pub</span> <span class="ident">log_file_full</span>: <span class="ident">String</span>
 }</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "kalavar_core";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

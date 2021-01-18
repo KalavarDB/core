@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["EncryptionManager",""]]});
+initSidebarItems({"struct":[["EncryptionManager","A utility structure for handling encryption between the server and the client"]]});

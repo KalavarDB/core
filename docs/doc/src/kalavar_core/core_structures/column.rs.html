@@ -222,6 +222,42 @@
 <span id="219">219</span>
 <span id="220">220</span>
 <span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Bit count definitions, used in storage calculations</span>
 <span class="kw">const</span> <span class="ident">BIT</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1</span>;
@@ -230,71 +266,105 @@
 <span class="kw">const</span> <span class="ident">MB</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1024</span> <span class="op">*</span> <span class="ident">KB</span>;
 <span class="kw">const</span> <span class="ident">GB</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1024</span> <span class="op">*</span> <span class="ident">MB</span>;
 
-<span class="comment">// An enumerator which defines the available column types</span>
-<span class="comment">// I recommend reading the documentation at the link below for details on them all:</span>
-<span class="comment">// https://kalavar.cf/documentation/data-types/</span>
+<span class="doccomment">/// An enumerator which defines the available column types</span>
+<span class="doccomment">/// I recommend reading the documentation at the link below for details on them all:</span>
+<span class="doccomment">/// https://kalavar.cf/documentation/data-types/</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ColumnTypeEnum</span> {
     <span class="comment">// Text Types</span>
+    <span class="doccomment">/// A generic String type</span>
     <span class="ident">String</span>,
+    <span class="doccomment">/// JSON flavoured string</span>
     <span class="ident">JSON</span>,
 
     <span class="comment">// Byte Types</span>
+    <span class="doccomment">/// Boolean data type for columns</span>
     <span class="ident">Bool</span>,
+    <span class="doccomment">/// 8 Bit storage type</span>
     <span class="ident">Byte</span>,
+    <span class="doccomment">/// Binary Large Object type</span>
     <span class="ident">BLOB</span>,
 
     <span class="comment">// Numeric Types</span>
+    <span class="doccomment">/// Unsigned 8 bit integer</span>
     <span class="ident">Integer8</span>,
+    <span class="doccomment">/// Unsigned 16 bit integer</span>
     <span class="ident">Integer16</span>,
+    <span class="doccomment">/// Unsigned 32 bit integee</span>
     <span class="ident">Integer32</span>,
+    <span class="doccomment">/// Unsigned 64 bit integer</span>
     <span class="ident">Integer64</span>,
+    <span class="doccomment">/// Signed 8 bit integer</span>
     <span class="ident">SignedInteger8</span>,
+    <span class="doccomment">/// Signed 16 bit integer</span>
     <span class="ident">SignedInteger16</span>,
+    <span class="doccomment">/// Signed 32 bit integer</span>
     <span class="ident">SignedInteger32</span>,
+    <span class="doccomment">/// Signed 64 bit integer</span>
     <span class="ident">SignedInteger64</span>,
+    <span class="doccomment">/// An unsigned integer, comprised of other integers to provide maximum storage capacity</span>
     <span class="ident">BigInteger</span>,
+    <span class="doccomment">/// A signed integer, comprised of other integers to provide maximum storage capacity</span>
     <span class="ident">SignedBigInteger</span>,
 
     <span class="comment">// Identifier Types</span>
+    <span class="doccomment">/// Snowflake unique identifier</span>
     <span class="ident">Snowflake</span>,
+    <span class="doccomment">/// Universally Unique Identifier</span>
     <span class="ident">UUID</span>,
+    <span class="doccomment">/// Sony&#39;s re-thought version of Snowflake</span>
     <span class="ident">SonyFlake</span>,
 
     <span class="comment">// Color Types</span>
+    <span class="doccomment">/// Red, Green, Blue color type</span>
     <span class="ident">RGB</span>,
+    <span class="doccomment">/// Red, Green, Blue, Alpha color type</span>
     <span class="ident">RGBA</span>,
+    <span class="doccomment">/// Cyan, Magenta, Yellow, Black color type</span>
     <span class="ident">CMYK</span>,
+    <span class="doccomment">/// Hexadecimal color type</span>
     <span class="ident">Hex</span>,
 
     <span class="comment">// Boundless Types</span>
+    <span class="doccomment">/// An array type for the column</span>
     <span class="ident">Array</span>,
+    <span class="doccomment">/// An enumerator type for the column, see the [docs](https://kalavar.cf/documentation/data-types/enum/) for more info</span>
     <span class="ident">Enum</span>,
 
     <span class="comment">// Network Types</span>
+    <span class="doccomment">/// Simple validated IPv4 address type</span>
     <span class="ident">IPv4</span>,
+    <span class="doccomment">/// Simple validated IPv6 address type</span>
     <span class="ident">IPv6</span>,
+    <span class="doccomment">/// Simple MAC address type</span>
     <span class="ident">Mac</span>,
-    <span class="ident">Mac8</span>,
+    <span class="comment">// Mac8,</span>
 
     <span class="comment">// Timestamps</span>
+    <span class="doccomment">/// A timestamp, prefixed with information about the timezone it is for to allow for conversion</span>
     <span class="ident">Timestamp</span>,
+    <span class="doccomment">/// A timestamp without the prefixed timezone data, assumes it is UTC and converts to `Timetstamp` as though it was UTC based, even if it may not be</span>
     <span class="ident">NaiveTimestamp</span>,
 }
 
-<span class="comment">// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type</span>
+<span class="doccomment">/// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnType</span> {
+    <span class="doccomment">/// If the column is to be hidden in results from queries</span>
     <span class="kw">pub</span> <span class="ident">is_private</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// The type of the column</span>
     <span class="kw">pub</span> <span class="ident">inner_type</span>: <span class="ident">ColumnTypeEnum</span>,
+    <span class="doccomment">/// The minimum length of the column type in question (the value this represents actually changes based on the inner_type</span>
     <span class="kw">pub</span> <span class="ident">min_len</span>: <span class="ident">u64</span>,
+    <span class="doccomment">/// The maximum length of the column type in question (the value this represents actually changes based on the inner_type</span>
     <span class="kw">pub</span> <span class="ident">max_len</span>: <span class="ident">u128</span>,
+    <span class="doccomment">/// The potential sub type of the type, if applicable</span>
     <span class="kw">pub</span> <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>,
 }
 
 
 <span class="kw">impl</span> <span class="ident">ColumnType</span> {
-    <span class="comment">// Helper method to generate a new column</span>
+    <span class="doccomment">/// Helper method to generate a new column</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">inner</span>: <span class="ident">ColumnTypeEnum</span>, <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>, <span class="ident">length</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColumnType</span> {
         <span class="comment">// Build a default column entry</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">ColumnType</span> {
@@ -309,6 +379,7 @@
         <span class="kw">return</span> <span class="ident">process_column</span>(<span class="ident">t</span>, <span class="ident">inner</span>, <span class="ident">length</span>);
     }
 
+    <span class="doccomment">/// Helper method to generate a new private column which remains hidden from query results</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_prv</span>(<span class="ident">inner</span>: <span class="ident">ColumnTypeEnum</span>, <span class="ident">value_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ColumnTypeEnum</span><span class="op">&gt;</span>, <span class="ident">length</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColumnType</span> {
         <span class="comment">// Build a default column entry</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">ColumnType</span> {
@@ -324,6 +395,7 @@
     }
 }
 
+<span class="doccomment">/// Helper function for serialization using the record types</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">process_column</span>(<span class="kw-2">mut</span> <span class="ident">t</span>: <span class="ident">ColumnType</span>, <span class="ident">inner</span>: <span class="ident">ColumnTypeEnum</span>, <span class="ident">length</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColumnType</span> {
     <span class="kw">return</span> <span class="kw">match</span> <span class="ident">inner</span> {
         <span class="ident">ColumnTypeEnum</span>::<span class="ident">String</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">JSON</span> <span class="op">|</span> <span class="ident">ColumnTypeEnum</span>::<span class="ident">BLOB</span> <span class="op">=</span><span class="op">&gt;</span> {

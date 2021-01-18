@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["AuthManager",""]]});
+initSidebarItems({"struct":[["AuthManager","A utility structure for managing authentication with the client"]]});

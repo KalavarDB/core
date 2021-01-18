@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["FG_CYA",""],["FG_GRE",""],["FG_GRY",""],["FG_MAG",""],["FG_RED",""],["FG_YEL",""],["RESET",""]],"fn":[["format_date",""]]});
+initSidebarItems({"constant":[["FG_CYA",""],["FG_GRE",""],["FG_GRY",""],["FG_MAG",""],["FG_RED",""],["FG_YEL",""],["RESET",""]],"fn":[["format_date","Helper method for formatting date-time information for the console and log file outputs."]]});

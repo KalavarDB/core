@@ -21,7 +21,6 @@
 <span id="18">18</span>
 <span id="19">19</span>
 <span id="20">20</span>
-<span id="21">21</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// STD lib imports</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
@@ -30,18 +29,17 @@
 <span class="comment">// Internal crate imports</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">database_record</span>::<span class="ident">DatabaseRecord</span>;
 
-<span class="comment">// A structure built to manage the basic functions of storage and retrieval of data</span>
-<span class="comment">// Literally the most important structure of the whole database, give it some credit</span>
+
+<span class="doccomment">/// Utility structure whose only job is to manage the smooth transfer of data between memory and disk based on cache capacity, memory usage, and a number of other factors</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StorageManager</span> {
-    <span class="comment">// A HashMap containing the name of each database the manager can locate,</span>
-    <span class="comment">// as well as a way of seeing the location of all of it&#39;s data</span>
+    <span class="doccomment">/// A tracking map of all the databases that the program has located within its data directory</span>
     <span class="kw">pub</span> <span class="ident">databases</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">DatabaseRecord</span><span class="op">&gt;</span>,
 
-    <span class="comment">// The last time the database was dumped to the disk</span>
+    <span class="doccomment">/// The last time that any in-memory data was dumped to the disk and refreshed</span>
     <span class="kw">pub</span> <span class="ident">last_write</span>: <span class="ident">Instant</span>,
 
-    <span class="comment">// The directory in which it will find any database it should read and process</span>
+    <span class="doccomment">/// The directory to scan for potential databases</span>
     <span class="kw">pub</span> <span class="ident">dir</span>: <span class="ident">String</span>,
 }
 </pre></div>

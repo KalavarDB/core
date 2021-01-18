@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Cell",""],["Row",""]]});
+initSidebarItems({"struct":[["Cell","A structure defining the type of column that the data is from, as well as the raw bytes of the given data"],["Row","A structure wrapping the cells of each row in a neat little basket"]]});

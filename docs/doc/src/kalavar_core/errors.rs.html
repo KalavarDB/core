@@ -69,6 +69,15 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Debug</span>, <span class="ident">Display</span>, <span class="ident">Formatter</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -77,12 +86,23 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ErrorMap</span> {
     <span class="comment">// General Errors</span>
-    <span class="ident">GXXX</span>, <span class="comment">// Unknown error, needs to be mapped to error code</span>
-    <span class="ident">G101</span>, <span class="comment">// Error connecting to database</span>
-    <span class="ident">G201</span>, <span class="comment">// Failed to generate required files (permissions error)</span>
-    <span class="ident">G202</span>, <span class="comment">// Failed to determine config directory</span>
-    <span class="ident">G203</span>, <span class="comment">// Failed to determine log directory</span>
-    <span class="ident">E204</span>, <span class="comment">// Invalid configuration file</span>
+    <span class="doccomment">/// Unknown error, needs to be mapped to error code</span>
+    <span class="ident">GXXX</span>,
+
+    <span class="doccomment">/// Error connecting to database</span>
+    <span class="ident">G101</span>,
+
+    <span class="doccomment">/// Failed to generate required files (permissions error)</span>
+    <span class="ident">G201</span>,
+
+    <span class="doccomment">/// Failed to determine config directory</span>
+    <span class="ident">G202</span>,
+
+    <span class="doccomment">/// Failed to determine log directory</span>
+    <span class="ident">G203</span>,
+
+    <span class="doccomment">/// Invalid configuration file</span>
+    <span class="ident">E204</span>,
 
     <span class="comment">// Connection Errors</span>
 
@@ -91,7 +111,6 @@
 
 
     <span class="comment">// Drive Errors</span>
-
 }
 
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ErrorMap</span> {
@@ -100,9 +119,10 @@
     }
 }
 
-
+<span class="doccomment">/// A generic error type to handle all the custom errors that this program might throw during operation</span>
 <span class="kw">struct</span> <span class="ident">GeneralError</span> {
-   <span class="ident">code</span>: <span class="ident">ErrorMap</span>,
+    <span class="doccomment">/// The error code which is relevant to the error encapsulated within</span>
+    <span class="ident">code</span>: <span class="ident">ErrorMap</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">GeneralError</span> {
@@ -135,7 +155,5 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">GeneralError</span> {
-
-}</pre></div>
+<span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">GeneralError</span> {}</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "kalavar_core";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -18,22 +18,60 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">logging</span>::<span class="ident">LoggingManager</span>;
+
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">time</span>::<span class="ident">Instant</span>;
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">sync</span>::<span class="ident">broadcast</span>::{<span class="ident">Receiver</span>, <span class="ident">Sender</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">logging</span>::<span class="ident">LoggingManager</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">connection_protocol</span>::<span class="ident">ConnectionProtocolMessage</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">encryption</span>::<span class="ident">EncryptionManager</span>;
 
+
+<span class="doccomment">/// A structure used to represent a connection to the system from an external client</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Connection</span> {
+    <span class="doccomment">/// The identification number of the connection, used by the manager to broadcast messages</span>
     <span class="kw">pub</span> <span class="ident">id</span>: <span class="ident">usize</span>,
+
+    <span class="doccomment">/// The time at which the connection was initialized</span>
     <span class="kw">pub</span> <span class="ident">opened</span>: <span class="ident">Instant</span>,
+
+    <span class="doccomment">/// The address of the connection</span>
     <span class="kw">pub</span> <span class="ident">remote</span>: <span class="ident">SocketAddr</span>,
+
+    <span class="doccomment">/// The datastream of the client, consists of the encryption manager among other things</span>
     <span class="kw">pub</span> <span class="ident">stream</span>: <span class="ident">EncryptionManager</span>,
+
+    <span class="doccomment">/// The distinctive logging manager for this client,</span>
     <span class="kw">pub</span> <span class="ident">logger</span>: <span class="ident">LoggingManager</span>,
+
+    <span class="doccomment">/// The timestamp of the last time the connection was validated to not be zombied</span>
     <span class="kw">pub</span> <span class="ident">last_ping</span>: <span class="ident">Instant</span>,
+
+    <span class="doccomment">/// The receiver for messages from the connection manager to the client</span>
     <span class="kw">pub</span> <span class="ident">receiver</span>: <span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">ConnectionProtocolMessage</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">transmitter</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">ConnectionProtocolMessage</span><span class="op">&gt;</span>
+
+    <span class="doccomment">/// The transmitter used to transmit messsages to the connection manager from the client</span>
+    <span class="kw">pub</span> <span class="ident">transmitter</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">ConnectionProtocolMessage</span><span class="op">&gt;</span>,
 }</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../";window.currentCrate = "kalavar_core";</script><script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script><script defer src="../../../../search-index.js"></script></body></html>

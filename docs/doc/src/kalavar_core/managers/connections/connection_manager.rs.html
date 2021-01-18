@@ -33,23 +33,23 @@
 <span class="comment">// Internal crate imports</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">storage</span>::<span class="ident">StorageManager</span>;
 
-<span class="comment">// Management structure to handle the connection server, and instnatiate the storage manager, w</span>
-<span class="comment">// hilst launching threads for managing memory allocation and queries</span>
+<span class="doccomment">/// A utility structure designed to simplify the management of connection handling and verification.</span>
+<span class="doccomment">/// This manager also handles the launching of the memory management thread, and the storage management thread</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConnectionManager</span>{
 
-    <span class="comment">// An optional TCP Listener (optional due to being added after the struct is initiated)</span>
+    <span class="doccomment">/// An optional TCP Listener (optional due to being added after the struct is initiated)</span>
     <span class="kw">pub</span> <span class="ident">listener</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span>,
 
-    <span class="comment">// The port that the listener will bind to</span>
+    <span class="doccomment">/// The port that the listener will bind to</span>
     <span class="kw">pub</span> <span class="ident">port</span>: <span class="ident">u32</span>,
 
-    <span class="comment">// The IP that the listener will bind to</span>
+    <span class="doccomment">/// The IP that the listener will bind to</span>
     <span class="kw">pub</span> <span class="ident">addr</span>: <span class="ident">String</span>,
 
-    <span class="comment">// The id of the next connection</span>
+    <span class="doccomment">/// The id of the next connection</span>
     <span class="kw">pub</span> <span class="ident">connections</span>: <span class="ident">usize</span>,
 
-    <span class="comment">// The storage manager</span>
+    <span class="doccomment">/// The storage manager</span>
     <span class="kw">pub</span> <span class="ident">dbm</span>: <span class="ident">StorageManager</span>
 }
 </pre></div>

@@ -297,6 +297,13 @@
 <span id="294">294</span>
 <span id="295">295</span>
 <span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// STD Lib imports</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">FromUtf8Error</span>;
@@ -307,22 +314,32 @@
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">io</span>::{<span class="ident">AsyncReadExt</span>, <span class="ident">ErrorKind</span>, <span class="ident">AsyncWriteExt</span>};
 
 <span class="comment">// Internal crate imports</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">config</span>::<span class="ident">ConfigManager</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">config</span>::{<span class="ident">ConfigManager</span>, <span class="ident">Config</span>, <span class="ident">NetConfig</span>, <span class="ident">LanguageConfig</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::<span class="ident">logging</span>::<span class="ident">LoggingManager</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errors</span>::<span class="ident">ErrorMap</span>::<span class="kw-2">*</span>;
 
 <span class="kw">impl</span> <span class="ident">ConfigManager</span> {
-    <span class="comment">// A helper method to build and pre-configure a configuration manager structure and return it to the caller</span>
+    <span class="doccomment">/// A helper method to build and pre-configure a configuration manager structure and return it to the caller</span>
     <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">logger</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">LoggingManager</span>, <span class="ident">os</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ConfigManager</span> {
 
         <span class="comment">// Instantiate the manager with pre-defined defaults</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">manager</span> <span class="op">=</span> <span class="ident">ConfigManager</span> {
             <span class="ident">config_path</span>: <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
-            <span class="ident">bind_port</span>: <span class="number">1234</span>,
-            <span class="ident">bind_addr</span>: <span class="string">&quot;127.0.0.1&quot;</span>.<span class="ident">to_string</span>(),
-            <span class="ident">max_connections</span>: <span class="number">0</span>,
-            <span class="ident">connections_per_thread</span>: <span class="number">5</span>,
-            <span class="ident">max_threads</span>: <span class="number">10</span>,
+            <span class="ident">config</span>: <span class="ident">Config</span> {
+                <span class="ident">network</span>: <span class="ident">NetConfig</span> {
+                    <span class="ident">bind_port</span>: <span class="number">1234</span>,
+                    <span class="ident">bind_addr</span>: <span class="string">&quot;127.0.0.1&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="ident">max_connections</span>: <span class="number">0</span>,
+                    <span class="ident">connections_per_thread</span>: <span class="number">5</span>,
+                },
+                <span class="ident">language</span>: <span class="ident">LanguageConfig</span> {
+                    <span class="ident">convention</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">database_convention</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">table_convention</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">column_convention</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">procedure_convention</span>: <span class="prelude-val">None</span>,
+                },
+            },
         };
 
         <span class="comment">// Attempt to determine the location of the configuration file based on the operating system (and by extension, file system)</span>
@@ -332,7 +349,7 @@
             <span class="comment">// And set the config path accordingly</span>
             <span class="string">&quot;linux&quot;</span> <span class="op">|</span> <span class="string">&quot;macos&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">logger</span>.<span class="ident">debug_message</span>(<span class="string">&quot;Readjusting configuration path directories for Linux&quot;</span>).<span class="ident">await</span>;
-                <span class="ident">manager</span>.<span class="ident">config_path</span> <span class="op">=</span> <span class="string">&quot;/etc/kalavar/server.conf&quot;</span>.<span class="ident">to_string</span>()
+                <span class="ident">manager</span>.<span class="ident">config_path</span> <span class="op">=</span> <span class="string">&quot;/etc/kalavar/server.toml&quot;</span>.<span class="ident">to_string</span>()
             }
 
             <span class="comment">// If the operating matches none of the previous branches of this logic tree</span>
@@ -350,113 +367,115 @@
 
         <span class="comment">// If the file is okay, parse the file</span>
         <span class="comment">// If it is not, check the type of the error and act accordingly</span>
-        <span class="kw">if</span> <span class="ident">file</span>.<span class="ident">is_ok</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">unwrap</span>();
-            <span class="ident">manager</span> <span class="op">=</span> <span class="ident">parse_config</span>(<span class="ident">logger</span>, <span class="ident">manager</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>).<span class="ident">await</span>;
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">unwrap_err</span>();
+        <span class="comment">// TODO: update the &quot;parse_config&quot; function to istead parse the config from TOML format instead of the current one</span>
+        <span class="comment">/*
+        if file.is_ok() {
+            let mut inner = file.unwrap();
+            manager = parse_config(logger, manager, &amp;mut inner).await;
+        } else {
+            let err = file.unwrap_err();
 
-            <span class="comment">// Match the type of error against a set of actions for each available error type</span>
-            <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
-                <span class="comment">// If the file is not found assume it has not been created, and attempt to generate a fresh one</span>
-                <span class="ident">ErrorKind</span>::<span class="ident">NotFound</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">logger</span>.<span class="ident">debug_message</span>(<span class="string">&quot;Configuration file not found, generating...&quot;</span>).<span class="ident">await</span>;
+            // Match the type of error against a set of actions for each available error type
+            match err.kind() {
+                // If the file is not found assume it has not been created, and attempt to generate a fresh one
+                ErrorKind::NotFound =&gt; {
+                    logger.debug_message(&quot;Configuration file not found, generating...&quot;).await;
 
-                    <span class="comment">// Attempt to create the config file</span>
-                    <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">manager</span>.<span class="ident">config_path</span>).<span class="ident">await</span>;
+                    // Attempt to create the config file
+                    file = File::create(&amp;manager.config_path).await;
 
-                    <span class="comment">// If the file created successfully, write the default contents of the file automatically</span>
-                    <span class="comment">// If note, check the type of error and act accordingly</span>
-                    <span class="kw">if</span> <span class="ident">file</span>.<span class="ident">is_ok</span>() {
-                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">File</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">unwrap</span>();
+                    // If the file created successfully, write the default contents of the file automatically
+                    // If note, check the type of error and act accordingly
+                    if file.is_ok() {
+                        let mut inner: File = file.unwrap();
 
-                        <span class="comment">// Attempt to write the contents of the default configuration file to the newly created one</span>
-                        <span class="kw">let</span> <span class="ident">write_result</span>: <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">write</span>(<span class="ident">BASE_CONFIG</span>.<span class="ident">as_bytes</span>()).<span class="ident">await</span>;
+                        // Attempt to write the contents of the default configuration file to the newly created one
+                        let write_result: io::Result&lt;usize&gt; = inner.write(BASE_CONFIG.as_bytes()).await;
 
-                        <span class="comment">// If the attempt was successful, parse the configuration as normal</span>
-                        <span class="comment">// If not, display an error in the console and break free from this logic chain</span>
-                        <span class="kw">if</span> <span class="ident">write_result</span>.<span class="ident">is_ok</span>() {
-                            <span class="ident">manager</span> <span class="op">=</span> <span class="ident">parse_config</span>(<span class="ident">logger</span>, <span class="ident">manager</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>).<span class="ident">await</span>
-                        } <span class="kw">else</span> {
-                            <span class="ident">logger</span>.<span class="ident">error</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Unable to write to file &#39;{}&#39;&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">manager</span>.<span class="ident">config_path</span>), <span class="ident">G201</span>).<span class="ident">await</span>
+                        // If the attempt was successful, parse the configuration as normal
+                        // If not, display an error in the console and break free from this logic chain
+                        if write_result.is_ok() {
+                            manager = parse_config(logger, manager, &amp;mut inner).await
+                        } else {
+                            logger.error(format!(&quot;Unable to write to file &#39;{}&#39;&quot;, &amp;manager.config_path), G201).await
                         }
-                    } <span class="kw">else</span> {
-                        <span class="kw">match</span> <span class="ident">file</span>.<span class="ident">unwrap_err</span>().<span class="ident">kind</span>() {
-                            <span class="comment">// If the file was not found, assume that the directory is missing, generate the necessary directory</span>
-                            <span class="ident">ErrorKind</span>::<span class="ident">NotFound</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="ident">logger</span>.<span class="ident">warn</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Directory not found: \&quot;{}\&quot;&quot;</span>, <span class="ident">manager</span>.<span class="ident">config_path</span>)).<span class="ident">await</span>;
-                                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="ident">manager</span>.<span class="ident">config_path</span>).<span class="ident">split</span>(<span class="string">&quot;/&quot;</span>).<span class="ident">collect</span>();
+                    } else {
+                        match file.unwrap_err().kind() {
+                            // If the file was not found, assume that the directory is missing, generate the necessary directory
+                            ErrorKind::NotFound =&gt; {
+                                logger.warn(format!(&quot;Directory not found: \&quot;{}\&quot;&quot;, manager.config_path)).await;
+                                let mut path: Vec&lt;&amp;str&gt; = (&amp;manager.config_path).split(&quot;/&quot;).collect();
 
-                                <span class="comment">// Remove the last component of the config path (the &quot;/server.conf&quot; part)</span>
-                                <span class="comment">// To leave us with the directory tree</span>
-                                <span class="ident">path</span>.<span class="ident">pop</span>();
+                                // Remove the last component of the config path (the &quot;/server.toml&quot; part)
+                                // To leave us with the directory tree
+                                path.pop();
 
-                                <span class="comment">// Attempt to create the directory</span>
-                                <span class="kw">let</span> <span class="ident">result</span>: <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">create_dir_all</span>(<span class="ident">path</span>.<span class="ident">join</span>(<span class="string">&quot;/&quot;</span>)).<span class="ident">await</span>;
+                                // Attempt to create the directory
+                                let result: io::Result&lt;()&gt; = create_dir_all(path.join(&quot;/&quot;)).await;
 
-                                <span class="comment">// If the attempt was a success, create the file as normal and write default config file, and parse as normal</span>
-                                <span class="comment">// If not, match the type of error, and act accordingly</span>
-                                <span class="kw">if</span> <span class="ident">result</span>.<span class="ident">is_ok</span>() {
-                                    <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">manager</span>.<span class="ident">config_path</span>).<span class="ident">await</span>;
-                                    <span class="kw">if</span> <span class="ident">file</span>.<span class="ident">is_ok</span>() {
-                                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">File</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">unwrap</span>();
-                                        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">write</span>(<span class="ident">BASE_CONFIG</span>.<span class="ident">as_bytes</span>()).<span class="ident">await</span>;
-                                        <span class="ident">manager</span> <span class="op">=</span> <span class="ident">parse_config</span>(<span class="ident">logger</span>, <span class="ident">manager</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>).<span class="ident">await</span>
-                                    } <span class="kw">else</span> {
-                                        <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">unwrap_err</span>();
+                                // If the attempt was a success, create the file as normal and write default config file, and parse as normal
+                                // If not, match the type of error, and act accordingly
+                                if result.is_ok() {
+                                    file = File::create(&amp;manager.config_path).await;
+                                    if file.is_ok() {
+                                        let mut inner: File = file.unwrap();
+                                        let _ = inner.write(BASE_CONFIG.as_bytes()).await;
+                                        manager = parse_config(logger, manager, &amp;mut inner).await
+                                    } else {
+                                        let e = result.unwrap_err();
 
-                                        <span class="comment">// Match the type of error to the tree</span>
-                                        <span class="kw">match</span> <span class="ident">e</span>.<span class="ident">kind</span>() {
-                                            <span class="comment">// If the error was as a result of permissions, report it to the console and exit the program using</span>
-                                            <span class="comment">// Error code G201</span>
-                                            <span class="ident">ErrorKind</span>::<span class="ident">PermissionDenied</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                                <span class="ident">logger</span>.<span class="ident">info</span>(<span class="string">&quot;You can fix the problem below by running the program using Super User (sudo)&quot;</span>).<span class="ident">await</span>;
-                                                <span class="ident">logger</span>.<span class="ident">fatal</span>(<span class="ident">e</span>, <span class="ident">G201</span>, <span class="number">1</span>).<span class="ident">await</span>;
+                                        // Match the type of error to the tree
+                                        match e.kind() {
+                                            // If the error was as a result of permissions, report it to the console and exit the program using
+                                            // Error code G201
+                                            ErrorKind::PermissionDenied =&gt; {
+                                                logger.info(&quot;You can fix the problem below by running the program using Super User (sudo)&quot;).await;
+                                                logger.fatal(e, G201, 1).await;
                                             }
 
-                                            <span class="comment">// If the error was not in the prior arms of this logic tree, report it under error code GXXX and</span>
-                                            <span class="comment">// Exit with a fatal error</span>
-                                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                                <span class="ident">logger</span>.<span class="ident">fatal</span>(<span class="ident">e</span>, <span class="ident">GXXX</span>, <span class="number">1</span>).<span class="ident">await</span>;
+                                            // If the error was not in the prior arms of this logic tree, report it under error code GXXX and
+                                            // Exit with a fatal error
+                                            _ =&gt; {
+                                                logger.fatal(e, GXXX, 1).await;
                                             }
                                         }
                                     }
-                                } <span class="kw">else</span> {
-                                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">unwrap_err</span>();
+                                } else {
+                                    let e = result.unwrap_err();
 
-                                    <span class="comment">// Match the type of error to the tree</span>
-                                    <span class="kw">match</span> <span class="ident">e</span>.<span class="ident">kind</span>() {
-                                        <span class="comment">// If the error was as a result of permissions, report it to the console and exit the program using</span>
-                                        <span class="comment">// Error code G201</span>
-                                        <span class="ident">ErrorKind</span>::<span class="ident">PermissionDenied</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                            <span class="ident">logger</span>.<span class="ident">info</span>(<span class="string">&quot;You can fix the problem below by running the program using Super User (sudo)&quot;</span>).<span class="ident">await</span>;
-                                            <span class="ident">logger</span>.<span class="ident">fatal</span>(<span class="ident">e</span>, <span class="ident">G201</span>, <span class="number">1</span>).<span class="ident">await</span>;
+                                    // Match the type of error to the tree
+                                    match e.kind() {
+                                        // If the error was as a result of permissions, report it to the console and exit the program using
+                                        // Error code G201
+                                        ErrorKind::PermissionDenied =&gt; {
+                                            logger.info(&quot;You can fix the problem below by running the program using Super User (sudo)&quot;).await;
+                                            logger.fatal(e, G201, 1).await;
                                         }
 
-                                        <span class="comment">// If the error was not in the prior arms of this logic tree, report it under error code GXXX and</span>
-                                        <span class="comment">// Exit with a fatal error</span>
-                                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                            <span class="ident">logger</span>.<span class="ident">fatal</span>(<span class="ident">e</span>, <span class="ident">GXXX</span>, <span class="number">1</span>).<span class="ident">await</span>;
+                                        // If the error was not in the prior arms of this logic tree, report it under error code GXXX and
+                                        // Exit with a fatal error
+                                        _ =&gt; {
+                                            logger.fatal(e, GXXX, 1).await;
                                         }
                                     }
                                 }
                             }
 
-                            <span class="comment">// If the error is not in the above logic, exit with a fatal error whilst reporting GXXX to the console</span>
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="ident">logger</span>.<span class="ident">error</span>(<span class="ident">err</span>, <span class="ident">GXXX</span>).<span class="ident">await</span>;
+                            // If the error is not in the above logic, exit with a fatal error whilst reporting GXXX to the console
+                            _ =&gt; {
+                                logger.error(err, GXXX).await;
                             }
                         }
                     }
                 }
 
-                <span class="comment">// If the error is anything else</span>
-                <span class="comment">// display an error message as well as a (currently undefined) error code for further information</span>
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">logger</span>.<span class="ident">error</span>(<span class="ident">err</span>, <span class="ident">GXXX</span>).<span class="ident">await</span>;
+                // If the error is anything else
+                // display an error message as well as a (currently undefined) error code for further information
+                _ =&gt; {
+                    logger.error(err, GXXX).await;
                 }
             }
-        }
+        }*/</span>
 
         <span class="comment">// Return the now created and ready to use config manager to the caller</span>
         <span class="ident">manager</span>
@@ -464,134 +483,129 @@
 }
 
 
-<span class="comment">// Helper function to parse the config file and modify the manager accordingly</span>
-<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">parse_config</span>(<span class="ident">l</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">LoggingManager</span>, <span class="kw-2">mut</span> <span class="ident">m</span>: <span class="ident">ConfigManager</span>, <span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">File</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ConfigManager</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">content</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>();
+<span class="comment">/*
+// Helper function to parse the config file and modify the manager accordingly
+async fn parse_config(l: &amp;mut LoggingManager, mut m: ConfigManager, file: &amp;mut File) -&gt; ConfigManager {
+    let mut content: Vec&lt;u8&gt; = vec!();
 
-    <span class="comment">// Attempt to read the config file</span>
-    <span class="kw">let</span> <span class="ident">read_result</span>: <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">content</span>).<span class="ident">await</span>;
+    // Attempt to read the config file
+    let read_result: io::Result&lt;usize&gt; = file.read_to_end(&amp;mut content).await;
 
-    <span class="comment">// If the file was able to be read successfully, parse it accordingly</span>
-    <span class="comment">// If not, exit with a GXXX error and report a fatal error to the terminal</span>
-    <span class="kw">if</span> <span class="ident">read_result</span>.<span class="ident">is_ok</span>() {
-        <span class="comment">// Attempt to parse the file to utf8 from binary, in case it has been overwritten with a binary format</span>
-        <span class="kw">let</span> <span class="ident">text_result</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">content</span>);
+    // If the file was able to be read successfully, parse it accordingly
+    // If not, exit with a GXXX error and report a fatal error to the terminal
+    if read_result.is_ok() {
+        // Attempt to parse the file to utf8 from binary, in case it has been overwritten with a binary format
+        let text_result: Result&lt;String, FromUtf8Error&gt; = String::from_utf8(content);
 
-        <span class="comment">// If the contents parsed successfully, match each line against a logic tree</span>
-        <span class="comment">// If not, exit using the GXXX error code and report a fatal error to the terminal</span>
-        <span class="kw">if</span> <span class="ident">text_result</span>.<span class="ident">is_ok</span>() {
-            <span class="kw">let</span> <span class="ident">text</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">text_result</span>.<span class="ident">unwrap</span>();
-            <span class="comment">// Split the file according to the system line endings into individual lines</span>
-            <span class="kw">let</span> <span class="ident">lines</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">split</span>(<span class="ident">LINE_ENDING</span>).<span class="ident">collect</span>();
+        // If the contents parsed successfully, match each line against a logic tree
+        // If not, exit using the GXXX error code and report a fatal error to the terminal
+        if text_result.is_ok() {
+            let text: String = text_result.unwrap();
+            // Split the file according to the system line endings into individual lines
+            let lines: Vec&lt;&amp;str&gt; = text.split(LINE_ENDING).collect();
 
-            <span class="comment">// Loop through each line of the file</span>
-            <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="ident">lines</span> {
-                <span class="comment">// Check the length of the line is more than 0, and the line is not commented out,</span>
-                <span class="comment">// and also contains the &quot;=&quot; character to prevent out of bounds errors from the arrays</span>
-                <span class="kw">if</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">line</span>.<span class="ident">as_bytes</span>()[<span class="number">0</span>] <span class="op">!</span><span class="op">=</span> <span class="string">b&quot;#&quot;</span>[<span class="number">0</span>] <span class="op">&amp;&amp;</span> <span class="ident">line</span>.<span class="ident">contains</span>(<span class="string">&quot;=&quot;</span>) {
-                    <span class="comment">// Split the line at the &quot;=&quot; character to get the key-value pair as individual strings</span>
-                    <span class="kw">let</span> <span class="ident">parts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">split</span>(<span class="string">&quot;=&quot;</span>).<span class="ident">collect</span>();
+            // Loop through each line of the file
+            for line in lines {
+                // Check the length of the line is more than 0, and the line is not commented out,
+                // and also contains the &quot;=&quot; character to prevent out of bounds errors from the arrays
+                if line.len() &gt; 0 &amp;&amp; line.as_bytes()[0] != b&quot;#&quot;[0] &amp;&amp; line.contains(&quot;=&quot;) {
+                    // Split the line at the &quot;=&quot; character to get the key-value pair as individual strings
+                    let parts: Vec&lt;&amp;str&gt; = line.split(&quot;=&quot;).collect();
 
-                    <span class="comment">// If there are exactly 2 parts, match them against a logic tree</span>
-                    <span class="kw">if</span> <span class="ident">parts</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">2</span> {
-                        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">parts</span>[<span class="number">0</span>];
-                        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">parts</span>[<span class="number">1</span>];
+                    // If there are exactly 2 parts, match them against a logic tree
+                    if parts.len() == 2 {
+                        let key = parts[0];
+                        let value = parts[1];
 
-                        <span class="comment">// Match the key against a logic tree for each of the possible config options available to the program at the current time</span>
-                        <span class="kw">match</span> <span class="ident">key</span> {
-                            <span class="string">&quot;connections&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">to_lowercase</span>() <span class="op">=</span><span class="op">=</span> <span class="string">&quot;infinite&quot;</span> {
-                                    <span class="ident">l</span>.<span class="ident">warn</span>(<span class="string">&quot;Using &#39;infinite&#39; connection mode is not advisable, it may lead to severe slowdowns during large queries&quot;</span>).<span class="ident">await</span>;
-                                } <span class="kw">else</span> {
-                                    <span class="kw">let</span> <span class="ident">port</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>();
-                                    <span class="kw">if</span> <span class="ident">port</span>.<span class="ident">is_ok</span>() {
-                                        <span class="ident">m</span>.<span class="ident">max_connections</span> <span class="op">=</span> <span class="ident">port</span>.<span class="ident">unwrap</span>();
-                                    } <span class="kw">else</span> {
-                                        <span class="ident">l</span>.<span class="ident">warn</span>(<span class="string">&quot;Invalid value specified for the \&quot;connections\&quot; configuration. Should be an integer or &#39;infinite&#39;&quot;</span>).<span class="ident">await</span>;
+                        // Match the key against a logic tree for each of the possible config options available to the program at the current time
+                        match key {
+                            &quot;connections&quot; =&gt; {
+                                if value.to_lowercase() == &quot;infinite&quot; {
+                                    l.warn(&quot;Using &#39;infinite&#39; connection mode is not advisable, it may lead to severe slowdowns during large queries&quot;).await;
+                                } else {
+                                    let port = value.parse();
+                                    if port.is_ok() {
+                                        m.max_connections = port.unwrap();
+                                    } else {
+                                        l.warn(&quot;Invalid value specified for the \&quot;connections\&quot; configuration. Should be an integer or &#39;infinite&#39;&quot;).await;
                                     }
                                 }
                             }
-                            <span class="string">&quot;thread&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">let</span> <span class="ident">port</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>();
-                                <span class="kw">if</span> <span class="ident">port</span>.<span class="ident">is_ok</span>() {
-                                    <span class="ident">m</span>.<span class="ident">connections_per_thread</span> <span class="op">=</span> <span class="ident">port</span>.<span class="ident">unwrap</span>();
-                                } <span class="kw">else</span> {
-                                    <span class="ident">l</span>.<span class="ident">warn</span>(<span class="string">&quot;Invalid value specified for the \&quot;thread\&quot; configuration. Should be an integer&quot;</span>).<span class="ident">await</span>;
+                            &quot;thread&quot; =&gt; {
+                                let port = value.parse();
+                                if port.is_ok() {
+                                    m.connections_per_thread = port.unwrap();
+                                } else {
+                                    l.warn(&quot;Invalid value specified for the \&quot;thread\&quot; configuration. Should be an integer&quot;).await;
                                 }
                             }
-                            <span class="string">&quot;threadcount&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">let</span> <span class="ident">port</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>();
-                                <span class="kw">if</span> <span class="ident">port</span>.<span class="ident">is_ok</span>() {
-                                    <span class="ident">m</span>.<span class="ident">max_threads</span> <span class="op">=</span> <span class="ident">port</span>.<span class="ident">unwrap</span>();
-                                } <span class="kw">else</span> {
-                                    <span class="ident">l</span>.<span class="ident">warn</span>(<span class="string">&quot;Invalid value specified for the \&quot;threadcount\&quot; configuration. Should be an integer&quot;</span>).<span class="ident">await</span>;
+                            &quot;threadcount&quot; =&gt; {
+                                let port = value.parse();
+                                if port.is_ok() {
+                                    m.max_threads = port.unwrap();
+                                } else {
+                                    l.warn(&quot;Invalid value specified for the \&quot;threadcount\&quot; configuration. Should be an integer&quot;).await;
                                 }
                             }
-                            <span class="string">&quot;port&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">let</span> <span class="ident">port</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>();
-                                <span class="kw">if</span> <span class="ident">port</span>.<span class="ident">is_ok</span>() {
-                                    <span class="ident">m</span>.<span class="ident">bind_port</span> <span class="op">=</span> <span class="ident">port</span>.<span class="ident">unwrap</span>();
-                                } <span class="kw">else</span> {
-                                    <span class="ident">l</span>.<span class="ident">warn</span>(<span class="string">&quot;Invalid value specified for the \&quot;port\&quot; configuration. Should be an integer&quot;</span>).<span class="ident">await</span>;
+                            &quot;port&quot; =&gt; {
+                                let port = value.parse();
+                                if port.is_ok() {
+                                    m.bind_port = port.unwrap();
+                                } else {
+                                    l.warn(&quot;Invalid value specified for the \&quot;port\&quot; configuration. Should be an integer&quot;).await;
                                 }
                             }
-                            <span class="string">&quot;address&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="ident">m</span>.<span class="ident">bind_addr</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_string</span>();
+                            &quot;address&quot; =&gt; {
+                                m.bind_addr = value.to_string();
                             }
-                            <span class="string">&quot;debug&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;false&quot;</span> {
-                                    <span class="ident">l</span>.<span class="ident">levels</span>.<span class="ident">remove</span>(<span class="string">&quot;DEBUG&quot;</span>);
+                            &quot;debug&quot; =&gt; {
+                                if value == &quot;false&quot; {
+                                    l.levels.remove(&quot;DEBUG&quot;);
                                 }
                             }
-                            <span class="string">&quot;info&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;false&quot;</span> {
-                                    <span class="ident">l</span>.<span class="ident">levels</span>.<span class="ident">remove</span>(<span class="string">&quot;INFO&quot;</span>);
+                            &quot;info&quot; =&gt; {
+                                if value == &quot;false&quot; {
+                                    l.levels.remove(&quot;INFO&quot;);
                                 }
                             }
-                            <span class="string">&quot;log&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;false&quot;</span> {
-                                    <span class="ident">l</span>.<span class="ident">levels</span>.<span class="ident">remove</span>(<span class="string">&quot;LOG&quot;</span>);
+                            &quot;log&quot; =&gt; {
+                                if value == &quot;false&quot; {
+                                    l.levels.remove(&quot;LOG&quot;);
                                 }
                             }
-                            <span class="string">&quot;warn&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;false&quot;</span> {
-                                    <span class="ident">l</span>.<span class="ident">levels</span>.<span class="ident">remove</span>(<span class="string">&quot;WARN&quot;</span>);
+                            &quot;warn&quot; =&gt; {
+                                if value == &quot;false&quot; {
+                                    l.levels.remove(&quot;WARN&quot;);
                                 }
                             }
-                            <span class="string">&quot;error&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;false&quot;</span> {
-                                    <span class="ident">l</span>.<span class="ident">levels</span>.<span class="ident">remove</span>(<span class="string">&quot;ERROR&quot;</span>);
+                            &quot;error&quot; =&gt; {
+                                if value == &quot;false&quot; {
+                                    l.levels.remove(&quot;ERROR&quot;);
                                 }
                             }
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                            _ =&gt; {}
                         }
                     }
                 }
             }
-        } <span class="kw">else</span> {
-            <span class="ident">l</span>.<span class="ident">error</span>(<span class="ident">text_result</span>.<span class="ident">unwrap_err</span>(), <span class="ident">GXXX</span>).<span class="ident">await</span>;
-            <span class="ident">l</span>.<span class="ident">debug_message</span>(<span class="kw-2">&amp;</span><span class="ident">m</span>.<span class="ident">config_path</span>).<span class="ident">await</span>;
-            <span class="ident">l</span>.<span class="ident">fatal</span>(<span class="string">&quot;Invalid config file content, exiting gracefully&quot;</span>, <span class="ident">GXXX</span>, <span class="number">1</span>).<span class="ident">await</span>;
+        } else {
+            l.error(text_result.unwrap_err(), GXXX).await;
+            l.debug_message(&amp;m.config_path).await;
+            l.fatal(&quot;Invalid config file content, exiting gracefully&quot;, GXXX, 1).await;
         }
-    } <span class="kw">else</span> {
-        <span class="ident">l</span>.<span class="ident">error</span>(<span class="ident">read_result</span>.<span class="ident">unwrap_err</span>(), <span class="ident">GXXX</span>).<span class="ident">await</span>;
-        <span class="ident">l</span>.<span class="ident">debug_message</span>(<span class="kw-2">&amp;</span><span class="ident">m</span>.<span class="ident">config_path</span>).<span class="ident">await</span>;
-        <span class="ident">l</span>.<span class="ident">fatal</span>(<span class="string">&quot;Unable to locate config file, exiting gracefully&quot;</span>, <span class="ident">GXXX</span>, <span class="number">1</span>).<span class="ident">await</span>;
+    } else {
+        l.error(read_result.unwrap_err(), GXXX).await;
+        l.debug_message(&amp;m.config_path).await;
+        l.fatal(&quot;Unable to locate config file, exiting gracefully&quot;, GXXX, 1).await;
     }
 
-    <span class="ident">m</span>
-}
+    m
+}*/</span>
 
-<span class="comment">// Define the default configuration file, this has been minimised using the &quot;\n&quot; escape to signify that a newline is intended, but not present to keep the source code length down</span>
+<span class="comment">// TODO: update `BASE_CONFIG` const to use TOML formatted config file</span>
+<span class="doccomment">/// (OBSOLETE) Defines the default configuration file, this has been minimised using the &quot;\n&quot; escape to signify that a newline is intended, but not present to keep the source code length down</span>
 <span class="kw">const</span> <span class="ident">BASE_CONFIG</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;# This is the default, automatically generated configuration file.\n# This file was created because no config file was detected on your system at the time the program launched\n\n\n# The port to bind the connection listener to\nport=1234\n
 # The IP address to bind the connection listener to\naddress=127.0.0.1\n\n# Which levels of logging should be enabled\ndebug=true\ninfo=true\nlog=true\nwarn=true\nerror=true\n\n# Maximum number of connections to allow\n# Inifinite allows an unlimited amount of connections\n# Automatically calculated from `thread` and `threadcount` values if not present\nconnections=infinite\n
 # Maximum number of connections per thread\nthread=5\n\n# Maximum number of threads available to the database
-threadcount=10&quot;</span>;
-
-
-<span class="comment">// Define the line ending of the current system, if unix it is &quot;\n&quot; if windows it is &quot;\r\n&quot;, this is important when reading and writing files</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
-<span class="kw">const</span> <span class="ident">LINE_ENDING</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;\r\n&quot;</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
-<span class="kw">const</span> <span class="ident">LINE_ENDING</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;\n&quot;</span>;</pre></div>
+threadcount=10&quot;</span>;</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../";window.currentCrate = "kalavar_core";</script><script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script><script defer src="../../../../search-index.js"></script></body></html>

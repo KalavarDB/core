@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DatabasePermissions",""],["PermissionManager",""],["TablePermissions",""]]});
+initSidebarItems({"struct":[["DatabasePermissions","Describes the permissions  has for the reference database. Calculated via bitwise operations"],["PermissionManager","Describes the permissions  has for any given database or table"],["TablePermissions","Describes the permissions  has for the reference table. Calculated via bitwise operations"]]});

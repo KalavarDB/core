@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["StorageManager",""]]});
+initSidebarItems({"struct":[["StorageManager","Utility structure whose only job is to manage the smooth transfer of data between memory and disk based on cache capacity, memory usage, and a number of other factors"]]});

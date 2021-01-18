@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Connection",""]]});
+initSidebarItems({"struct":[["Connection","A structure used to represent a connection to the system from an external client"]]});

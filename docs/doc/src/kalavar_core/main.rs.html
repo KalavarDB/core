@@ -70,9 +70,6 @@
     <span class="ident">config</span>::<span class="ident">ConfigManager</span>,
 };
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span>;
-
 <span class="comment">// The primary function of the program, called at runtime to start the server</span>
 <span class="attribute">#[<span class="ident">tokio</span>::<span class="ident">main</span>]</span>
 <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
@@ -99,5 +96,8 @@
 <span class="kw">mod</span> <span class="ident">implementors</span>;
 <span class="kw">mod</span> <span class="ident">core_structures</span>;
 <span class="kw">mod</span> <span class="ident">core</span>;
-<span class="kw">mod</span> <span class="ident">errors</span>;</pre></div>
+<span class="kw">mod</span> <span class="ident">errors</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span>;</pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "kalavar_core";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

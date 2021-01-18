@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Table",""]]});
+initSidebarItems({"struct":[["Table","A structure defining the contents of a table within a database"]]});

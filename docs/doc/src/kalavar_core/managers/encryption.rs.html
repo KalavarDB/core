@@ -47,19 +47,36 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">io</span>::{<span class="ident">BufReader</span>, <span class="ident">BufWriter</span>, <span class="ident">AsyncWriteExt</span>};
 <span class="kw">use</span> <span class="ident">orion</span>::<span class="ident">aead</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">as_bytes</span>::<span class="ident">AsBytes</span>;
 
+<span class="doccomment">/// A utility structure for handling encryption between the server and the client</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EncryptionManager</span> {
+
+    <span class="doccomment">/// The key used to encrypt the data</span>
     <span class="ident">key</span>: <span class="ident">SecretKey</span>,
+
+    <span class="doccomment">/// The stream the data should be sent to, and decrypted from</span>
     <span class="kw">pub</span> <span class="ident">stream</span>: <span class="ident">TcpStream</span>
 }
 
 
 <span class="kw">impl</span> <span class="ident">EncryptionManager</span> {
+    <span class="doccomment">/// A utility method to instantiate a new encryption manager for a given TcpStream</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">stream</span>: <span class="ident">TcpStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EncryptionManager</span> {
         <span class="ident">EncryptionManager</span> {
             <span class="ident">key</span>: <span class="ident">SecretKey</span>::<span class="ident">default</span>(),
@@ -67,6 +84,7 @@
         }
     }
 
+    <span class="doccomment">/// (OBSOLETE) A method to send information about the encryption methods used to the client</span>
     <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_kv_bytes</span>();
         <span class="kw">let</span> <span class="ident">ciphertext</span> <span class="op">=</span> <span class="ident">seal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">key</span>, <span class="ident">k</span>.<span class="ident">as_slice</span>());
@@ -82,6 +100,8 @@
         }
     }
 
+
+    <span class="doccomment">/// Encrypt and then write the provided data to the TcpStream and flush the buffer so that it is transmitted to the client for processing</span>
     <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">AsBytes</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) {
         <span class="kw">let</span> <span class="ident">ciphertext</span> <span class="op">=</span> <span class="ident">seal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">key</span>, <span class="ident">data</span>.<span class="ident">as_kv_bytes</span>().<span class="ident">as_slice</span>());
         <span class="kw">if</span> <span class="ident">ciphertext</span>.<span class="ident">is_ok</span>() {
@@ -90,6 +110,8 @@
             <span class="ident">writer</span>.<span class="ident">flush</span>().<span class="ident">await</span>;
         }
     }
+
+    <span class="doccomment">/// (OBSOLETE) Read and subsequently decrypt the data received from the client</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BufReader</span><span class="op">&lt;</span><span class="ident">TcpStream</span><span class="op">&gt;</span>) {
         <span class="comment">// let data = open(&amp;self.key, )</span>
     }

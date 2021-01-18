@@ -80,31 +80,31 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">row_record</span>::<span class="ident">RowRecord</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core_structures</span>::<span class="ident">column</span>::<span class="ident">ColumnType</span>;
 
-<span class="comment">// Helper structure used to locate specific rows for a specific table in a database</span>
+<span class="doccomment">/// Helper structure used to locate specific rows for a specific table in a database</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TableRecord</span> {
-    <span class="comment">// A reference to the table that this record actually points to</span>
+    <span class="doccomment">/// A reference to the table that this record actually points to</span>
     <span class="kw">pub</span> <span class="ident">inner</span>: <span class="ident">Table</span>,
 
-    <span class="comment">// The byte number that this table begins at in the data list</span>
+    <span class="doccomment">/// The byte number that this table begins at in the data list</span>
     <span class="kw">pub</span> <span class="ident">start</span>: <span class="ident">u64</span>,
 
-    <span class="comment">// The byte signifying the end of this table</span>
+    <span class="doccomment">/// The byte signifying the end of this table</span>
     <span class="kw">pub</span> <span class="ident">end</span>: <span class="ident">u64</span>,
 
-    <span class="comment">// The name of the file backing this table</span>
+    <span class="doccomment">/// The name of the file backing this table</span>
     <span class="kw">pub</span> <span class="ident">backing</span>: <span class="ident">String</span>,
 
-    <span class="comment">// If the backing is actually a directory, or just a file</span>
+    <span class="doccomment">/// If the backing is actually a directory, or just a file</span>
     <span class="kw">pub</span> <span class="ident">backing_is_dir</span>: <span class="ident">bool</span>,
 
-    <span class="comment">// The name of the table this struct is referencing</span>
+    <span class="doccomment">/// The name of the table this struct is referencing</span>
     <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">String</span>,
 
-    <span class="comment">// The columns of the table, and their respective types</span>
+    <span class="doccomment">/// The columns of the table, and their respective types</span>
     <span class="kw">pub</span> <span class="ident">columns</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ColumnType</span><span class="op">&gt;</span>,
 
-    <span class="comment">// The rows within the table itself</span>
+    <span class="doccomment">/// The rows within the table itself</span>
     <span class="kw">pub</span> <span class="ident">rows</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u128</span>, <span class="ident">RowRecord</span><span class="op">&gt;</span>
 }
 
