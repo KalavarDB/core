@@ -11,20 +11,21 @@ pause() {
 while :; do
   # show menu
   clear
-  echo "---------------------------------"
-  echo "       Kalavar Dev Kit V0.1      "
-  echo "---------------------------------"
-  echo "1.   Check Dependencies"
-  echo "2.   Build and run"
-  echo "3. Δ Build and run as super user"
-  echo "4.   Build and run tests"
-  echo "5. Δ Purge target directory"
-  echo "6.   Install Dependency Checker"
-  echo "7.   Exit"
-  echo "---------------------------------"
-  echo " Δ - requires SUDO priveleges"
-  echo "---------------------------------"
-  read -r -p "Enter your choice [1-7] : " c
+  echo "+----------------------------------+"
+  echo "|      Kalavar Dev Kit V0.1        |"
+  echo "+----------------------------------+"
+  echo "| 1.   Check Dependencies          |"
+  echo "| 2.   Build and run               |"
+  echo "| 3. Δ Build and run as super user |"
+  echo "| 4.   Build and run tests         |"
+  echo "| 5.   Build internal docs         |"
+  echo "| 6. Δ Purge target directory      |"
+  echo "| 7.   Install Dependency Checker  |"
+  echo "| 8.   Exit                        |"
+  echo "+----------------------------------+"
+  echo "| Δ - requires SUDO priveleges     |"
+  echo "+----------------------------------+"
+  read -r -p "Enter your choice [1-8] : " c
   # take action
   case $c in
   1)
@@ -48,16 +49,21 @@ while :; do
     pause
     ;;
   5)
-    sudo rm -r ./target
+    cargo doc
     echo
     pause
     ;;
   6)
+    sudo rm -r ./target
+    echo
+    pause
+    ;;
+  7)
     cargo install version-checker
     echo
     pause
     ;;
-  7) break ;;
-  *) pause "Select between 1 to 7 only" ;;
+  8) break ;;
+  *) pause "Select between 1 to 8 only" ;;
   esac
 done
