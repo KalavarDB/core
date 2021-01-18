@@ -14,7 +14,7 @@ jobs:
     name: Document Crate
     runs-on: ubuntu-latest
     env:
-      RUSTDOCFLAGS: -Dbroken_intra_doc_links
+      RUSTDOCFLAGS: -Dbroken_intra_doc_links -Z unstable-options --extend-css docs/theme.css
       OPENVINO_SKIP_LINKING: 1
     steps:
     - uses: actions/checkout@v2.3.4
@@ -23,7 +23,7 @@ jobs:
         submodules: true
     - uses: actions-rs/toolchain@v1
       with:
-          toolchain: stable
+          toolchain: nightly
     - uses: actions-rs/cargo@v1
       with: 
         command: doc
@@ -34,6 +34,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add -A
         git commit -m "Built docs for ${{github.sha}}" -a
+        git pull --rebase
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
