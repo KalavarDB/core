@@ -5,17 +5,16 @@ use std::time::Instant;
 // Internal crate imports
 use crate::core_structures::database_record::DatabaseRecord;
 
-// A structure built to manage the basic functions of storage and retrieval of data
-// Literally the most important structure of the whole database, give it some credit
+
+/// Utility structure whose only job is to manage the smooth transfer of data between memory and disk based on cache capacity, memory usage, and a number of other factors
 #[derive(Debug)]
 pub struct StorageManager {
-    // A HashMap containing the name of each database the manager can locate,
-    // as well as a way of seeing the location of all of it's data
+    /// A tracking map of all the databases that the program has located within its data directory
     pub databases: HashMap<String, DatabaseRecord>,
 
-    // The last time the database was dumped to the disk
+    /// The last time that any in-memory data was dumped to the disk and refreshed
     pub last_write: Instant,
 
-    // The directory in which it will find any database it should read and process
+    /// The directory to scan for potential databases
     pub dir: String,
 }

@@ -7,22 +7,32 @@ use tokio::io;
 use tokio::io::{AsyncReadExt, ErrorKind, AsyncWriteExt};
 
 // Internal crate imports
-use crate::managers::config::ConfigManager;
+use crate::managers::config::{ConfigManager, Config, NetConfig, LanguageConfig};
 use crate::managers::logging::LoggingManager;
 use crate::errors::ErrorMap::*;
 
 impl ConfigManager {
-    // A helper method to build and pre-configure a configuration manager structure and return it to the caller
+    /// A helper method to build and pre-configure a configuration manager structure and return it to the caller
     pub async fn new(logger: &mut LoggingManager, os: &str) -> ConfigManager {
 
         // Instantiate the manager with pre-defined defaults
         let mut manager = ConfigManager {
             config_path: "".to_string(),
-            bind_port: 1234,
-            bind_addr: "127.0.0.1".to_string(),
-            max_connections: 0,
-            connections_per_thread: 5,
-            max_threads: 10,
+            config: Config {
+                network: NetConfig {
+                    bind_port: 1234,
+                    bind_addr: "127.0.0.1".to_string(),
+                    max_connections: 0,
+                    connections_per_thread: 5,
+                },
+                language: LanguageConfig {
+                    convention: None,
+                    database_convention: None,
+                    table_convention: None,
+                    column_convention: None,
+                    procedure_convention: None,
+                },
+            },
         };
 
         // Attempt to determine the location of the configuration file based on the operating system (and by extension, file system)
@@ -32,7 +42,7 @@ impl ConfigManager {
             // And set the config path accordingly
             "linux" | "macos" => {
                 logger.debug_message("Readjusting configuration path directories for Linux").await;
-                manager.config_path = "/etc/kalavar/server.conf".to_string()
+                manager.config_path = "/etc/kalavar/server.toml".to_string()
             }
 
             // If the operating matches none of the previous branches of this logic tree
@@ -50,6 +60,8 @@ impl ConfigManager {
 
         // If the file is okay, parse the file
         // If it is not, check the type of the error and act accordingly
+        // TODO: update the "parse_config" function to istead parse the config from TOML format instead of the current one
+        /*
         if file.is_ok() {
             let mut inner = file.unwrap();
             manager = parse_config(logger, manager, &mut inner).await;
@@ -87,7 +99,7 @@ impl ConfigManager {
                                 logger.warn(format!("Directory not found: \"{}\"", manager.config_path)).await;
                                 let mut path: Vec<&str> = (&manager.config_path).split("/").collect();
 
-                                // Remove the last component of the config path (the "/server.conf" part)
+                                // Remove the last component of the config path (the "/server.toml" part)
                                 // To leave us with the directory tree
                                 path.pop();
 
@@ -156,7 +168,7 @@ impl ConfigManager {
                     logger.error(err, GXXX).await;
                 }
             }
-        }
+        }*/
 
         // Return the now created and ready to use config manager to the caller
         manager
@@ -164,6 +176,7 @@ impl ConfigManager {
 }
 
 
+/*
 // Helper function to parse the config file and modify the manager accordingly
 async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut File) -> ConfigManager {
     let mut content: Vec<u8> = vec!();
@@ -280,17 +293,11 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
     }
 
     m
-}
+}*/
 
-// Define the default configuration file, this has been minimised using the "\n" escape to signify that a newline is intended, but not present to keep the source code length down
+// TODO: update `BASE_CONFIG` const to use TOML formatted config file
+/// (OBSOLETE) Defines the default configuration file, this has been minimised using the "\n" escape to signify that a newline is intended, but not present to keep the source code length down
 const BASE_CONFIG: &str = "# This is the default, automatically generated configuration file.\n# This file was created because no config file was detected on your system at the time the program launched\n\n\n# The port to bind the connection listener to\nport=1234\n
 # The IP address to bind the connection listener to\naddress=127.0.0.1\n\n# Which levels of logging should be enabled\ndebug=true\ninfo=true\nlog=true\nwarn=true\nerror=true\n\n# Maximum number of connections to allow\n# Inifinite allows an unlimited amount of connections\n# Automatically calculated from `thread` and `threadcount` values if not present\nconnections=infinite\n
 # Maximum number of connections per thread\nthread=5\n\n# Maximum number of threads available to the database
 threadcount=10";
-
-
-// Define the line ending of the current system, if unix it is "\n" if windows it is "\r\n", this is important when reading and writing files
-#[cfg(windows)]
-const LINE_ENDING: &str = "\r\n";
-#[cfg(not(windows))]
-const LINE_ENDING: &str = "\n";

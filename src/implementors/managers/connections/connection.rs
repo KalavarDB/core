@@ -8,6 +8,7 @@ use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 use crate::managers::encryption::EncryptionManager;
 
 impl Connection {
+    /// Utility method to instantiate a new Connection structure on behalf of the connection manager
     pub async fn new(id: usize, logger: &LoggingManager, (stream, remote): (TcpStream, SocketAddr), receiver: Receiver<ConnectionProtocolMessage>, transmitter: Sender<ConnectionProtocolMessage>) -> Connection {
         logger.debug_message(format!("Incoming connection from {}", remote.ip())).await;
         Connection {

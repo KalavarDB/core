@@ -14,7 +14,8 @@ pub struct ConfigManager {
 pub struct Config {
     /// Network configuration options
     pub network: NetConfig,
-    pub processing: ProcessingConfig,
+
+    /// Language related configuration options
     pub language: LanguageConfig,
 }
 
@@ -33,11 +34,20 @@ pub struct NetConfig {
     pub connections_per_thread: u8,
 }
 
-pub struct ProcessingConfig {
-    // The maximum number of threads the server should run at a time
-    pub max_threads: u8,
-}
-
+/// Utility structure to define things relating to language used within the system
 pub struct LanguageConfig {
-    // The
+    /// The naming convention against which to validate the names of all databases, tables, columns, and procedures
+    pub convention: Option<String>,
+
+    /// The naming convention against which to validate the names of all databases
+    pub database_convention: Option<String>,
+
+    /// The naming convention against which to validate the names of all tables
+    pub table_convention: Option<String>,
+
+    /// The naming convention against which to validate the names of all columns
+    pub column_convention: Option<String>,
+
+    /// The naming convention against which to validate the names of all procedures
+    pub procedure_convention: Option<String>,
 }

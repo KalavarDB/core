@@ -13,7 +13,7 @@ use tokio::sync::broadcast::{channel, Receiver, Sender};
 use tokio::time::Duration;
 
 impl ConnectionManager {
-    // Helper function used to instantiate a new connection manager on behalf of a caller
+    /// Helper function used to instantiate a new connection manager on behalf of a caller
     pub async fn new(
         l: &mut LoggingManager,
         config: &ConfigManager,
@@ -29,8 +29,7 @@ impl ConnectionManager {
         }
     }
 
-    // The function used to start the connection server,
-    // as well as the other core components of the program such as memory tracking and storage manageent
+    /// Launches the memory management thread, and the storage management thread, whilst also beginning to listen for incoming TCP connections based off of the configuration options provided by the config manager
     pub async fn connect(&mut self, logger: &LoggingManager) {
         // Define a defualt transmitter and receiver which will be used for inter-thread communications across this codebase
         let (transmitter, mut receiver): (

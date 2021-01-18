@@ -4,22 +4,22 @@ use tokio::net::TcpListener;
 // Internal crate imports
 use crate::managers::storage::StorageManager;
 
-// Management structure to handle the connection server, and instnatiate the storage manager, w
-// hilst launching threads for managing memory allocation and queries
+/// A utility structure designed to simplify the management of connection handling and verification.
+/// This manager also handles the launching of the memory management thread, and the storage management thread
 pub struct ConnectionManager{
 
-    // An optional TCP Listener (optional due to being added after the struct is initiated)
+    /// An optional TCP Listener (optional due to being added after the struct is initiated)
     pub listener: Option<TcpListener>,
 
-    // The port that the listener will bind to
+    /// The port that the listener will bind to
     pub port: u32,
 
-    // The IP that the listener will bind to
+    /// The IP that the listener will bind to
     pub addr: String,
 
-    // The id of the next connection
+    /// The id of the next connection
     pub connections: usize,
 
-    // The storage manager
+    /// The storage manager
     pub dbm: StorageManager
 }

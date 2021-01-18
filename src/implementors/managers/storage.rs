@@ -8,6 +8,7 @@ use tokio::io::ErrorKind;
 use crate::errors::ErrorMap::*;
 
 impl StorageManager {
+    /// Instantiates a new storage manager on behalf of the caller
     pub async fn new(l: &mut LoggingManager, os: &str) -> StorageManager {
         let mut storage_manager = StorageManager {
             databases: HashMap::new(),
@@ -38,6 +39,7 @@ impl StorageManager {
     }
 }
 
+/// Utility method to parse the database files within the data directory
 async fn parse_incoming(mut s: StorageManager, l: &LoggingManager) -> StorageManager {
     let mut failed: (bool, ErrorKind) = (false, ErrorKind::Other);
     let core_files: [&str;3] = ["/data/core/map.kgb", "/data/core/map.kdb", l.log_file.as_str()];
@@ -62,7 +64,7 @@ async fn parse_incoming(mut s: StorageManager, l: &LoggingManager) -> StorageMan
     s
 }
 
-
+/// Utility function to handle the event that the data directory does not exist in a more graceful manner than just panicking
 async fn handle_missing_data_dir(l: &LoggingManager, e: ErrorKind, root: &String) {
     match e {
         ErrorKind::NotFound => {
