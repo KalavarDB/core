@@ -5,6 +5,7 @@ on:
     tags-ignore: [dev]
     paths-ignore:
       - 'docs/*'
+      - '.github/*'
 defaults:
   run:
     shell: bash
