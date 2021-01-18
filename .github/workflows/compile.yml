@@ -3,8 +3,7 @@ on:
   push:
     branches: [main]
     tags-ignore: [dev]
-    paths-ignore:
-      - 'docs/*'
+    paths-ignore: ['docs/*', 'binaries/*']
 defaults:
   run:
     shell: bash
@@ -32,7 +31,9 @@ jobs:
       - run: |
           git pull --rebase
           mkdir -p binaries/$USE_TOOLCHAIN
+          echo Files inside of target/$USE_TOOLCHAIN
           ls target/$USE_TOOLCHAIN
+          echo =====================================
           cp target/$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
           git add -A
           git commit -m "build ($USE_TOOLCHAIN) complete"
