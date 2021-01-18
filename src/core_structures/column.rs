@@ -5,71 +5,105 @@ const KB: u64 = 1024 * BYTE;
 const MB: u64 = 1024 * KB;
 const GB: u64 = 1024 * MB;
 
-// An enumerator which defines the available column types
-// I recommend reading the documentation at the link below for details on them all:
-// https://kalavar.cf/documentation/data-types/
+/// An enumerator which defines the available column types
+/// I recommend reading the documentation at the link below for details on them all:
+/// https://kalavar.cf/documentation/data-types/
 #[derive(Debug, Clone)]
 pub enum ColumnTypeEnum {
     // Text Types
+    /// A generic String type
     String,
+    /// JSON flavoured string
     JSON,
 
     // Byte Types
+    /// Boolean data type for columns
     Bool,
+    /// 8 Bit storage type
     Byte,
+    /// Binary Large Object type
     BLOB,
 
     // Numeric Types
+    /// Unsigned 8 bit integer
     Integer8,
+    /// Unsigned 16 bit integer
     Integer16,
+    /// Unsigned 32 bit integee
     Integer32,
+    /// Unsigned 64 bit integer
     Integer64,
+    /// Signed 8 bit integer
     SignedInteger8,
+    /// Signed 16 bit integer
     SignedInteger16,
+    /// Signed 32 bit integer
     SignedInteger32,
+    /// Signed 64 bit integer
     SignedInteger64,
+    /// An unsigned integer, comprised of other integers to provide maximum storage capacity
     BigInteger,
+    /// A signed integer, comprised of other integers to provide maximum storage capacity
     SignedBigInteger,
 
     // Identifier Types
+    /// Snowflake unique identifier
     Snowflake,
+    /// Universally Unique Identifier
     UUID,
+    /// Sony's re-thought version of Snowflake
     SonyFlake,
 
     // Color Types
+    /// Red, Green, Blue color type
     RGB,
+    /// Red, Green, Blue, Alpha color type
     RGBA,
+    /// Cyan, Magenta, Yellow, Black color type
     CMYK,
+    /// Hexadecimal color type
     Hex,
 
     // Boundless Types
+    /// An array type for the column
     Array,
+    /// An enumerator type for the column, see the [docs](https://kalavar.cf/documentation/data-types/enum/) for more info
     Enum,
 
     // Network Types
+    /// Simple validated IPv4 address type
     IPv4,
+    /// Simple validated IPv6 address type
     IPv6,
+    /// Simple MAC address type
     Mac,
-    Mac8,
+    // Mac8,
 
     // Timestamps
+    /// A timestamp, prefixed with information about the timezone it is for to allow for conversion
     Timestamp,
+    /// A timestamp without the prefixed timezone data, assumes it is UTC and converts to `Timetstamp` as though it was UTC based, even if it may not be
     NaiveTimestamp,
 }
 
-// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type
+/// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type
 #[derive(Debug, Clone)]
 pub struct ColumnType {
+    /// If the column is to be hidden in results from queries
     pub is_private: bool,
+    /// The type of the column
     pub inner_type: ColumnTypeEnum,
+    /// The minimum length of the column type in question (the value this represents actually changes based on the inner_type
     pub min_len: u64,
+    /// The maximum length of the column type in question (the value this represents actually changes based on the inner_type
     pub max_len: u128,
+    /// The potential sub type of the type, if applicable
     pub value_type: Option<ColumnTypeEnum>,
 }
 
 
 impl ColumnType {
-    // Helper method to generate a new column
+    /// Helper method to generate a new column
     pub fn new(inner: ColumnTypeEnum, value_type: Option<ColumnTypeEnum>, length: u64) -> ColumnType {
         // Build a default column entry
         let mut t = ColumnType {
@@ -84,6 +118,7 @@ impl ColumnType {
         return process_column(t, inner, length);
     }
 
+    /// Helper method to generate a new private column which remains hidden from query results
     pub fn new_prv(inner: ColumnTypeEnum, value_type: Option<ColumnTypeEnum>, length: u64) -> ColumnType {
         // Build a default column entry
         let mut t = ColumnType {
@@ -99,6 +134,7 @@ impl ColumnType {
     }
 }
 
+/// Helper function for serialization using the record types
 pub fn process_column(mut t: ColumnType, inner: ColumnTypeEnum, length: u64) -> ColumnType {
     return match inner {
         ColumnTypeEnum::String | ColumnTypeEnum::JSON | ColumnTypeEnum::BLOB => {

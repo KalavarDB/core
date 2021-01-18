@@ -5,12 +5,23 @@ use std::error::Error;
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorMap {
     // General Errors
-    GXXX, // Unknown error, needs to be mapped to error code
-    G101, // Error connecting to database
-    G201, // Failed to generate required files (permissions error)
-    G202, // Failed to determine config directory
-    G203, // Failed to determine log directory
-    E204, // Invalid configuration file
+    /// Unknown error, needs to be mapped to error code
+    GXXX,
+
+    /// Error connecting to database
+    G101,
+
+    /// Failed to generate required files (permissions error)
+    G201,
+
+    /// Failed to determine config directory
+    G202,
+
+    /// Failed to determine log directory
+    G203,
+
+    /// Invalid configuration file
+    E204,
 
     // Connection Errors
 
@@ -19,7 +30,6 @@ pub enum ErrorMap {
 
 
     // Drive Errors
-
 }
 
 impl Display for ErrorMap {
@@ -28,9 +38,10 @@ impl Display for ErrorMap {
     }
 }
 
-
+/// A generic error type to handle all the custom errors that this program might throw during operation
 struct GeneralError {
-   code: ErrorMap,
+    /// The error code which is relevant to the error encapsulated within
+    code: ErrorMap,
 }
 
 impl Display for GeneralError {
@@ -63,6 +74,4 @@ impl Debug for GeneralError {
     }
 }
 
-impl Error for GeneralError {
-
-}
+impl Error for GeneralError {}
