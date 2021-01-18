@@ -245,7 +245,7 @@ pub fn process_column(mut t: ColumnType, inner: ColumnTypeEnum, length: u64) -> 
             t
         }
         ColumnTypeEnum::Timestamp => {
-            t.min_len = BYTE * 10
+            t.min_len = BYTE * 10;
             t.max_len = BYTE * 10 as u128;
             t
         }
