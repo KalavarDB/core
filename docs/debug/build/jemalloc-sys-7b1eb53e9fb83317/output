@@ -371,8 +371,8 @@ ar crus lib/libjemalloc.a src/jemalloc.o src/arena.o src/background_thread.o src
 ln -sf libjemalloc.so.2 lib/libjemalloc.so
 running: "make" "srcroot=../jemalloc/" "install_lib_static" "install_include" "-j" "2"
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
-/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
+/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -m 755 lib/libjemalloc.a /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 /usr/bin/install -c -m 755 lib/libjemalloc_pic.a /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 cargo:root=/home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out
