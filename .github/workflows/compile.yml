@@ -32,7 +32,7 @@ jobs:
       - run: |
           git pull --rebase
           mkdir -p binaries/$USE_TOOLCHAIN
-          ls target
+          ls target/$USE_TOOLCHAIN
           cp target/$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
           git add -A
           git commit -m "build ($USE_TOOLCHAIN) complete"
