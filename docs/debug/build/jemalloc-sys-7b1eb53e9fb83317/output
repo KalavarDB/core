@@ -373,8 +373,8 @@ running: "make" "srcroot=../jemalloc/" "install_lib_static" "install_include" "-
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 /usr/bin/install -c -m 755 lib/libjemalloc.a /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
-/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -m 755 lib/libjemalloc_pic.a /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
+/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 cargo:root=/home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out
 cargo:rustc-link-lib=static=jemalloc_pic
 cargo:rustc-link-search=native=/home/runner/work/core/core/./docs/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/build/lib
