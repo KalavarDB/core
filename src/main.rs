@@ -17,6 +17,9 @@ use crate::managers::{
     config::ConfigManager,
 };
 
+#[cfg(test)]
+mod tests;
+
 // The primary function of the program, called at runtime to start the server
 #[tokio::main]
 async fn main() {

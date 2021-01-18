@@ -1,5 +1,4 @@
 pub mod database_record;
-pub mod database;
 pub mod table;
 pub mod query;
 pub mod query_result;

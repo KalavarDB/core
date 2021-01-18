@@ -36,7 +36,7 @@ pub struct TablePermissions {
 impl Display for PermissionManager {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut content = String::new();
-        for (name, db) in self.inner {
+        for (name, db) in &self.inner {
             content = format!("{}Permissions for '{}':", content, name);
             content = format!("{}\nCREATE:        {}", content, db.create);
             content = format!("{}\nDELETE:        {}", content, db.delete);
@@ -48,7 +48,7 @@ impl Display for PermissionManager {
             content = format!("{}\nMODIFY TABLES: {}", content, db.modify_tables);
             content = format!("{}\nNumeric:       {}", content, db.int);
 
-            for (table_name, table) in db.access {
+            for (table_name, table) in &db.access {
                 content = format!("{}\nPermissions for '{}'.'{}':", content, name, table_name);
                 content = format!("{}\nCREATE:        {}", content, table.create);
                 content = format!("{}\nDELETE:        {}", content, table.delete);

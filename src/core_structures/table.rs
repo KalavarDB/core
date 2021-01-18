@@ -2,7 +2,7 @@
 use std::collections::HashMap;
 
 // Internal crate imports
-use crate::core_structures::column::ColumnType;
+use crate::core_structures::column::{ColumnType, ColumnTypeEnum};
 use crate::core_structures::row::Row;
 
 // A structure defining the contents of a table within a database
@@ -15,19 +15,19 @@ pub struct Table {
     pub columns: HashMap<String, ColumnType>,
 
     // An (unsorted) array of all the rows in this table
-    pub rows: Vec<Row>
+    pub rows: Vec<Row>,
 }
 
 impl Table {
-    pub fn new(name: String, columns: Vec<(String, ColumnType)>) -> Table {
+    pub fn new<N: Into<String>>(name: N, columns: Vec<(N, ColumnType)>) -> Table {
         let mut t = Table {
-            name,
+            name: name.into(),
             columns: HashMap::new(),
-            rows: vec!()
+            rows: vec!(),
         };
-
+        t.columns.insert("__IDENTIFIER__".to_string(), ColumnType::new_prv(ColumnTypeEnum::Integer64, None, 64));
         for column in columns {
-            t.columns.insert(column.0, column.1);
+            t.columns.insert(column.0.into(), column.1);
         }
 
         t
