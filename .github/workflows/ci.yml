@@ -12,7 +12,7 @@ on:
     branches: ['main']
     paths-ignore: ['docs/*', 'binaries/*']
 
-name: Continuous-Integration
+name: CI
 
 jobs:
   check:
