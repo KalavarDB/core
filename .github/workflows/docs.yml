@@ -21,10 +21,13 @@ jobs:
       with:
         ref: main
         submodules: true
-    - uses: ./.github/actions/install-rust
+    - uses: actions-rs/toolchain@v1
       with:
-        toolchain: nightly
-    - run: cargo doc --no-deps --document-private-items
+          toolchain: stable
+    - uses: actions-rs/cargo@v1
+      with: 
+        command: doc
+        args: --no-deps --document-private-items 
     - uses: actions/upload-artifact@v1
       with:
         name: doc-api
