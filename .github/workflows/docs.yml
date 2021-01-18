@@ -1,4 +1,4 @@
-name: CI
+name: Build Docs
 on:
   push:
     branches: [main]
@@ -10,61 +10,8 @@ defaults:
     shell: bash
 
 jobs:
-  # Check Code style quickly by running `rustfmt` over all code
-  rustfmt:
-    name: Rustfmt
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - uses: ./.github/actions/install-rust
-    - run: rustup component add rustfmt
-    - run: cargo fmt --all -- --check
-
-  # Lint dependency graph for security advisories, duplicate versions, and
-  # incompatible licences
-  cargo_deny:
-    name: Cargo deny
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - uses: ./.github/actions/install-rust
-    - run: |
-        set -e
-        curl -L https://github.com/EmbarkStudios/cargo-deny/releases/download/0.8.5/cargo-deny-0.8.5-x86_64-unknown-linux-musl.tar.gz | tar xzf -
-        mv cargo-deny-*-x86_64-unknown-linux-musl/cargo-deny cargo-deny
-        echo `pwd` >> $GITHUB_PATH
-    - run: cargo deny check
-
-  # Build `mdBook` documentation for `wasmtime`, and upload it as a temporary
-  # build artifact
-  doc_book:
-    name: Doc - build the book
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - run: |
-        set -e
-        curl -L https://github.com/rust-lang-nursery/mdBook/releases/download/v0.4.4/mdbook-v0.4.4-x86_64-unknown-linux-gnu.tar.gz | tar xzf -
-        echo `pwd` >> $GITHUB_PATH
-    - run: (cd docs && mdbook build)
-    - run: cargo build -p wasmtime
-    - run: (cd docs && mdbook test -L ../target/debug/deps)
-    - uses: actions/upload-artifact@v1
-      with:
-        name: doc-book
-        path: docs/book
-
-  # Build rustdoc API documentation for `wasmtime*` crates. Note that we don't
-  # want to document all our transitive dependencies, hence `--no-deps`. This is
-  # a temporary build artifact we upload to consume later.
   doc_api:
-    name: Doc - build the API documentation
+    name: Document Crate
     runs-on: ubuntu-latest
     env:
       RUSTDOCFLAGS: -Dbroken_intra_doc_links
@@ -86,4 +33,4 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: doc-api
-        path: docs
+        path: target/doc
