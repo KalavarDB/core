@@ -73,46 +73,14 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-#  build-win-32:
-#    if: |
-#      contains(github.event.head_commit.message, '[release]')
-#    runs-on: ubuntu-latest
-#    env:
-#      USE_TOOLCHAIN: "i686-pc-windows-gnu"
-#    name: Build Windows x32
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions-rs/toolchain@v1
-#        with:
-#          toolchain: stable
-#          target: ${{env.USE_TOOLCHAIN}}
-#          override: true
-#      - uses: actions-rs/cargo@v1
-#        with:
-#          use-cross: true
-#          command: build
-#          args: --target ${{env.USE_TOOLCHAIN}} --release
-#      - run: |
-#          git pull --rebase
-#          mkdir -p binaries/$USE_TOOLCHAIN
-#          cp target/$USE_TOOLCHAIN/release/kalavar-core binaries/$USE_TOOLCHAIN/kalavar
-#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-#          git config --local user.name "github-actions[bot]"
-#          git add -A
-#          git commit -m "build ($USE_TOOLCHAIN) complete"
-#      - name: Push changes
-#        uses: ad-m/github-push-action@master
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          branch: ${{ github.ref }}
-build-linux-32:
+  build-linux-32:
     if: |
       contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-latest
     env:
       USE_TOOLCHAIN: "i686-unknown-linux-gnu"
     name: Build Linux x32
-     steps:
+    steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
@@ -137,38 +105,6 @@ build-linux-32:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-#  build-win-64:
-#    if: |
-#      contains(github.event.head_commit.message, '[release]')
-#    runs-on: windows-latest
-#    env:
-#      USE_TOOLCHAIN: "x86_64-pc-windows-gnu"
-#    name: Build Windows x64
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions-rs/toolchain@v1
-#        with:
-#          toolchain: stable
-#          target: ${{env.USE_TOOLCHAIN}}
-#          override: true
-#      - uses: actions-rs/cargo@v1
-#        with:
-#          use-cross: false
-#          command: build
-#          args: --target ${{env.USE_TOOLCHAIN}} --release
-#      - run: |
-#          git pull --rebase
-#          mkdir -p binaries/$USE_TOOLCHAIN
-#          cp target/$USE_TOOLCHAIN/release/kalavar-core binaries/$USE_TOOLCHAIN/kalavar
-#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-#          git config --local user.name "github-actions[bot]"
-#          git add -A
-#          git commit -m "build ($USE_TOOLCHAIN) complete"
-#      - name: Push changes
-#        uses: ad-m/github-push-action@master
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          branch: ${{ github.ref }}
   build-linux-64:
     if: |
       contains(github.event.head_commit.message, '[release]')
@@ -201,3 +137,68 @@ build-linux-32:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+
+#  build-win-32:
+#    if: |
+#      contains(github.event.head_commit.message, '[release]')
+#    runs-on: ubuntu-latest
+#    env:
+#      USE_TOOLCHAIN: "i686-pc-windows-gnu"
+#    name: Build Windows x32
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions-rs/toolchain@v1
+#        with:
+#          toolchain: stable
+#          target: ${{env.USE_TOOLCHAIN}}
+#          override: true
+#      - uses: actions-rs/cargo@v1
+#        with:
+#          use-cross: true
+#          command: build
+#          args: --target ${{env.USE_TOOLCHAIN}} --release
+#      - run: |
+#          git pull --rebase
+#          mkdir -p binaries/$USE_TOOLCHAIN
+#          cp target/$USE_TOOLCHAIN/release/kalavar-core binaries/$USE_TOOLCHAIN/kalavar
+#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#          git config --local user.name "github-actions[bot]"
+#          git add -A
+#          git commit -m "build ($USE_TOOLCHAIN) complete"
+#      - name: Push changes
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          branch: ${{ github.ref }}
+#  build-win-64:
+#    if: |
+#      contains(github.event.head_commit.message, '[release]')
+#    runs-on: windows-latest
+#    env:
+#      USE_TOOLCHAIN: "x86_64-pc-windows-gnu"
+#    name: Build Windows x64
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions-rs/toolchain@v1
+#        with:
+#          toolchain: stable
+#          target: ${{env.USE_TOOLCHAIN}}
+#          override: true
+#      - uses: actions-rs/cargo@v1
+#        with:
+#          use-cross: false
+#          command: build
+#          args: --target ${{env.USE_TOOLCHAIN}} --release
+#      - run: |
+#          git pull --rebase
+#          mkdir -p binaries/$USE_TOOLCHAIN
+#          cp target/$USE_TOOLCHAIN/release/kalavar-core binaries/$USE_TOOLCHAIN/kalavar
+#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#          git config --local user.name "github-actions[bot]"
+#          git add -A
+#          git commit -m "build ($USE_TOOLCHAIN) complete"
+#      - name: Push changes
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          branch: ${{ github.ref }}
