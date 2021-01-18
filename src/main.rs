@@ -1,3 +1,5 @@
+#![doc(html_logo_url = "https://kalavar.cf/assets/images/k_transparent.png", html_favicon_url = "https://kalavar.cf/favicon.ico")]
+
 /// # The code you are currently reading is highly early development, and may contain things which are useless at this time.
 /// # That also means that this code should not be taken as final, and any content within is subject to change without notice.
 /// # For further information, I recommend looking at the documentation at the link below.
