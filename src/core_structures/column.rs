@@ -160,17 +160,17 @@ pub fn process_column(mut t: ColumnType, inner: ColumnTypeEnum, length: u64) -> 
         }
         ColumnTypeEnum::SignedInteger16 | ColumnTypeEnum::Integer16 => {
             t.min_len = BYTE * 2;
-            t.max_len = (BYTE * 2) as u128;
+            t.max_len = BYTE * 2 as u128;
             t
         }
         ColumnTypeEnum::SignedInteger32 | ColumnTypeEnum::Integer32 => {
             t.min_len = BYTE * 4;
-            t.max_len = (BYTE * 4) as u128;
+            t.max_len = BYTE * 4 as u128;
             t
         }
         ColumnTypeEnum::SignedInteger64 | ColumnTypeEnum::Integer64 => {
             t.min_len = BYTE * BYTE;
-            t.max_len = (BYTE * BYTE) as u128;
+            t.max_len = BYTE * BYTE as u128;
             t
         }
         ColumnTypeEnum::SignedBigInteger | ColumnTypeEnum::BigInteger => {
@@ -180,78 +180,78 @@ pub fn process_column(mut t: ColumnType, inner: ColumnTypeEnum, length: u64) -> 
         }
         ColumnTypeEnum::Snowflake => {
             t.min_len = BYTE * BYTE;
-            t.max_len = (BYTE * BYTE) as u128;
+            t.max_len = BYTE * BYTE as u128;
             t
         }
         ColumnTypeEnum::UUID => {
             t.min_len = BYTE * 32;
-            t.max_len = (BYTE * 32) as u128;
+            t.max_len = BYTE * 32 as u128;
             t
         }
         ColumnTypeEnum::SonyFlake => {
             t.min_len = BYTE * BYTE;
-            t.max_len = (BYTE * BYTE) as u128;
+            t.max_len = BYTE * BYTE as u128;
             t
         }
         ColumnTypeEnum::RGB => {
             t.min_len = BYTE * 6;
-            t.max_len = (BYTE * 6) as u128;
+            t.max_len = BYTE * 6 as u128;
             t
         }
         ColumnTypeEnum::RGBA => {
             t.min_len = BYTE * 7;
-            t.max_len = (BYTE * 7) as u128;
+            t.max_len = BYTE * 7 as u128;
             t
         }
         ColumnTypeEnum::CMYK => {
             t.min_len = BYTE * 7;
-            t.max_len = (BYTE * 7) as u128;
+            t.max_len = BYTE * 7 as u128;
             t
         }
         ColumnTypeEnum::Hex => {
             t.min_len = BYTE * 3;
-            t.max_len = (BYTE * 7) as u128;
+            t.max_len = BYTE * 7 as u128;
             t
         }
         ColumnTypeEnum::Array => {
             t.min_len = BYTE;
-            t.max_len = (BYTE * length) as u128;
+            t.max_len = BYTE * length as u128;
             t
         }
         ColumnTypeEnum::Enum => {
             t.min_len = BYTE;
-            t.max_len = (BYTE * 4) as u128;
+            t.max_len = BYTE * 4 as u128;
             t
         }
         ColumnTypeEnum::IPv4 => {
             t.min_len = (BYTE * 4) + 3;
-            t.max_len = ((BYTE * 4) + 3) as u128;
+            t.max_len = (BYTE * 4) + 3 as u128;
             t
         }
         ColumnTypeEnum::IPv6 => {
             t.min_len = (BYTE * 16) + 7;
-            t.max_len = ((BYTE * 16) + 7) as u128;
+            t.max_len = (BYTE * 16) + 7 as u128;
             t
         }
         ColumnTypeEnum::Mac => {
-            t.min_len = (BIT * 48);
-            t.max_len = (BIT * 48) as u128;
+            t.min_len = BIT * 48;
+            t.max_len = BIT * 48 as u128;
             t
         }
         ColumnTypeEnum::Mac8 => {
             // TODO: check bit length of MAC8 addresses
-            t.min_len = (BIT * 48);
-            t.max_len = (BIT * 48) as u128;
+            t.min_len = BIT * 48;
+            t.max_len = BIT * 48 as u128;
             t
         }
         ColumnTypeEnum::Timestamp => {
-            t.min_len = (BYTE * 10);
-            t.max_len = (BYTE * 10) as u128;
+            t.min_len = BYTE * 10
+            t.max_len = BYTE * 10 as u128;
             t
         }
         ColumnTypeEnum::NaiveTimestamp => {
-            t.min_len = (BYTE * 9);
-            t.max_len = (BYTE * 9) as u128;
+            t.min_len = BYTE * 9;
+            t.max_len = BYTE * 9 as u128;
             t
         }
     };
