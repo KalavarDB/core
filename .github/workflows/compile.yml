@@ -1,4 +1,4 @@
-name: Build Docs
+name: Cross Compile
 on:
   push:
     branches: [main]
