@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["OpCodes","The enumerator defining the different operation codes, and their respective identifiers"]]});
+initSidebarItems({"enum":[["OpCodes","The enumerator defining the different operation codes, and their respective identifiers, see here"]]});

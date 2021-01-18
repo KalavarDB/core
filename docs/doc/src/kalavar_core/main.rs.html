@@ -50,6 +50,9 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/// # The code you are currently reading is highly early development, and may contain things which are useless at this time.</span>
 <span class="doccomment">/// # That also means that this code should not be taken as final, and any content within is subject to change without notice.</span>
@@ -58,17 +61,17 @@
 <span class="comment">// Used by many structures and methods within the program to determine where files are located</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">consts</span>::<span class="ident">OS</span>;
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::{
+    <span class="ident">logging</span>::<span class="ident">LoggingManager</span>,
+    <span class="ident">connections</span>::<span class="ident">connection_manager</span>::<span class="ident">ConnectionManager</span>,
+    <span class="ident">config</span>::<span class="ident">ConfigManager</span>,
+};
 
 <span class="comment">// The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.</span>
 <span class="attribute">#[<span class="ident">global_allocator</span>]</span>
 <span class="kw">static</span> <span class="ident">ALLOC</span>: <span class="ident">jemallocator</span>::<span class="ident">Jemalloc</span> <span class="op">=</span> <span class="ident">jemallocator</span>::<span class="ident">Jemalloc</span>;
 
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">managers</span>::{
-    <span class="ident">logging</span>::<span class="ident">LoggingManager</span>,
-    <span class="ident">connections</span>::<span class="ident">connection_manager</span>::<span class="ident">ConnectionManager</span>,
-    <span class="ident">config</span>::<span class="ident">ConfigManager</span>,
-};
 
 <span class="comment">// The primary function of the program, called at runtime to start the server</span>
 <span class="attribute">#[<span class="ident">tokio</span>::<span class="ident">main</span>]</span>
@@ -92,10 +95,13 @@
 }
 
 <span class="comment">// Sub-modules</span>
+<span class="doccomment">/// Structure definitions for all of the management structures used within the program</span>
 <span class="kw">mod</span> <span class="ident">managers</span>;
-<span class="kw">mod</span> <span class="ident">implementors</span>;
+<span class="doccomment">/// Structure definitions for things like databases and tables</span>
 <span class="kw">mod</span> <span class="ident">core_structures</span>;
+<span class="doccomment">/// A selection of utilities and helper methods to ensure that the program runs smoothyl</span>
 <span class="kw">mod</span> <span class="ident">core</span>;
+<span class="doccomment">/// Custom defined error types used by the program to report clear, concise error messages back to the user so they can get their database up and running ASAP</span>
 <span class="kw">mod</span> <span class="ident">errors</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
