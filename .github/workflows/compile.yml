@@ -10,3 +10,53 @@ defaults:
     shell: bash
 
 jobs:
+  build-linux-32:
+    if: |
+      contains(github.event.head_commit.message, '[release]')
+    runs-on: ubuntu-latest
+    env:
+      USE_TOOLCHAIN: "i686-uknown-linux-gnu"
+    name: Build Linux x32
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: $USE_TOOLCHAIN
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --target $USE_TOOLCHAIN --release
+      - run: |
+          git pull --rebase
+          mkdir -p binaries/$USE_TOOLCHAIN
+          cp target$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
+          git add -A
+          git commit -m "build ($USE_TOOLCHAIN) complete"
+  build-linux-64:
+    if: |
+      contains(github.event.head_commit.message, '[release]')
+    runs-on: ubuntu-latest
+    env:
+      USE_TOOLCHAIN: "x86_64-uknown-linux-gnu"
+    name: Build Linux x64
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: $USE_TOOLCHAIN
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --target $USE_TOOLCHAIN --release
+      - run: |
+          git pull --rebase
+          mkdir -p binaries/$USE_TOOLCHAIN
+          cp target$USE_TOOLCHAIN/release/kalavar_core binaries/$USE_TOOLCHAIN/kalavar
+          git add -A
+          git commit -m "build ($USE_TOOLCHAIN) complete"
