@@ -12,7 +12,7 @@ jobs:
   build-mac-m1:
     if: |
       contains(github.event.head_commit.message, '[release]')
-    runs-on: ubuntu-latest
+    runs-on: macos-11.0
     env:
       USE_TOOLCHAIN: "aarch64-apple-darwin"
     name: Build M1 MacOS
@@ -44,7 +44,7 @@ jobs:
   build-mac-64:
     if: |
       contains(github.event.head_commit.message, '[release]')
-    runs-on: ubuntu-latest
+    runs-on: macos-11.0
     env:
       USE_TOOLCHAIN: "x86_64-apple-darwin"
     name: Build MacOS x64
@@ -140,7 +140,7 @@ jobs:
   build-win-64:
     if: |
       contains(github.event.head_commit.message, '[release]')
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       USE_TOOLCHAIN: "x86_64-pc-windows-gnu"
     name: Build Windows x64
