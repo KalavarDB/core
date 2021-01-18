@@ -1,4 +1,4 @@
-name: Cross Compile
+name: Cross-Compile
 on:
   push:
     branches: [main]
