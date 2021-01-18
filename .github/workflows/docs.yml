@@ -3,8 +3,6 @@ on:
   push:
     branches: [main]
     tags-ignore: [dev]
-    paths:
-      - 'src/*'
     paths-ignore:
       - 'docs/*'
 defaults:
