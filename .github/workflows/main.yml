@@ -3,6 +3,8 @@ name: TODO
 on: 
   push:
     branches: ["main"]
+    tags-ignore: [dev]
+    paths-ignore: ['docs/*', '.github/*']
 
 jobs:
   Check-Todo:
