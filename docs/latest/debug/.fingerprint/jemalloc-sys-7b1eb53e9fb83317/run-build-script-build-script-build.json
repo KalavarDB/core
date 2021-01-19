@@ -1,0 +1,1 @@
+{"rustc":9442641659841932997,"features":"","target":0,"profile":0,"path":0,"deps":[[7803085696882689339,"build_script_build",false,9409669897169155741]],"local":[{"RerunIfChanged":{"output":"debug/build/jemalloc-sys-7b1eb53e9fb83317/output","paths":["jemalloc"]}}],"rustflags":[],"metadata":0,"config":0}

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ConnectionManager","A utility structure designed to simplify the management of connection handling and verification. This manager also handles the launching of the memory management thread, and the storage management thread"]]});
