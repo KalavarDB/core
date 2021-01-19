@@ -35,7 +35,7 @@ jobs:
         mkdir -p ./docs/latest
         cp -r ./docs/latest ./docs/${{ steps.vars.outputs.sha_short }}
         rm -r ./docs/latest
-        rustdoc src/main.rs --target-dir ./docs -Z unstable-options --static-root-path './docs/static/'
+        rustdoc src/main.rs --output ./docs -Z unstable-options --static-root-path './docs/static/'
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add -A
