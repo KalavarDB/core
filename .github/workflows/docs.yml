@@ -33,7 +33,8 @@ jobs:
         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
         mkdir -p ./docs/static
         mkdir -p ./docs/latest
-        cp ./docs/latest ./docs/${{ steps.vars.outputs.sha_short }}
+        cp -r ./docs/latest ./docs/${{ steps.vars.outputs.sha_short }}
+        rm -r ./docs/latest
         rustdoc src/main.rs --target-dir ./docs -Z unstable-options --static-root-path './docs/static/'
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
