@@ -2,7 +2,6 @@ name: Build Docs
 on:
   push:
     branches: [main]
-    paths: "src/*"
 defaults:
   run:
     shell: bash
@@ -10,7 +9,7 @@ defaults:
 jobs:
   doc_api:
     if: |
-      !contains(github.event.head_commit.message, 'Built docs for')
+      !contains(github.event.head_commit.message, 'Built docs for') && contains(github.event.head_commit.message, '[doc]')
     name: Document Crate
     runs-on: ubuntu-latest
     env:
