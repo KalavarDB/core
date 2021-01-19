@@ -33,7 +33,6 @@ jobs:
         rm -r ./docs/latest
         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
         mkdir -p ./docs/static
-        mkdir -p ./docs/latest
     - name: Rustdoc
       run: |
         cargo rustdoc --target-dir './docs/latest'
@@ -41,6 +40,7 @@ jobs:
       run: |
         cp -r ./docs/latest/doc/* ./docs/${{ steps.vars.outputs.sha_short }}
         rm -r ./docs/latest
+        mkdir -p ./docs/latest
         cp -r ./docs/${{ steps.vars.outputs.sha_short }}/* ./docs/latest/
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
