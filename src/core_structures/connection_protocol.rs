@@ -31,7 +31,7 @@ pub struct ConnectionProtocolMessage {
     pub inner: (Option<String>, Option<Vec<u8>>, Option<(f64, f64, f64)>/*, Option<Query>, Option<QueryResult>*/),
 
     /// The OP code of the payload, see the docs at the link below for a breakdown:
-    /// https://kalavar.cf/documentation/general/opcodes
+    /// <https://kalavar.cf/documentation/general/opcodes>
     pub opcode: OpCodes,
 }
 

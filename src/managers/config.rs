@@ -36,26 +36,28 @@ pub struct NetConfig {
     pub max_connections: u32,
 }
 
-/// Utility structure to define things relating to language used within the system
+
+/// A utility structure to define things relating to language used within the system
+///
+/// ## Naming Conventions - Acceptable values.
+/// The following naming conventions are recognized and handled automatically by Kalvar.<br>
+/// They are all commonly used conventions within programming languages such as: Rust, Python, Java, C#, JavaScript, etc...
+///
+/// |Name|Variation|Identifier|
+/// |:---:|:---:|:---:|
+/// |Camel Case|Standard|CamelCase|
+/// |Camel Case|Microsoft|microsoftCamelCase|
+/// |Pascal Case|Not Applicable|PascalCase|
+/// |Snake Case|Not Applicable|snake_case|
+/// |Kebab Case|Not Applicable|kebab-case|
+/// |Screaming Case|Not Applicable|SCREAMING_CASE|
+/// |None|Not Applicable|none|
+///
+/// If you have a suggestion for another type of naming convention you would like us to consider, please open an issue <br>
+/// To ensure your issue gets seen by the right people, please use the `X-NAMING-CON` tag when opening your issue <br>
+/// [Open Issue](https://github.com/KalavarDB/core/issues)
 #[derive(Debug, Clone, Deserialize)]
 pub struct LanguageConfig {
-    //! ## Naming Conventions - Acceptable values.
-    //! The following naming conventions are recognized and handled automatically by Kalvar.<br>
-    //! They are all commonly used conventions within programming languages such as: Rust, Python, Java, C#, JavaScript, etc...
-    //!
-    //! |Name|Variation|Identifier|
-    //! |:---:|:---:|:---:|
-    //! |Camel Case|Standard|CamelCase|
-    //! |Camel Case|Microsoft|microsoftCamelCase|
-    //! |Pascal Case|Not Applicable|PascalCase|
-    //! |Snake Case|Not Applicable|snake_case|
-    //! |Kebab Case|Not Applicable|kebab-case|
-    //! |Screaming Case|Not Applicable|SCREAMING_CASE|
-    //! |None|Not Applicable|none|
-    //!
-    //! If you have a suggestion for another type of naming convention you would like us to consider, please open an issue <br>
-    //! To ensure your issue gets seen by the right people, please use the `X-NAMING-CON` tag when opening your issue <br>
-    //! [Open Issue](https://github.com/KalavarDB/core/issues)
 
 
     /// The naming convention against which to validate the names of all databases, tables, columns, and procedures

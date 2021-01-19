@@ -7,7 +7,7 @@ const GB: u64 = 1024 * MB;
 
 /// An enumerator which defines the available column types
 /// I recommend reading the documentation at the link below for details on them all:
-/// https://kalavar.cf/documentation/data-types/
+/// <https://kalavar.cf/documentation/data-types/>
 #[derive(Debug, Clone)]
 pub enum ColumnTypeEnum {
     // Text Types
@@ -234,23 +234,23 @@ pub fn process_column(mut t: ColumnType, inner: ColumnTypeEnum, length: u64) -> 
             t
         }
         ColumnTypeEnum::Mac => {
-            t.min_len = (BIT * 48);
+            t.min_len = BIT * 48;
             t.max_len = (BIT * 48) as u128;
             t
         }
         ColumnTypeEnum::Mac8 => {
             // TODO: check bit length of MAC8 addresses
-            t.min_len = (BIT * 48);
+            t.min_len = BIT * 48;
             t.max_len = (BIT * 48) as u128;
             t
         }
         ColumnTypeEnum::Timestamp => {
-            t.min_len = (BYTE * 10);
+            t.min_len = BYTE * 10;
             t.max_len = (BYTE * 10) as u128;
             t
         }
         ColumnTypeEnum::NaiveTimestamp => {
-            t.min_len = (BYTE * 9);
+            t.min_len = BYTE * 9;
             t.max_len = (BYTE * 9) as u128;
             t
         }
