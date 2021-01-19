@@ -13,7 +13,7 @@ jobs:
     name: Document Crate
     runs-on: ubuntu-latest
     env:
-      RUSTDOCFLAGS: -Dbroken_intra_doc_links -Z unstable-options --extend-css docs/theme.css
+      RUSTDOCFLAGS: -Z unstable-options --static-root-path './docs/static/'
       OPENVINO_SKIP_LINKING: 1
     steps:
     - uses: actions/checkout@v2.3.4
@@ -35,7 +35,7 @@ jobs:
         mkdir -p ./docs/latest
         cp -r ./docs/latest ./docs/${{ steps.vars.outputs.sha_short }}
         rm -r ./docs/latest
-        cargo rustdoc --target-dir ./docs/latest -Z unstable-options --static-root-path './docs/static/' 
+        cargo rustdoc --target-dir './docs/latest'
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add -A
