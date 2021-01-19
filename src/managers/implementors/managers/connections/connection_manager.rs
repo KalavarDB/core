@@ -142,7 +142,7 @@ impl ConnectionManager {
                 tokio::spawn(async move {
                     connection.transmitter.send(ConnectionProtocolMessage::new_con(&connection.id));
                     connection.stream.init().await;
-                    // crate::core::utils::connection_handling::handle(connection).await
+                    crate::core::utils::connection_handling::handle(connection).await
                 });
             }
         } else {
