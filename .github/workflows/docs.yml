@@ -33,7 +33,7 @@ jobs:
         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
         mkdir -p ./docs/static
         mkdir -p ./docs/latest
-        cp -r ./docs/latest/ ./docs/${{ steps.vars.outputs.sha_short }}
+        cp -r ./docs/latest/* ./docs/${{ steps.vars.outputs.sha_short }}
         rm -r ./docs/latest
     - name: Rustdoc
       run: |
