@@ -35,7 +35,7 @@ jobs:
         mkdir -p ./docs/latest
         cp -r ./docs/latest ./docs/${{ steps.vars.outputs.sha_short }}
         rm -r ./docs/latest
-        rustdoc src/main.rs --output ./docs --edition 2018 -Z unstable-options --static-root-path './docs/static/' 
+        cargo doc --document-private-items --target-dir './docs/latest' -- -Z unstable-options --static-root-path './docs/static/' 
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add -A
