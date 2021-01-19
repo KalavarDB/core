@@ -3,6 +3,7 @@ use std::fmt;
 use std::error::Error;
 
 #[derive(Debug, Clone, Copy)]
+#[allow(dead_code)]
 pub enum ErrorMap {
     // General Errors
     /// Unknown error, needs to be mapped to error code

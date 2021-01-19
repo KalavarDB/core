@@ -2,8 +2,8 @@
 use std::collections::HashMap;
 
 // External crate imports
-use tokio::fs::File;
-use serde::{Serialize, Deserialize};
+
+
 
 // Internal crate imports
 use crate::core_structures::table_record::TableRecord;
@@ -28,6 +28,7 @@ pub struct DatabaseRecord {
 
 /// # The following content is undocumented due to not being ready for documentation at this time.
 /// # You are welcome to attempt to make sense of it though.
+#[allow(dead_code)]
 impl DatabaseRecord {
 
     pub fn new(name: String, backing: String) -> DatabaseRecord {

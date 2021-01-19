@@ -1,13 +1,13 @@
 // STD Lib imports
-use std::string::FromUtf8Error;
+
 
 // External crate imports
-use tokio::fs::{File, create_dir_all};
+use tokio::fs::{File};
 use tokio::io;
-use tokio::io::{AsyncReadExt, ErrorKind, AsyncWriteExt};
+
 
 // Internal crate imports
-use crate::managers::config::{ConfigManager, Config, NetConfig, LanguageConfig, LogConfig};
+use crate::managers::config::{ConfigManager};
 use crate::managers::logging::LoggingManager;
 use crate::errors::ErrorMap::*;
 
@@ -42,7 +42,7 @@ impl ConfigManager {
         }
 
         // Attempt to open the config file
-        let mut file: io::Result<File> = File::open(&manager.config_path).await;
+        let _file: io::Result<File> = File::open(&manager.config_path).await;
 
         // If the file is okay, parse the file
         // If it is not, check the type of the error and act accordingly

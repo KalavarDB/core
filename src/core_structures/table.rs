@@ -17,6 +17,7 @@ pub struct Table {
     /// An (unsorted) array of all the rows in this table
     pub rows: Vec<Row>,
 }
+#[allow(dead_code)]
 
 impl Table {
     /// Helper method designed to instantiate a new table on behalf of the caller

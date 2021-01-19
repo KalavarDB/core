@@ -1,10 +1,10 @@
-use crate::core_structures::row::{Row, Cell};
+use crate::core_structures::row::{Row};
 use crate::core_structures::column::{ColumnType, ColumnTypeEnum};
 use crate::core_structures::as_bytes::AsBytes;
 
 #[test]
 fn test_new_row() {
-    let mut c = ColumnType::new_prv(ColumnTypeEnum::Integer64, None, 64);
+    let c = ColumnType::new_prv(ColumnTypeEnum::Integer64, None, 64);
     let mut r = Row::new(vec![("__IDENTIFIER__".to_string(), c)]);
 
     r.entries.get_mut("__IDENTIFIER__").unwrap().inner_value = 64.as_kv_bytes();
