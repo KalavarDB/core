@@ -13,7 +13,7 @@ jobs:
     name: Document Crate
     runs-on: ubuntu-latest
     env:
-      RUSTDOCFLAGS: -Z unstable-options --static-root-path './docs/static/'
+      RUSTDOCFLAGS: -Z unstable-options --static-root-path /static/
       OPENVINO_SKIP_LINKING: 1
     steps:
     - uses: actions/checkout@v2.3.4
