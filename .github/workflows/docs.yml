@@ -25,19 +25,20 @@ jobs:
         toolchain: nightly
         components: clippy
         override: true
-    - name: Check RustDoc version
+    - name: compute-sha
+      id: vars
+      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+    - name: Rustdoc
       run: |
-        rustdoc --version
-    - uses: actions-rs/cargo@v1
-      with: 
-        command: doc
-        args: --no-deps --document-private-items --target-dir ./docs
-    - name: Commit documentation
-      run: |
+        mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
+        mkdir -p ./docs/static
+        mkdir -p ./docs/latest
+        cp ./docs/latest ./docs/${{ steps.vars.outputs.sha_short }}
+        rustdoc src/main.rs --target-dir ./docs -Z unstable-options --static-root-path './docs/static/'
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add -A
-        git commit -m "Built docs for ${{github.sha}}" -a
+        git commit -m "Built docs for ${{ steps.vars.outputs.sha_short }}" -a
         git pull --rebase
     - name: Push changes
       uses: ad-m/github-push-action@master
