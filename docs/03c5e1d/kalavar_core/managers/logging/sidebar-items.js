@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LoggingManager","A utility structure designed to assist in the processing of log messages across the entire system."]]});
