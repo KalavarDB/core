@@ -43,6 +43,7 @@ pub struct LanguageConfig {
     /// The following naming conventions are recognized and handled automatically by Kalvar.
     /// They are all commonly used conventions within programming languages such as: Rust, Python, Java, C#, JavaScript, etc...
     /// |Name|Variation|Identifier|
+    ///
     /// |:---:|:---:|:---:|
     /// |Camel Case|Standard|CamelCase|
     /// |Camel Case|Microsoft|microsoftCamelCase|
