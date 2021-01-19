@@ -1,0 +1,108 @@
+# Network configuration settings
+[network]
+# The port to listen for incoming connections on
+# Default: 1234
+bind-port = 1234
+
+# The host to listen for
+# "localhost" refers to "127.0.0.1"
+# Default: "localhost"
+bind-address = "localhost"
+
+# The maxmimum number of simultaneous connections
+# Default: 25
+max-connections = 25
+
+# -----------------------------------------------------
+
+# Language configuration settings
+[language]
+# The following naming conventions are recognized and handled automatically by Kalvar.
+# They are all commonly used conventions within programming languages such as: Rust, Python, Java, C#, JavaScript, etc...
+# +----------------+----------------+--------------------+
+# |      Name      |    Variation   |     Identifier     |
+# +----------------+----------------+--------------------+
+# |   Camel Case   |    Standard    |     CamelCase      |
+# |   Camel Case   |    Microsoft   | microsoftCamelCase |
+# |   Pascal Case  | Not Applicable |     PascalCase     |
+# |   Snake Case   | Not Applicable |     snake_case     |
+# |   Kebab Case   | Not Applicable |     kebab-case     |
+# | Screaming Case | Not Applicable |   SCREAMING_CASE   |
+# |      None      | Not Applicable |        none        |
+# +----------------+----------------+--------------------+
+#
+# If you have a suggestion for another type of naming convention you would like us to consider, please open an issue
+# To ensure your issue gets seen by the right people, please use the `X-NAMING-CON` tag when opening your issue
+# https://github.com/KalavarDB/core/issues
+
+# The naming convention which applies to all items not given a different value below
+# Default: snake_case
+convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-convention = true
+
+
+# The naming convention to enforce for all database names
+# Default: "snake_case"
+database-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-database-convention = true
+
+
+# The naming convention to enforce for all table names
+# Default: "snake_case"
+table-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-table-convention = true
+
+
+# The naming convention to enforce for all column names
+# Default: "snake_case"
+column-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-column-convention = true
+
+
+# The naming convention to enforce for all procedure names
+# Default: "snake_case"
+procedure-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-procedure-convention = true
+
+# -----------------------------------------------------
+
+# Output logging configuration settings
+[logs]
+# Path to the output location of log files
+# Default: "/var/lib/kalavar/logs"
+path = "/var/lib/kalavar/logs"
+
+# Enables the DEBUG log level
+# Default: true
+debug = true
+
+# Enables the INFO log level
+# Default: true
+info = true
+
+# Enables the LOG log level
+# Default: true
+log = true
+
+# Enables the WARN log level
+# Default: true
+warn = true
+
+# Enables the ERROR log level
+# Default: true
+error = true

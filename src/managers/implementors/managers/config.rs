@@ -7,7 +7,7 @@ use tokio::io;
 use tokio::io::{AsyncReadExt, ErrorKind, AsyncWriteExt};
 
 // Internal crate imports
-use crate::managers::config::{ConfigManager, Config, NetConfig, LanguageConfig};
+use crate::managers::config::{ConfigManager, Config, NetConfig, LanguageConfig, LogConfig};
 use crate::managers::logging::LoggingManager;
 use crate::errors::ErrorMap::*;
 
@@ -18,21 +18,7 @@ impl ConfigManager {
         // Instantiate the manager with pre-defined defaults
         let mut manager = ConfigManager {
             config_path: "".to_string(),
-            config: Config {
-                network: NetConfig {
-                    bind_port: 1234,
-                    bind_addr: "127.0.0.1".to_string(),
-                    max_connections: 0,
-                    connections_per_thread: 5,
-                },
-                language: LanguageConfig {
-                    convention: None,
-                    database_convention: None,
-                    table_convention: None,
-                    column_convention: None,
-                    procedure_convention: None,
-                },
-            },
+            config: toml::from_str(BASE_CONFIG).unwrap()
         };
 
         // Attempt to determine the location of the configuration file based on the operating system (and by extension, file system)

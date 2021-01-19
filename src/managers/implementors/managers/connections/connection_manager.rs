@@ -23,7 +23,7 @@ impl ConnectionManager {
         ConnectionManager {
             listener: None,
             port: config.config.network.bind_port,
-            addr: config.config.network.bind_addr.clone(),
+            addr: config.config.network.bind_address.clone(),
             dbm: StorageManager::new(l, os).await,
             connections: 0,
         }

@@ -15,17 +15,18 @@ while :; do
   echo "|      Kalavar Dev Kit V0.1        |"
   echo "+----------------------------------+"
   echo "| 1.   Check Dependencies          |"
-  echo "| 2.   Build and run               |"
-  echo "| 3. Δ Build and run as super user |"
-  echo "| 4.   Build and run tests         |"
-  echo "| 5.   Build internal docs         |"
-  echo "| 6. Δ Purge target directory      |"
-  echo "| 7.   Install Dependency Checker  |"
-  echo "| 8.   Exit                        |"
+  echo "| 2.   Check source code           |"
+  echo "| 3.   Build and run               |"
+  echo "| 4. Δ Build and run as super user |"
+  echo "| 5.   Build and run tests         |"
+  echo "| 6.   Build internal docs         |"
+  echo "| 7. Δ Purge target directory      |"
+  echo "| 8.   Install Dependency Checker  |"
+  echo "| 9.   Exit                        |"
   echo "+----------------------------------+"
   echo "| Δ - requires SUDO priveleges     |"
   echo "+----------------------------------+"
-  read -r -p "Enter your choice [1-8] : " c
+  read -r -p "Enter your choice [1-9] : " c
   # take action
   case $c in
   1)
@@ -34,36 +35,41 @@ while :; do
     pause
     ;;
   2)
-    cargo run
+    cargo check
     echo
     pause
     ;;
   3)
-    cargo build && sudo target/debug/kalavar-core
+    cargo run
     echo
     pause
     ;;
   4)
-    cargo test
+    cargo build && sudo target/debug/kalavar-core
     echo
     pause
     ;;
   5)
-    cargo doc --no-deps --target-dir ./docs
+    cargo test --all --jobs 1 -- --nocapture
     echo
     pause
     ;;
   6)
-    sudo rm -r ./target
+    cargo doc --no-deps --target-dir ./docs
     echo
     pause
     ;;
   7)
+    sudo rm -r ./target
+    echo
+    pause
+    ;;
+  8)
     cargo install version-checker
     echo
     pause
     ;;
-  8) break ;;
+  9) break ;;
   *) pause "Select between 1 to 8 only" ;;
   esac
 done
