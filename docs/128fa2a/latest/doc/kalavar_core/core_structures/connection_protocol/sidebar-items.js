@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["DataType","An enum describing the types of data that a ConnectionProtocolMessage may contain"]],"struct":[["ConnectionProtocolMessage","A structure defined to help move information between threads via broadcast channels"]]});
