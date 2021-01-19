@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde_derive::Deserialize;
 
 /// A utility structure designed to parse the content of the configuration files used to make Kalavar work.
 #[derive(Debug, Clone, Deserialize)]
