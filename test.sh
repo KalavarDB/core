@@ -49,7 +49,7 @@ while :; do
     pause
     ;;
   5)
-    RUSTDOCFLAGS='-Z unstable-options --extend-css ./docs/theme.css' cargo doc --no-deps --target-dir ./docs
+    cargo doc --no-deps --target-dir ./docs
     echo
     pause
     ;;
