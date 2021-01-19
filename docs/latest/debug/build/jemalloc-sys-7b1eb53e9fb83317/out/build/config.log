@@ -502,7 +502,7 @@ configure:7639: cc -o conftest -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-form
 conftest.c:48:6: warning: conflicting types for built-in function 'log' [-Wbuiltin-declaration-mismatch]
  char log ();
       ^~~
-/tmp/ccGmpPjv.o: In function `main':
+/tmp/ccSyNGqb.o: In function `main':
 /home/runner/work/core/core/docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/build/conftest.c:52: undefined reference to `log'
 collect2: error: ld returned 1 exit status
 configure:7639: $? = 1
@@ -1124,7 +1124,7 @@ configure:10328: checking for dlfcn.h
 configure:10328: result: yes
 configure:10333: checking for dlsym
 configure:10333: cc -o conftest -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall conftest.c -lm  -lpthread >&5
-/tmp/cc3GyibU.o: In function `main':
+/tmp/cc4yCm5t.o: In function `main':
 /home/runner/work/core/core/docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/build/conftest.c:100: undefined reference to `dlsym'
 collect2: error: ld returned 1 exit status
 configure:10333: $? = 1
@@ -1370,7 +1370,7 @@ configure:10915: $? = 0
 configure:10915: result: yes
 configure:10928: checking for issetugid
 configure:10928: cc -o conftest -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall conftest.c -lm  -lpthread -ldl >&5
-/tmp/ccz0UCdy.o: In function `main':
+/tmp/ccP8LI3l.o: In function `main':
 /home/runner/work/core/core/docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/build/conftest.c:109: undefined reference to `issetugid'
 collect2: error: ld returned 1 exit status
 configure:10928: $? = 1
@@ -1490,7 +1490,7 @@ configure: failed program was:
 configure:10928: result: no
 configure:10941: checking for _malloc_thread_cleanup
 configure:10941: cc -o conftest -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall conftest.c -lm  -lpthread -ldl >&5
-/tmp/cc9U38qD.o: In function `main':
+/tmp/cchRd0Kr.o: In function `main':
 /home/runner/work/core/core/docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/build/conftest.c:109: undefined reference to `_malloc_thread_cleanup'
 collect2: error: ld returned 1 exit status
 configure:10941: $? = 1
@@ -1610,7 +1610,7 @@ configure: failed program was:
 configure:10941: result: no
 configure:10956: checking for _pthread_mutex_init_calloc_cb
 configure:10956: cc -o conftest -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall conftest.c -lm  -lpthread -ldl >&5
-/tmp/cchBqzCI.o: In function `main':
+/tmp/ccs8xzss.o: In function `main':
 /home/runner/work/core/core/docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/build/conftest.c:109: undefined reference to `_pthread_mutex_init_calloc_cb'
 collect2: error: ld returned 1 exit status
 configure:10956: $? = 1

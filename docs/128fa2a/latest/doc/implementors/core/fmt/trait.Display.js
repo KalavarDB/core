@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["kalavar_core"] = [{"text":"impl Display for PermissionManager","synthetic":false,"types":[]},{"text":"impl Display for ErrorMap","synthetic":false,"types":[]},{"text":"impl Display for GeneralError","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

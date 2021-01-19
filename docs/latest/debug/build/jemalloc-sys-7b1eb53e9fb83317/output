@@ -242,8 +242,8 @@ cache-oblivious    : 1
 cxx                : 0
 ===============================================================================
 running: "make" "srcroot=../jemalloc/" "-j" "2"
-cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/jemalloc.sym.o ../jemalloc/src/jemalloc.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/arena.sym.o ../jemalloc/src/arena.c
+cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/jemalloc.sym.o ../jemalloc/src/jemalloc.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/background_thread.sym.o ../jemalloc/src/background_thread.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/base.sym.o ../jemalloc/src/base.c
 cc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -fPIC -DPIC -c -O0 -ffunction-sections -fdata-sections -fPIC -g -fno-omit-frame-pointer -m64 -Wall -D_GNU_SOURCE -D_REENTRANT -Iinclude -I../jemalloc/include -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/bin.sym.o ../jemalloc/src/bin.c
@@ -371,8 +371,8 @@ ln -sf libjemalloc.so.2 lib/libjemalloc.so
 running: "make" "srcroot=../jemalloc/" "install_lib_static" "install_include" "-j" "2"
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 /usr/bin/install -c -d /home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
-/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -m 755 lib/libjemalloc.a /home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
+/usr/bin/install -c -m 644 include/jemalloc/jemalloc.h /home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/include/jemalloc
 /usr/bin/install -c -m 755 lib/libjemalloc_pic.a /home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out/lib
 cargo:root=/home/runner/work/core/core/./docs/latest/debug/build/jemalloc-sys-7b1eb53e9fb83317/out
 cargo:rustc-link-lib=static=jemalloc_pic
