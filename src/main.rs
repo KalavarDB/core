@@ -26,7 +26,7 @@ async fn main() {
     // This is important as the program requires this at all levels for debugging
     let mut logger = LoggingManager::new();
 
-    logger.init();
+    logger.init().await;
 
     // Instantiate a new instance of the config manager
     // Used to parse the configuration file into something the server can make use of

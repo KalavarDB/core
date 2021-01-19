@@ -40,7 +40,7 @@ impl StorageManager {
 }
 
 /// Utility method to parse the database files within the data directory
-async fn parse_incoming(mut s: StorageManager, l: &LoggingManager) -> StorageManager {
+async fn parse_incoming(s: StorageManager, l: &LoggingManager) -> StorageManager {
     let mut failed: (bool, ErrorKind) = (false, ErrorKind::Other);
     let core_files: [&str;3] = ["/data/core/map.kgb", "/data/core/map.kdb", l.log_file.as_str()];
     for dir in core_files.iter() {

@@ -1,6 +1,7 @@
 use crate::managers::permission::PermissionManager;
 
 /// A utility structure for managing authentication with the client
+#[allow(dead_code)]
 pub struct AuthManager {
     /// A structure representing the permissions that the user has across all of the system
     pub permissions: PermissionManager,

@@ -99,7 +99,7 @@ impl ConnectionManager {
                 // Create an endless loop
                 loop {
                     // Update memory values
-                    epoch::advance();
+                    epoch::advance().unwrap();
 
                     // Get the amount of RAM the process is using at the current time as a floating point value
                     let used = stats::allocated::read().unwrap() as f64;
@@ -108,7 +108,7 @@ impl ConnectionManager {
                     let total = stats::resident::read().unwrap() as f64;
 
                     // Report the used and total values to the protocol thread for action
-                    memtra.send(ConnectionProtocolMessage::new_mem(used, total));
+                    memtra.send(ConnectionProtocolMessage::new_mem(used, total)).unwrap();
 
                     // Sleep the whole thread for 20 seconds to avoid cpu usage spikes
                     tokio::time::sleep(Duration::from_secs(20)).await;
@@ -140,7 +140,7 @@ impl ConnectionManager {
 
                 // Spawn a thread to handle the connection and any requests it decides to make
                 tokio::spawn(async move {
-                    connection.transmitter.send(ConnectionProtocolMessage::new_con(&connection.id));
+                    connection.transmitter.send(ConnectionProtocolMessage::new_con(&connection.id)).unwrap();
                     connection.stream.init().await;
                     crate::core::utils::connection_handling::handle(connection).await
                 });

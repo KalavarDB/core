@@ -33,25 +33,27 @@ impl EncryptionManager {
             println!("{} bytes", payload.len());
 
             let mut writer = BufWriter::new(&mut self.stream);
-            writer.write_all(payload.as_slice()).await;
-            writer.flush().await;
+            writer.write_all(payload.as_slice()).await.unwrap();
+            writer.flush().await.unwrap();
             println!("key transmitted");
         }
     }
 
 
     /// Encrypt and then write the provided data to the TcpStream and flush the buffer so that it is transmitted to the client for processing
+    #[allow(dead_code)]
     pub async fn write<A: AsBytes>(&mut self, data: &A) {
         let ciphertext = seal(&self.key, data.as_kv_bytes().as_slice());
         if ciphertext.is_ok() {
             let mut writer = BufWriter::new(&mut self.stream);
-            writer.write_all(ciphertext.unwrap().as_slice()).await;
-            writer.flush().await;
+            writer.write_all(ciphertext.unwrap().as_slice()).await.unwrap();
+            writer.flush().await.unwrap();
         }
     }
 
     /// (OBSOLETE) Read and subsequently decrypt the data received from the client
-    pub fn read(&mut self, reader: &mut BufReader<TcpStream>) {
+    #[allow(dead_code)]
+    pub fn read(&mut self, _reader: &mut BufReader<TcpStream>) {
         // let data = open(&self.key, )
     }
 }

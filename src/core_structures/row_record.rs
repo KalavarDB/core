@@ -2,10 +2,10 @@
 use std::collections::HashMap;
 
 // External crate imports
-use serde::{Serialize, Deserialize};
+
 
 // Internal crate imports
-use crate::core_structures::table::Table;
+
 use crate::core_structures::row::Row;
 
 /// Helper structure used to reference specific rows for a specific table in a database

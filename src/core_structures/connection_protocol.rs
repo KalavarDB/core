@@ -2,6 +2,7 @@
 use crate::core::utils::connection_handling::api::opcode_parser::OpCodes;
 
 /// An enum describing the types of data that a ConnectionProtocolMessage may contain
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum DataType {
     /// The payload contained is within the String section

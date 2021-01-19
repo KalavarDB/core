@@ -21,6 +21,7 @@ const FG_YEL: &str = "\x1b[33m";
 const FG_GRE: &str = "\x1b[32m";
 const FG_CYA: &str = "\x1b[36m";
 const FG_MAG: &str = "\x1b[35m";
+#[allow(dead_code)]
 const FG_GRY: &str = "\x1b[2m\x1b[37m";
 
 impl LoggingManager {
@@ -71,7 +72,7 @@ impl LoggingManager {
 
         match file {
             Ok(mut f) => {
-                f.write_all(format!(" FATAL > {:?} > {} > {}\n", error, format_date().await, content).as_bytes()).await;
+                f.write_all(format!(" FATAL > {:?} > {} > {}\n", error, format_date().await, content).as_bytes()).await.unwrap();
             }
             _ => {}
         }
@@ -89,7 +90,7 @@ impl LoggingManager {
 
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" DEBUG >      > {} > {}\n", format_date().await, c).as_bytes()).await;
+                    f.write_all(format!(" DEBUG >      > {} > {}\n", format_date().await, c).as_bytes()).await.unwrap();
                 }
                 _ => {}
             }
@@ -97,6 +98,7 @@ impl LoggingManager {
     }
 
     /// Prints content to the terminal and file without any pretty formatting
+    #[allow(dead_code)]
     pub async fn debug<A: Debug>(&self, content: A) {
         if self.levels.get("DEBUG").is_some() {
             println!(" {}DEBUG{} >      > {}{}{} > {}{:?}{}", FG_GRE, RESET, FG_MAG, format_date().await, RESET, FG_GRE, content, RESET);
@@ -106,7 +108,7 @@ impl LoggingManager {
 
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" DEBUG >      > {} > {:?}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" DEBUG >      > {} > {:?}\n", format_date().await, content).as_bytes()).await.unwrap();
                 }
                 _ => {}
             }
@@ -128,7 +130,7 @@ impl LoggingManager {
 
                 match file {
                     Ok(mut f) => {
-                        f.write_all(format!(" DEBUG >      > {} > {}\n", format_date().await, line).as_bytes()).await;
+                        f.write_all(format!(" DEBUG >      > {} > {}\n", format_date().await, line).as_bytes()).await.unwrap();
                     }
                     _ => {}
                 }
@@ -146,13 +148,13 @@ impl LoggingManager {
 
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" INFO  >      > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" INFO  >      > {} > {}\n", format_date().await, content).as_bytes()).await.unwrap();
                 }
                 _ => {}
             }
         }
     }
-
+    #[allow(dead_code)]
     /// Prints information to the terminal and log file
     pub async fn log<A: Display>(&self, content: A) {
         if self.levels.get("LOG").is_some() {
@@ -163,7 +165,7 @@ impl LoggingManager {
 
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!("  LOG  >      > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!("  LOG  >      > {} > {}\n", format_date().await, content).as_bytes()).await.unwrap();
                 }
                 _ => {}
             }
@@ -179,7 +181,7 @@ impl LoggingManager {
 
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" WARN  >      > {} > {}\n", format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" WARN  >      > {} > {}\n", format_date().await, content).as_bytes()).await.unwrap();
                 }
                 _ => {}
             }
@@ -200,7 +202,7 @@ impl LoggingManager {
 
             match file {
                 Ok(mut f) => {
-                    f.write_all(format!(" ERROR > {:?} > {} > {}\n", error, format_date().await, content).as_bytes()).await;
+                    f.write_all(format!(" ERROR > {:?} > {} > {}\n", error, format_date().await, content).as_bytes()).await.unwrap();
                 }
                 _ => {}
             }

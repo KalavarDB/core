@@ -25,6 +25,7 @@ pub struct Cell {
 
 /// # The following content is undocumented due to not being ready for documentation at this time.
 /// # You are welcome to attempt to make sense of it though.
+#[allow(dead_code)]
 impl Row {
     pub fn new(cells: Vec<(String, ColumnType)>) -> Row {
         let mut r = Row {

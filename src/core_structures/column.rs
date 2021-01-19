@@ -1,13 +1,24 @@
 /// Bit count definitions, used in storage calculations
+#[allow(dead_code)]
 const BIT: u64 = 1;
+#[allow(dead_code)]
+
 const BYTE: u64 = 8 * BIT;
+#[allow(dead_code)]
+
 const KB: u64 = 1024 * BYTE;
+#[allow(dead_code)]
+
 const MB: u64 = 1024 * KB;
+#[allow(dead_code)]
+
 const GB: u64 = 1024 * MB;
+#[allow(dead_code)]
 
 /// An enumerator which defines the available column types
 /// I recommend reading the documentation at the link below for details on them all:
 /// <https://kalavar.cf/documentation/data-types/>
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum ColumnTypeEnum {
     // Text Types
@@ -102,12 +113,16 @@ pub struct ColumnType {
     pub value_type: Option<ColumnTypeEnum>,
 }
 
-
 impl ColumnType {
     /// Helper method to generate a new column
-    pub fn new(inner: ColumnTypeEnum, value_type: Option<ColumnTypeEnum>, length: u64) -> ColumnType {
+    #[allow(dead_code)]
+    pub fn new(
+        inner: ColumnTypeEnum,
+        value_type: Option<ColumnTypeEnum>,
+        length: u64,
+    ) -> ColumnType {
         // Build a default column entry
-        let mut t = ColumnType {
+        let t = ColumnType {
             is_private: false,
             inner_type: inner.clone(),
             min_len: 0,
@@ -120,9 +135,14 @@ impl ColumnType {
     }
 
     /// Helper method to generate a new private column which remains hidden from query results
-    pub fn new_prv(inner: ColumnTypeEnum, value_type: Option<ColumnTypeEnum>, length: u64) -> ColumnType {
+    #[allow(dead_code)]
+    pub fn new_prv(
+        inner: ColumnTypeEnum,
+        value_type: Option<ColumnTypeEnum>,
+        length: u64,
+    ) -> ColumnType {
         // Build a default column entry
-        let mut t = ColumnType {
+        let t = ColumnType {
             is_private: true,
             inner_type: inner.clone(),
             min_len: 0,
