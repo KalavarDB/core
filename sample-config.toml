@@ -41,7 +41,7 @@ accept-ranges = ["*"]
 #
 # If you have a suggestion for another type of naming convention you would like us to consider, please open an issue
 # To ensure your issue gets seen by the right people, please use the `X-NAMING-CON` tag when opening your issue
-# https://github.com/KalavarDB/core/issues
+# https://tiny.kalavar.cf/?code=OWOJIGv3OB
 
 # The naming convention which applies to all items not given a different value below
 # Default: snake_case
@@ -114,3 +114,21 @@ warn = true
 # Enables the ERROR log level
 # Default: true
 error = true
+
+# -----------------------------------------------------
+
+# Privacy configuration options
+[privacy]
+# If you wish to opt into ananymous usage tracking
+# Accepted values:
+# +----------+------------+------------------------------------------+
+# |   Name   | Identifier | More Info                                |
+# +----------+------------+------------------------------------------+
+# | Detailed | detailed   | https://tiny.kalavar.cf/?code=nUU9A08wmd |
+# | Basic    | basic      | https://tiny.kalavar.cf/?code=8OWvSu875O |
+# | Minimal  | minimal    | https://tiny.kalavar.cf/?code=hsFKfvHC7Q |
+# | None     | none       | https://tiny.kalavar.cf/?code=jCNZkLAKQy |
+# +----------+------------+------------------------------------------+
+#
+# Default: "none"
+mode = "none"
