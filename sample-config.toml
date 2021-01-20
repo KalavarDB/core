@@ -13,6 +13,14 @@ bind-address = "localhost"
 # Default: 25
 max-connections = 25
 
+# The IP ranges from which to accept connections
+# Default: ["*"]
+# Example:
+#   Accept all addresses from local network:
+#   accept-ranges = ["10.*"]
+accept-ranges = ["*"]
+
+
 # -----------------------------------------------------
 
 # Language configuration settings

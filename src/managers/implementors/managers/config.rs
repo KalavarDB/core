@@ -7,7 +7,7 @@ use tokio::io;
 
 
 // Internal crate imports
-use crate::managers::config::{ConfigManager};
+use crate::managers::config::{ConfigManager, PreConfig};
 use crate::managers::logging::LoggingManager;
 use crate::errors::ErrorMap::*;
 
@@ -18,7 +18,7 @@ impl ConfigManager {
         // Instantiate the manager with pre-defined defaults
         let mut manager = ConfigManager {
             config_path: "".to_string(),
-            config: toml::from_str(BASE_CONFIG).unwrap()
+            config: toml::from_str::<PreConfig>(BASE_CONFIG).unwrap().convert(),
         };
 
         // Attempt to determine the location of the configuration file based on the operating system (and by extension, file system)
@@ -281,9 +281,122 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
     m
 }*/
 
-// TODO: update `BASE_CONFIG` const to use TOML formatted config file
-/// (OBSOLETE) Defines the default configuration file, this has been minimised using the "\n" escape to signify that a newline is intended, but not present to keep the source code length down
-const BASE_CONFIG: &str = "# This is the default, automatically generated configuration file.\n# This file was created because no config file was detected on your system at the time the program launched\n\n\n# The port to bind the connection listener to\nport=1234\n
-# The IP address to bind the connection listener to\naddress=127.0.0.1\n\n# Which levels of logging should be enabled\ndebug=true\ninfo=true\nlog=true\nwarn=true\nerror=true\n\n# Maximum number of connections to allow\n# Inifinite allows an unlimited amount of connections\n# Automatically calculated from `thread` and `threadcount` values if not present\nconnections=infinite\n
-# Maximum number of connections per thread\nthread=5\n\n# Maximum number of threads available to the database
-threadcount=10";
+/// Defines the default configuration file
+pub const BASE_CONFIG: &str = r#"
+#
+# Network configuration settings
+[network]
+# The port to listen for incoming connections on
+# Default: 1234
+bind-port = 1234
+
+# The host to listen for
+# "localhost" refers to "127.0.0.1"
+# Default: "localhost"
+bind-address = "localhost"
+
+# The maxmimum number of simultaneous connections
+# Default: 25
+max-connections = 25
+
+# The IP ranges from which to accept connections
+# Default: ["*"]
+# Example:
+#   Accept all addresses from local network:
+#   accept-ranges = ["10.*"]
+accept-ranges = ["*"]
+
+
+# -----------------------------------------------------
+
+# Language configuration settings
+[language]
+# The following naming conventions are recognized and handled automatically by Kalvar.
+# They are all commonly used conventions within programming languages such as: Rust, Python, Java, C#, JavaScript, etc...
+# +----------------+----------------+--------------------+
+# |      Name      |    Variation   |     Identifier     |
+# +----------------+----------------+--------------------+
+# |   Camel Case   |    Standard    |     CamelCase      |
+# |   Camel Case   |    Microsoft   | microsoftCamelCase |
+# |   Pascal Case  | Not Applicable |     PascalCase     |
+# |   Snake Case   | Not Applicable |     snake_case     |
+# |   Kebab Case   | Not Applicable |     kebab-case     |
+# | Screaming Case | Not Applicable |   SCREAMING_CASE   |
+# |      None      | Not Applicable |        none        |
+# +----------------+----------------+--------------------+
+#
+# If you have a suggestion for another type of naming convention you would like us to consider, please open an issue
+# To ensure your issue gets seen by the right people, please use the `X-NAMING-CON` tag when opening your issue
+# https://github.com/KalavarDB/core/issues
+
+# The naming convention which applies to all items not given a different value below
+# Default: snake_case
+convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-convention = true
+
+
+# The naming convention to enforce for all database names
+# Default: "snake_case"
+database-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-database-convention = true
+
+
+# The naming convention to enforce for all table names
+# Default: "snake_case"
+table-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-table-convention = true
+
+
+# The naming convention to enforce for all column names
+# Default: "snake_case"
+column-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-column-convention = true
+
+
+# The naming convention to enforce for all procedure names
+# Default: "snake_case"
+procedure-convention = "snake_case"
+
+# If the convention should be forced, or should provide a soft warning to the user
+# Default: true
+force-procedure-convention = true
+
+# -----------------------------------------------------
+
+# Output logging configuration settings
+[logs]
+# Path to the output location of log files
+# Default: "/var/lib/kalavar/logs"
+path = "/var/lib/kalavar/logs"
+
+# Enables the DEBUG log level
+# Default: true
+debug = true
+
+# Enables the INFO log level
+# Default: true
+info = true
+
+# Enables the LOG log level
+# Default: true
+log = true
+
+# Enables the WARN log level
+# Default: true
+warn = true
+
+# Enables the ERROR log level
+# Default: true
+error = true"#;

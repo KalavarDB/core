@@ -45,9 +45,8 @@ impl TableRecord {
             inner: Table {
                 name: name.to_string(),
                 columns: HashMap::new(),
-                rows: vec![]
             },
-            start,
+            start: start.clone(),
             end: start+1,
             backing: "".to_string(),
             backing_is_dir: false,
