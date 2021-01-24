@@ -30,13 +30,13 @@ accept-ranges = ["*"]
 # +----------------+----------------+--------------------+
 # |      Name      |    Variation   |     Identifier     |
 # +----------------+----------------+--------------------+
-# |   Camel Case   |    Standard    |     CamelCase      |
-# |   Camel Case   |    Microsoft   | microsoftCamelCase |
-# |   Pascal Case  | Not Applicable |     PascalCase     |
-# |   Snake Case   | Not Applicable |     snake_case     |
-# |   Kebab Case   | Not Applicable |     kebab-case     |
-# | Screaming Case | Not Applicable |   SCREAMING_CASE   |
-# |      None      | Not Applicable |        none        |
+# |   Camel Case   |    Microsoft   |   UpperCamelCase   |
+# |   Camel Case   |    Standard    |   lowerCamelCase   |
+# |   Pascal Case  | Not Applicable |      PascalCase    |
+# |   Snake Case   | Not Applicable |  UPPER_SNAKE_CASE  |
+# |   Snake Case   | Not Applicable |  lower_snake_case  |
+# |   Kebab Case   | Not Applicable |      kebab-case    |
+# |      None      | Not Applicable |         none       |
 # +----------------+----------------+--------------------+
 #
 # If you have a suggestion for another type of naming convention you would like us to consider, please open an issue
