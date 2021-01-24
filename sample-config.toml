@@ -118,7 +118,7 @@ error = true
 # Enables the logging manager to create and write to log files when the program runs
 # Default: true
 # NOTE: it is highly recommended to leave this option enabled, without it you may struggle to diagnose issues with your system should the database stop working
-log_to_file: true
+log_to_file = true
 
 # -----------------------------------------------------
 
