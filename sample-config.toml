@@ -126,14 +126,15 @@ log_to_file: true
 [privacy]
 # If you wish to opt into ananymous usage tracking
 # Accepted values:
-# +----------+------------+------------------------------------------+
-# |   Name   | Identifier | More Info                                |
-# +----------+------------+------------------------------------------+
-# | Detailed | detailed   | https://tiny.kalavar.cf/?code=nUU9A08wmd |
-# | Basic    | basic      | https://tiny.kalavar.cf/?code=8OWvSu875O |
-# | Minimal  | minimal    | https://tiny.kalavar.cf/?code=hsFKfvHC7Q |
-# | None     | none       | https://tiny.kalavar.cf/?code=jCNZkLAKQy |
-# +----------+------------+------------------------------------------+
+# +----------+------------+
+# |   Name   | Identifier |
+# +----------+------------+
+# | Detailed | detailed   |
+# | Basic    | basic      |
+# | Minimal  | minimal    |
+# | None     | none       |
+# +----------+------------+
+# For more information, see here: https://tiny.kalavar.cf/?code=nUU9A08wmd
 #
 # Default: "none"
 mode = "none"
