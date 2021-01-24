@@ -284,6 +284,7 @@ async fn parse_config(l: &mut LoggingManager, mut m: ConfigManager, file: &mut F
 /// Defines the default configuration file
 pub const BASE_CONFIG: &str = r#"
 #
+
 # Network configuration settings
 [network]
 # The port to listen for incoming connections on
@@ -316,18 +317,18 @@ accept-ranges = ["*"]
 # +----------------+----------------+--------------------+
 # |      Name      |    Variation   |     Identifier     |
 # +----------------+----------------+--------------------+
-# |   Camel Case   |    Standard    |     CamelCase      |
-# |   Camel Case   |    Microsoft   | microsoftCamelCase |
-# |   Pascal Case  | Not Applicable |     PascalCase     |
-# |   Snake Case   | Not Applicable |     snake_case     |
-# |   Kebab Case   | Not Applicable |     kebab-case     |
-# | Screaming Case | Not Applicable |   SCREAMING_CASE   |
-# |      None      | Not Applicable |        none        |
+# |   Camel Case   |    Microsoft   |   UpperCamelCase   |
+# |   Camel Case   |    Standard    |   lowerCamelCase   |
+# |   Pascal Case  | Not Applicable |      PascalCase    |
+# |   Snake Case   | Not Applicable |  UPPER_SNAKE_CASE  |
+# |   Snake Case   | Not Applicable |  lower_snake_case  |
+# |   Kebab Case   | Not Applicable |      kebab-case    |
+# |      None      | Not Applicable |         none       |
 # +----------------+----------------+--------------------+
 #
 # If you have a suggestion for another type of naming convention you would like us to consider, please open an issue
 # To ensure your issue gets seen by the right people, please use the `X-NAMING-CON` tag when opening your issue
-# https://github.com/KalavarDB/core/issues
+# https://tiny.kalavar.cf/?code=OWOJIGv3OB
 
 # The naming convention which applies to all items not given a different value below
 # Default: snake_case
@@ -399,4 +400,28 @@ warn = true
 
 # Enables the ERROR log level
 # Default: true
-error = true"#;
+error = true
+
+# Enables the logging manager to create and write to log files when the program runs
+# Default: true
+# NOTE: it is highly recommended to leave this option enabled, without it you may struggle to diagnose issues with your system should the database stop working
+log_to_file = true
+
+# -----------------------------------------------------
+
+# Privacy configuration options
+[privacy]
+# If you wish to opt into ananymous usage tracking
+# Accepted values:
+# +----------+------------+
+# |   Name   | Identifier |
+# +----------+------------+
+# | Detailed | detailed   |
+# | Basic    | basic      |
+# | Minimal  | minimal    |
+# | None     | none       |
+# +----------+------------+
+# For more information, see here: https://tiny.kalavar.cf/?code=nUU9A08wmd
+#
+# Default: "none"
+mode = "none""#;
