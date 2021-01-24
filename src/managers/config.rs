@@ -154,6 +154,10 @@ pub struct NetConfig {
 
     /// The maximum number of connections the server should accept and handle at any given time
     pub max_connections: u32,
+
+    /// The IP ranges from which to accept connections
+    /// Accepts CIDR and range notation (see public documentation)
+    pub accept_ranges: Vec<String>,
 }
 
 
@@ -237,8 +241,21 @@ pub struct LogConfig {
 
     /// Enables the `ERROR` log level
     pub error: bool,
+
+    /// Enables the logging manager to actually create and write log files to disk
+    pub log_to_file: bool,
 }
 
+pub struct PrivacyConfig {
+    pub mode: PrivacyMode,
+}
+
+pub enum PrivacyMode {
+    None,
+    Minimal,
+    Basic,
+    Detailed
+}
 
 impl PreConfig {
     pub fn convert(self) -> Config {

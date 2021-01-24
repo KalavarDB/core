@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["handle_missing_data_dir","Utility function to handle the event that the data directory does not exist in a more graceful manner than just panicking"],["parse_incoming","Utility method to parse the database files within the data directory"]]});

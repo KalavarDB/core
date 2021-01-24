@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["ErrorMap",""]],"struct":[["GeneralError","A generic error type to handle all the custom errors that this program might throw during operation"]]});

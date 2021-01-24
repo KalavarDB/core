@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["BASE_CONFIG","(OBSOLETE) Defines the default configuration file, this has been minimised using the \"\\n\" escape to signify that a newline is intended, but not present to keep the source code length down"]]});
