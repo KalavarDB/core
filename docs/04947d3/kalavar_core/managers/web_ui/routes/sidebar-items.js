@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["map_routes",""],["rocket_route_fn_root","Rocket code generated wrapping route function."],["root",""]],"static":[["static_rocket_route_info_for_root","Rocket code generated static route info."]]});
