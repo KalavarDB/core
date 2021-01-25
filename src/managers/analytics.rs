@@ -69,6 +69,7 @@ pub struct OSInfo {
     pub version: String,
 
     /// The release ID for the operating system which is running
+    pub release: String,
 }
 
 /// An information storage structure designed to store information about the disk
