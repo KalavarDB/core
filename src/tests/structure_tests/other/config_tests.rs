@@ -1,5 +1,6 @@
-use crate::managers::config::PreConfig;
 use crate::managers::implementors::managers::config::BASE_CONFIG;
+use crate::managers::config::pre::PreConfig;
+
 use toml::de::Error;
 
 #[test]
@@ -11,7 +12,6 @@ fn test_empty_config_parse() {
     } else {
         dbg!(manager.unwrap_err());
     }
-
 }
 
 #[test]
@@ -23,5 +23,4 @@ fn test_config_parse() {
     } else {
         dbg!(manager.unwrap_err());
     }
-
 }

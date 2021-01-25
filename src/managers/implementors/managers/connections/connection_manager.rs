@@ -2,8 +2,10 @@ use crate::core::utils::connection_handling::api::opcode_parser::OpCodes::*;
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 use crate::errors::ErrorMap::*;
 use crate::managers::{
-    config::ConfigManager, connections::connection::Connection,
-    connections::connection_manager::ConnectionManager, logging::LoggingManager,
+    config::post::ConfigManager,
+    connections::connection::Connection,
+    connections::connection_manager::ConnectionManager,
+    logging::LoggingManager,
     storage::StorageManager,
 };
 
@@ -114,7 +116,7 @@ impl ConnectionManager {
                     tokio::time::sleep(Duration::from_secs(20)).await;
                 }
             });
-            
+
             // Unwrap the connection listener
             let incoming_connections = bind_result.unwrap();
 

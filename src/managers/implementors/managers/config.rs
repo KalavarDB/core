@@ -7,7 +7,7 @@ use tokio::io;
 
 
 // Internal crate imports
-use crate::managers::config::{ConfigManager, PreConfig};
+use crate::managers::config::{post::ConfigManager, pre::PreConfig};
 use crate::managers::logging::LoggingManager;
 use crate::errors::ErrorMap::*;
 

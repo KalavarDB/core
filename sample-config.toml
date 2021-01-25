@@ -2,7 +2,7 @@
 [network]
 # The port to listen for incoming connections on
 # Default: 1234
-bind-port = 1234
+bind-port = 48173
 
 # The host to listen for
 # "localhost" refers to "127.0.0.1"

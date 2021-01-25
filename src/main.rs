@@ -10,7 +10,7 @@ use std::env::consts::OS;
 use crate::managers::{
     logging::LoggingManager,
     connections::connection_manager::ConnectionManager,
-    config::ConfigManager,
+    config::post::ConfigManager,
 };
 
 // The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.
