@@ -3,6 +3,7 @@ use tokio::net::TcpListener;
 
 // Internal crate imports
 use crate::managers::storage::StorageManager;
+use crate::managers::analytics::AnalyticsManager;
 
 /// A utility structure designed to simplify the management of connection handling and verification.
 /// This manager also handles the launching of the memory management thread, and the storage management thread
@@ -21,5 +22,5 @@ pub struct ConnectionManager{
     pub connections: usize,
 
     /// The storage manager
-    pub dbm: StorageManager
+    pub dbm: StorageManager,
 }

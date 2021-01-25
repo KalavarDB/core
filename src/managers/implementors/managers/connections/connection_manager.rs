@@ -13,6 +13,7 @@ use jemalloc_ctl::{epoch, stats};
 use tokio::net::TcpListener;
 use tokio::sync::broadcast::{channel, Receiver, Sender};
 use tokio::time::Duration;
+use crate::managers::analytics::AnalyticsManager;
 
 impl ConnectionManager {
     /// Helper function used to instantiate a new connection manager on behalf of a caller
@@ -32,7 +33,7 @@ impl ConnectionManager {
     }
 
     /// Launches the memory management thread, and the storage management thread, whilst also beginning to listen for incoming TCP connections based off of the configuration options provided by the config manager
-    pub async fn connect(&mut self, logger: &LoggingManager) {
+    pub async fn connect(&mut self, logger: &LoggingManager, mut analytics: AnalyticsManager) {
         // Define a defualt transmitter and receiver which will be used for inter-thread communications across this codebase
         let (transmitter, mut receiver): (
             Sender<ConnectionProtocolMessage>,
@@ -116,6 +117,18 @@ impl ConnectionManager {
                     tokio::time::sleep(Duration::from_secs(20)).await;
                 }
             });
+
+            // create a new subscriber to the transmitter
+            let analytics_receiver: Receiver<ConnectionProtocolMessage> = transmitter.subscribe();
+
+            // create a new logging manager for the analytics controller thread;
+            let analog = logger.clone();
+
+
+            tokio::spawn(async move {
+                analytics.spawn(analog, analytics_receiver).await;
+            });
+
 
             // Unwrap the connection listener
             let incoming_connections = bind_result.unwrap();

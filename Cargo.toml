@@ -32,7 +32,9 @@ jemalloc-ctl = "0.3.3"
 tokio-rustls = "0.22.0"
 orion = "0.15.5"
 
-
 # Analytics dependencies
 heim = "0.0.11"
 raw-cpuid = "9.0.0"
+
+# Web UI information
+rocket = "0.4.6"

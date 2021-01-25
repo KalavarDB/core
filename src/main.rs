@@ -1,4 +1,7 @@
 #![doc(html_logo_url = "https://kalavar.cf/assets/images/k_transparent.png", html_favicon_url = "https://kalavar.cf/favicon.ico", issue_tracker_base_url = "https://github.com/KalavarDB/core/issues/", html_root_url = "https://dev.kalavar.cf/", html_no_source)]
+#![feature(proc_macro_hygiene, decl_macro)]
+#[macro_use]
+extern crate rocket;
 
 /// # The code you are currently reading is highly early development, and may contain things which are useless at this time.
 /// # That also means that this code should not be taken as final, and any content within is subject to change without notice.
@@ -12,11 +15,11 @@ use crate::managers::{
     connections::connection_manager::ConnectionManager,
     config::post::ConfigManager,
 };
+use crate::managers::analytics::AnalyticsManager;
 
 // The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.
 #[global_allocator]
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
-
 
 
 // The primary function of the program, called at runtime to start the server
@@ -37,7 +40,7 @@ async fn main() {
     // Ranging from the connections themselves, to the memory manager, and even the storage manager
     // Without the following two lines of code, the program would simply exit and do nothing.
     let mut connection_manager = ConnectionManager::new(&mut logger, &config_manager, OS).await;
-    connection_manager.connect(&logger).await;
+    connection_manager.connect(&logger, AnalyticsManager::new(config_manager.config.privacy.mode.clone())).await;
 }
 
 // Sub-modules
