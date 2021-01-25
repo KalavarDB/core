@@ -1,4 +1,4 @@
-#![doc(html_logo_url = "https://kalavar.cf/assets/images/word_banner_transparent.png", html_favicon_url = "https://kalavar.cf/favicon.ico", issue_tracker_base_url = "https://github.com/KalavarDB/core/issues/", html_root_url = "https://dev.kalavar.cf/", html_no_source)]
+#![doc(html_logo_url = "https://kalavar.cf/assets/images/k_transparent.png", html_favicon_url = "https://kalavar.cf/favicon.ico", issue_tracker_base_url = "https://github.com/KalavarDB/core/issues/", html_root_url = "https://dev.kalavar.cf/", html_no_source)]
 
 /// # The code you are currently reading is highly early development, and may contain things which are useless at this time.
 /// # That also means that this code should not be taken as final, and any content within is subject to change without notice.
