@@ -5,3 +5,10 @@
 // - How much ram is being used by the database
 // - How any queries are created
 // - Database Versions
+
+
+use crate::managers::config::post::PrivacyMode;
+
+pub struct AnalyticsManager {
+    pub mode: PrivacyMode,
+}
