@@ -1,7 +1,11 @@
 #![doc(html_logo_url = "https://kalavar.cf/assets/images/k_transparent.png", html_favicon_url = "https://kalavar.cf/favicon.ico", issue_tracker_base_url = "https://github.com/KalavarDB/core/issues/", html_root_url = "https://dev.kalavar.cf/", html_no_source)]
 #![feature(proc_macro_hygiene, decl_macro)]
+
 #[macro_use]
 extern crate rocket;
+
+#[macro use]
+extern crate raw_cpuid;
 
 /// # The code you are currently reading is highly early development, and may contain things which are useless at this time.
 /// # That also means that this code should not be taken as final, and any content within is subject to change without notice.

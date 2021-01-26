@@ -87,11 +87,11 @@ pub struct MemoryInfo {
 /// An information storage structure designed to store information about the memory
 pub struct InnerMemoryInfo {
     /// The total available
-    pub total: u64,
+    pub total: f64,
 
     /// The amount used
-    pub used: u64,
+    pub used: f64,
 
     /// The amount free
-    pub free: u64,
+    pub free: f64,
 }
