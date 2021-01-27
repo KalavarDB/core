@@ -1,6 +1,7 @@
 use crate::core_structures::row::Cell;
 
 /// A general structure matching a Query after it has been compiled
+#[derive(Debug, Clone)]
 pub struct Query {
     /// Any recursive queries which are referenced and must be completed beforehand
     pub recursive: Option<Box<Query>>,
@@ -29,11 +30,13 @@ pub struct Query {
 }
 
 /// The structure used for filtering data from a query where possible
+#[derive(Debug, Clone)]
 pub struct Filter {
     pub subs: Vec<SubFilter>,
 }
 
 /// A sub-structure used for defining filters on content
+#[derive(Debug, Clone)]
 pub struct SubFilter {
     /// The (optional) field which the right assignment is being compared against
     pub field: Option<String>,
@@ -46,6 +49,7 @@ pub struct SubFilter {
 }
 
 /// A structure defining a variable
+#[derive(Debug, Clone)]
 pub struct Variable {
     /// The type of variable this is
     pub var_type: VariableType,
@@ -61,6 +65,7 @@ pub struct Variable {
 }
 
 /// An enumerator defining the types of variables possible
+#[derive(Debug, Clone)]
 pub enum VariableType {
     /// A type of variable which cannot be changed, making it a constant
     Constant,
@@ -70,6 +75,7 @@ pub enum VariableType {
 }
 
 /// An enumerator defining the privacy types of variables
+#[derive(Debug, Clone)]
 pub enum VariablePrivacy {
     /// Can be seen across all connections (Always used for constant values)
     Public,
@@ -79,6 +85,7 @@ pub enum VariablePrivacy {
 }
 
 /// An enumerator defining the different operations allowed to queries
+#[derive(Debug, Clone)]
 pub enum Operation {
     /// Used on queries which return data
     Get,
