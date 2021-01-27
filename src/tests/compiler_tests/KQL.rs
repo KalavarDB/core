@@ -9,6 +9,7 @@ FIELDS "name", "email", "pass""#);
 
     if let Ok(tree) = compile {
         println!("successfully compiled {} tokens", tree.len());
+        dbg!(tree);
         assert_eq!(1,1)
     } else {
         println!("{}", compile.unwrap_err());
