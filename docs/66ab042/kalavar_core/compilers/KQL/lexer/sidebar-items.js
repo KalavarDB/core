@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Lexer","An iterator which processes the input text into a set of tokens"]],"type":[["Result","A type of result which only needs one value for convenience"]]});

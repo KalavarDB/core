@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["language","Language declarations"],["lexer","The lexer type to \"compile\" the language"],["utilities","The structures required for Queries"]]});
