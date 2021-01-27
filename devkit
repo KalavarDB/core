@@ -1,5 +1,24 @@
 #!/bin/bash
 
+uppers=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+lowers=abcdefghijklmnopqrstuvwxyz
+
+lowercase() { #usage: lc "SOME STRING" -> "some string"
+  i=0
+  while ([ $i -lt ${#1} ]); do
+    CUR=${1:$i:1}
+    case $uppers in
+    *$CUR*)
+      CUR=${uppers%$CUR*}
+      OUTPUT="${OUTPUT}${lowers:${#CUR}:1}"
+      ;;
+    *) OUTPUT="${OUTPUT}$CUR" ;;
+    esac
+    i=$((i + 1))
+  done
+  echo "${OUTPUT}"
+}
+
 # display message and pause
 pause() {
   read -r -p "$1" key
@@ -56,9 +75,12 @@ while :; do
     ;;
   6)
     read -r -p "Enter the name of the test to run: " test_name
+
+    LOWERTEST=lowercase ${test_name// /_}
+
     while :; do
       clear
-      cargo test "$test_name" -- --nocapture
+      cargo test "$LOWERTEST" -- --nocapture
       echo
       read -n 1 -r -p "Run again? " cont
       echo # (optional) move to a new line
