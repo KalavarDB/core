@@ -97,7 +97,7 @@ impl AnalyticsManager {
                             },
                         };
 
-                        let id = cpuid!();
+                        // let id = raw_cpuid::cpuid!();
 
                         logger.debug_message("This message is from the analytics manager").await;
                     }

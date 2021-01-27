@@ -4,9 +4,6 @@
 #[macro_use]
 extern crate rocket;
 
-#[macro use]
-extern crate raw_cpuid;
-
 /// # The code you are currently reading is highly early development, and may contain things which are useless at this time.
 /// # That also means that this code should not be taken as final, and any content within is subject to change without notice.
 /// # For further information, I recommend looking at the documentation at the link below.
@@ -56,6 +53,9 @@ mod core_structures;
 mod core;
 /// Custom defined error types used by the program to report clear, concise error messages back to the user so they can get their database up and running ASAP
 mod errors;
+
+/// A module containing all the information regarding compilers used in the project.
+mod compilers;
 
 #[cfg(test)]
 mod tests;
