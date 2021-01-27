@@ -3,7 +3,7 @@ use crate::core_structures::row::Cell;
 /// A general structure matching a Query after it has been compiled
 pub struct Query {
     /// Any recursive queries which are referenced and must be completed beforehand
-    pub recursive: Option<Query>,
+    pub recursive: Option<Box<Query>>,
 
     /// The filter for returned data
     pub filter: Option<Filter>,
