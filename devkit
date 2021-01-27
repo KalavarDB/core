@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# display message and pause
+pause() {
+  read -r -p "$1" key
+}
+
+# set an
+while :; do
+  # show menu
+  clear
+  echo "+----------------------------------+"
+  echo "|      Kalavar Dev Kit V0.1.2      |"
+  echo "+----------------------------------+"
+  echo "| 0.   Exit                        |"
+  echo "| 1.   Check Dependencies          |"
+  echo "| 2.   Check source code           |"
+  echo "| 3.   Build and run               |"
+  echo "| 4. Δ Build and run as super user |"
+  echo "| 5.   Build and run tests         |"
+  echo "| 6.   Build and run specific test |"
+  echo "| 7.   Build internal docs         |"
+  echo "| 8. Δ Purge target directory      |"
+  echo "| 9.   Install Dependency Checker  |"
+  echo "+----------------------------------+"
+  echo "| Δ - requires SUDO priveleges     |"
+  echo "+----------------------------------+"
+  read -n 1 -r -p "Enter your choice [0-9] : " c
+  echo
+  # take action
+  case $c in
+  1)
+    version-checker
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  2)
+    cargo check
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  3)
+    cargo run
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  4)
+    cargo build && sudo target/debug/kalavar-core
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  5)
+    cargo test --all --jobs 1 -- --nocapture
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  6)
+    read -r -p "Enter the name of the test to run: " test_name
+    while :; do
+      clear
+      cargo test "$test_name" -- --nocapture
+      echo
+      read -n 1 -r -p "Run again? " cont
+      echo # (optional) move to a new line
+      if [[ $cont =~ ^[Nn]$ ]]; then
+        break
+      fi
+    done
+    pause "Press [Enter] key to continue..."
+    ;;
+  7)
+    cargo doc --no-deps --target-dir ./docs
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  8)
+    sudo rm -r ./target
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  9)
+    cargo install version-checker
+    echo
+    pause "Press [Enter] key to continue..."
+    ;;
+  0) break ;;
+  *) pause "Select between 0 to 9 only" ;;
+  esac
+done
