@@ -66,7 +66,6 @@ while :; do
         break
       fi
     done
-    pause "Press [Enter] key to continue..."
     ;;
   7)
     cargo doc --no-deps --target-dir ./docs
