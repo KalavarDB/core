@@ -23,7 +23,7 @@ pub(crate) mod authentication;
 pub(crate) mod permission;
 
 /// Documentation for the web UI
-pub(crate) mod web_ui;
+// pub(crate) mod web_ui;
 
 /// Implentation definitions for all of the management structures used within the program
 pub(crate) mod implementors;

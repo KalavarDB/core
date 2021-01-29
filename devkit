@@ -30,31 +30,37 @@ while :; do
   # take action
   case $c in
   1)
+    clear
     version-checker
     echo
     pause "Press [Enter] key to continue..."
     ;;
   2)
+    clear
     cargo check
     echo
     pause "Press [Enter] key to continue..."
     ;;
   3)
+    clear
     cargo run
     echo
     pause "Press [Enter] key to continue..."
     ;;
   4)
+    clear
     cargo build && sudo target/debug/kalavar-core
     echo
     pause "Press [Enter] key to continue..."
     ;;
   5)
+    clear
     cargo test --all --jobs 1 -- --nocapture
     echo
     pause "Press [Enter] key to continue..."
     ;;
   6)
+    clear
     read -r -p "Enter the name of the test to run: " test_name
 
     while :; do
@@ -71,21 +77,27 @@ while :; do
     #    pause "hi"
     ;;
   7)
+    clear
     cargo doc --no-deps --target-dir ./docs
     echo
     pause "Press [Enter] key to continue..."
     ;;
   8)
+    clear
     sudo rm -r ./target
     echo
     pause "Press [Enter] key to continue..."
     ;;
   9)
+    clear
     cargo install version-checker
     echo
     pause "Press [Enter] key to continue..."
     ;;
   0) break ;;
-  *) pause "Select between 0 to 9 only" ;;
+  *)
+    clear
+    pause "Please select a number between 0 and 9"
+    ;;
   esac
 done

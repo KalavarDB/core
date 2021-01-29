@@ -37,4 +37,4 @@ heim = "0.0.11"
 raw-cpuid = "9.0.0"
 
 # Web UI information
-rocket = "0.4.6"
+rocket = { git = "https://github.com/SergioBenitez/Rocket" }
