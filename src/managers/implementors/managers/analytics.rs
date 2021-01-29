@@ -1,8 +1,8 @@
 use crate::managers::analytics::{AnalyticsManager, InnerMemoryInfo, Analytics, MemoryInfo, DiskInfo, OSInfo, CPUInfo};
 use crate::managers::config::post::PrivacyMode;
 use crate::managers::logging::LoggingManager;
-use crate::managers::web_ui::routes::map_routes;
-use crate::managers::web_ui::WebUIMessage;
+// use crate::managers::web_ui::routes::map_routes;
+// use crate::managers::web_ui::WebUIMessage;
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 use crate::core::utils::connection_handling::api::opcode_parser::OpCodes;
 
@@ -22,13 +22,13 @@ impl AnalyticsManager {
     }
 
     pub async fn spawn(&mut self, logger: LoggingManager, mut receiver: Receiver<ConnectionProtocolMessage>) {
-        let (websend, webrec): (Sender<WebUIMessage>, Receiver<WebUIMessage>) = channel(20);
-
-        let (wbtsend, wbtrec) = (websend.clone(), websend.subscribe());
-        let l2 = logger.clone();
-        tokio::spawn(async move {
-            map_routes(l2, wbtsend, wbtrec).await;
-        });
+        // let (websend, webrec): (Sender<WebUIMessage>, Receiver<WebUIMessage>) = channel(20);
+        //
+        // let (wbtsend, wbtrec) = (websend.clone(), websend.subscribe());
+        // let l2 = logger.clone();
+        // tokio::spawn(async move {
+        //     map_routes(l2, wbtsend, wbtrec).await;
+        // });
 
         match self.mode {
             PrivacyMode::None => {
