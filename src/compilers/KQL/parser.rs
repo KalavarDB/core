@@ -2,6 +2,7 @@ use crate::compilers::KQL::lexer::Lexer;
 use crate::compilers::KQL::language::Token;
 use crate::compilers::KQL::utilities::{Query, Operation};
 use super::lexer::Result;
+use std::ops::Add;
 
 impl Lexer {
     // Convert the content of the lexer into a Query, or an Error
@@ -37,7 +38,7 @@ impl Lexer {
             match token {
                 Token::Identifier(ident) => {
                     if position == 0 {
-                        return Err(format!("Expected one of \"GET\", \"INSERT\", \"MODIFY\", or another operation keyword. Found identifier \"{}\"\nFor all operation keywords, see https://tiny.kalavar.cf/?code=J3kqfgrJ48", ident));
+                        return Err(format_err_message(format!("Expected operation keyword. Found identifier \"{}\"", ident), 1, "Syntax Error".to_string(), Some(("See below for all operation keywords".to_string(), "https://tiny.kalavar.cf/?code=J3kqfgrJ48".to_string()))));
                     } else {
                         match q.operation.clone().unwrap() {
                             Operation::Get => {
@@ -76,7 +77,44 @@ impl Lexer {
             position += 1;
         }
 
-
         Ok(q)
     }
+}
+
+/// Utility function for formatting and generating error and warning messages
+///
+/// Parameters:
+/// - `message`: `String` - The headline message of the error or warning
+/// - `level`: `usize` - The level of the error (`0` - warning, `1` - error)
+/// - `e_type`: `String` - The type of error (`Warning`, `Syntax Error`)
+/// - `link`: `Option<(String, String)>` - The (optional) link to more information regarding the error/warning
+///   - `link.0` - The message regarding the link ("For more information see here:")
+///   - `link.1` - The URL to display`
+pub fn format_err_message(message: String, level: usize, e_type: String, link: Option<(String, String)>) -> String {
+    let mut content = String::new();
+
+    let lines: Vec<&str> = message.split("\n").collect();
+
+    let mut index = 0;
+    for line in lines {
+        if index == 0 {
+            match level {
+                0 => content = format!(" \x1b[1;33m{}:\x1b[0m \x1b[1m{}\x1b[0m", e_type, line),
+                1 => content = format!(" \x1b[1;31m{}:\x1b[0m \x1b[1m{}\x1b[0m", e_type, line),
+                _ => {}
+            }
+        } else {
+            content = format!("{}\n    \x1b[1;34m|\x1b[0m \x1b[1m{}\x1b[0m", content, line)
+        }
+
+        index += 1;
+    }
+    if let Some(c) = link {
+        content = format!("{}\n    \x1b[1;34m|\x1b[0m {}\x1b[0m", content, c.0);
+        content = format!("{}\n    \x1b[1;34m= {}\x1b[0m", content, c.1);
+    }
+
+    content = format!("{}\n", content);
+
+    content
 }
