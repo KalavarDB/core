@@ -36,19 +36,27 @@ impl Lexer {
             dbg!(&position, &token);
             match token {
                 Token::Identifier(ident) => {
-                    if position > 0 && position < 4 {
-                        match position {
-                            1 => {
-                                q.database = Some(ident)
+                    if position == 0 {
+                        return Err(format!("Expected one of \"GET\", \"INSERT\", \"MODIFY\", or another operation keyword. Found identifier \"{}\"\nFor all operation keywords, see https://tiny.kalavar.cf/?code=J3kqfgrJ48", ident));
+                    } else {
+                        match q.operation.clone().unwrap() {
+                            Operation::Get => {
+                                if position > 0 && position < 4 {
+                                    match position {
+                                        1 => {
+                                            q.database = Some(ident)
+                                        }
+                                        3 => {
+                                            q.table = Some(ident)
+                                        }
+                                        _ => {}
+                                    }
+                                }
                             }
-                            3 => {
-                                q.table = Some(ident)
-                            }
-                            _ => {}
+                            Operation::Insert => {}
+                            Operation::Modify => {}
+                            Operation::Prune => {}
                         }
-                    } else if position == 0 {
-                        return Err(format!(r#"Expected one of "GET", "INSERT", "MODIFY", or another operation keyword. Found identifier "{}"
-For all operation keywrods, see https://tiny.kalavar.cf/"#, ident));
                     }
                 }
                 Token::Literal(lit) => {}
