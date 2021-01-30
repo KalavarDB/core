@@ -1,4 +1,7 @@
 use crate::core_structures::row::Cell;
+use std::fmt::Display;
+use serde::__private::Formatter;
+use crate::compilers::KQL::parser::format_err_message;
 
 /// A general structure matching a Query after it has been compiled
 #[derive(Debug, Clone)]
@@ -98,4 +101,120 @@ pub enum Operation {
 
     /// Used on queries which remove existing data
     Prune,
+}
+
+/// ErrorMessage from the compiler, not necessarily an error, might be a warning
+#[derive(Debug, Clone)]
+pub struct CompilerError {
+    /// The type of error that has occurred, can also be a warning
+    pub e_type: CompilerErrorType,
+
+    /// The formatted error message
+    pub formatted: String,
+
+    /// The formatted error message with colors
+    pub formatted_color: String,
+
+    /// The headline of the message
+    pub headline: String,
+
+    /// The link used in the message for providing additional out-of-bounds support to the user
+    pub link: Option<(String, String)>,
+}
+
+/// Enum representing the type of error (warning/fatal)
+#[derive(Debug, Clone)]
+pub enum CompilerErrorType {
+    /// For when the error is a warning and the compiler can continue
+    Warning,
+    Syntax,
+}
+
+impl Display for CompilerError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.formatted)
+    }
+}
+
+
+impl CompilerError {
+    /// Utility function for formatting and generating error and warning messages
+    ///
+    /// Parameters:
+    /// - `message`: `String` - The headline message of the error or warning
+    /// - `level`: `usize` - The level of the error (`0` - warning, `1` - error)
+    /// - `e_type`: `String` - The type of error (`Warning`, `Syntax Error`)
+    /// - `link`: `Option<(String, String)>` - The (optional) link to more information regarding the error/warning
+    ///   - `link.0` - The message regarding the link ("For more information see here:")
+    ///   - `link.1` - The URL to display`
+    pub fn new(headline: String, e_type: CompilerErrorType, link: Option<(String, String)>) -> CompilerError {
+        let mut e = CompilerError {
+            e_type,
+            formatted: "".to_string(),
+            formatted_color: "".to_string(),
+            headline,
+            link,
+        };
+
+        e.formatted_color = format_err_message(&e, true);
+        e.formatted = format_err_message(&e, false);
+
+        e
+    }
+}
+
+/// Utility function for formatting and generating error and warning messages
+///
+/// Parameters:
+/// - `e`: &CompilerError - An error instance from which to pull relevant data
+/// - `color`: bool - Whether or not the result should contain color escape codes or not
+pub fn format_err_message(e: &CompilerError, color: bool) -> String {
+    let mut content = String::new();
+
+    let headline = e.headline.clone();
+    let lines: Vec<&str> = headline.split("\n").collect();
+
+    let mut index = 0;
+    for line in lines {
+        if index == 0 {
+            match e.e_type {
+                CompilerErrorType::Warning => {
+                    match color {
+                        true => content = format!(" \x1b[1;33mWarning:\x1b[0m \x1b[1m{}\x1b[0m", line),
+                        false => content = format!(" Warning: {}", line)
+                    }
+                }
+                CompilerErrorType::Syntax => {
+                    match color {
+                        true => content = format!(" \x1b[1;31mSyntax Error:\x1b[0m \x1b[1m{}\x1b[0m", line),
+                        false => content = format!(" Syntax Error: {}", line)
+                    }
+                }
+                _ => {}
+            }
+        } else {
+            match color {
+                true => content = format!("{}\n    \x1b[1;34m|\x1b[0m \x1b[1m{}\x1b[0m", content, line),
+                false => content = format!("{}\n    | {}", content, line)
+            }
+        }
+
+        index += 1;
+    }
+    if let Some(c) = e.link.clone() {
+        match color {
+            true => {
+                content = format!("{}\n    \x1b[1;34m|\x1b[0m {}\x1b[0m", content, c.0);
+                content = format!("{}\n    \x1b[1;34m= {}\x1b[0m", content, c.1);
+            }
+            false => {
+                content = format!("{}\n    | {}", content, c.0);
+                content = format!("{}\n    = {}", content, c.1);
+            }
+        }
+    }
+
+    content = format!("{}\n", content);
+
+    content
 }

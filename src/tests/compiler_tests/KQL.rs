@@ -11,7 +11,7 @@ FIELDS "name", "email", "pass""#);
         dbg!(query);
         assert_eq!(1, 1)
     } else {
-        println!("{}", compile.unwrap_err());
+        println!("{:#?}", compile.unwrap_err());
         assert_eq!(1, 1)
     }
 }
@@ -25,9 +25,13 @@ FIELDS "name", "email", "pass""#);
 
     if let Ok(query) = compile {
         dbg!(query);
-        assert_eq!(1, 1)
+        assert_eq!(1, 2)
     } else {
-        println!("{}", compile.unwrap_err());
+        let errors = compile.unwrap_err();
+        println!("{:#?}", errors);
+        for error in errors {
+            println!("{}", error.formatted_color);
+        }
         assert_eq!(1, 1)
     }
 }
