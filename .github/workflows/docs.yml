@@ -25,28 +25,28 @@ jobs:
         toolchain: nightly
         components: clippy
         override: true
-    - name: compute-sha
-      id: vars
-      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-    - name: Remove Old Content
-      run: |
-        rm -r ./docs/latest
-        mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
-        mkdir -p ./docs/static
+#     - name: compute-sha
+#       id: vars
+#       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+#     - name: Remove Old Content
+#       run: |
+#         rm -r ./docs/latest
+#         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
+#         mkdir -p ./docs/static
     - name: Rustdoc
       run: |
         cargo rustdoc --target-dir './docs/latest'
     - name: Commit changes
       run: |
-        cp -r ./docs/latest/doc/* ./docs/${{ steps.vars.outputs.sha_short }}
-        rm -r ./docs/latest
-        mkdir -p ./docs/latest
-        cp -r ./docs/${{ steps.vars.outputs.sha_short }}/* ./docs/latest/
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add -A
         git commit -m "Built docs for ${{ steps.vars.outputs.sha_short }}" -a
         git pull --rebase
+#        cp -r ./docs/latest/doc/* ./docs/${{ steps.vars.outputs.sha_short }}
+#        rm -r ./docs/latest
+#        mkdir -p ./docs/latest
+#        cp -r ./docs/${{ steps.vars.outputs.sha_short }}/* ./docs/latest/
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
