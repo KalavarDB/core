@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["WebUIMessage","Enumerator to move data between the analytics thread and the web UI management thread"]],"mod":[["routes","Documentation on the routes of the web ui;"]]});

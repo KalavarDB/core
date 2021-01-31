@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["BASE_CONFIG","Defines the default configuration file"]]});

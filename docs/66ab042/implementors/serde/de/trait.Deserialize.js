@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["kalavar_core"] = [{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for PreConfig","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for PreNetConfig","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for PreLanguageConfig","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for PreLogConfig","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for PrePrivacyConfig","synthetic":false,"types":[]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
