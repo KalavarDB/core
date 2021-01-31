@@ -2,14 +2,14 @@
 use std::collections::HashMap;
 
 // External crate imports
-
+use serde_derive::{Serialize, Deserialize};
 
 // Internal crate imports
 
 use crate::core_structures::row::Row;
 
 /// Helper structure used to reference specific rows for a specific table in a database
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RowRecord {
     /// A reference to the row that this record actually points to
     pub inner: Row,

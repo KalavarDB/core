@@ -15,11 +15,15 @@ const MB: u64 = 1024 * KB;
 const GB: u64 = 1024 * MB;
 #[allow(dead_code)]
 
+
+use serde_derive::{Serialize, Deserialize};
+
+
 /// An enumerator which defines the available column types
 /// I recommend reading the documentation at the link below for details on them all:
 /// <https://kalavar.cf/documentation/data-types/>
 #[allow(dead_code)]
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ColumnTypeEnum {
     // Text Types
     /// A generic String type
@@ -99,7 +103,7 @@ pub enum ColumnTypeEnum {
 }
 
 /// A structure designed to incorporate the data type it stores, as well as the minimum and maximum byte count of the type
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ColumnType {
     /// If the column is to be hidden in results from queries
     pub is_private: bool,

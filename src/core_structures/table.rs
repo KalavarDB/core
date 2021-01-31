@@ -1,11 +1,14 @@
 // STD Lib imports
 use std::collections::HashMap;
 
+// External crate imports
+use serde_derive::{Serialize, Deserialize};
+
 // Internal crate imports
 use crate::core_structures::column::{ColumnType, ColumnTypeEnum};
 
 /// A structure defining the contents of a table within a database
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Table {
     /// The name of the table this struct references
     pub name: String,

@@ -1,19 +1,22 @@
 // STD Lib imports
 use std::collections::HashMap;
 
+// External crate imports
+use serde_derive::{Serialize, Deserialize};
+
 // Internal crate imports
 use crate::core_structures::column::ColumnType;
 use crate::core_structures::as_bytes::AsBytes;
 
 /// A structure wrapping the cells of each row in a neat little basket
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Row {
     /// A map linking each cell within the row, to its parent column
     pub entries: HashMap<String, Cell>
 }
 
 /// A structure defining the type of column that the data is from, as well as the raw bytes of the given data
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Cell {
     /// The type of data stored in "inner_value"
     /// Influences how the "inner_value" is parsed into content

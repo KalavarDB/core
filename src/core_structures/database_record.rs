@@ -2,7 +2,7 @@
 use std::collections::HashMap;
 
 // External crate imports
-
+use serde_derive::{Serialize, Deserialize};
 
 
 // Internal crate imports
@@ -10,7 +10,7 @@ use crate::core_structures::table_record::TableRecord;
 use crate::core_structures::column::ColumnType;
 
 /// Helper structure used to locate specific data entries for each of the tables assigned to a database
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DatabaseRecord {
     /// The name of the database this record represents
     pub name: String,
@@ -30,13 +30,12 @@ pub struct DatabaseRecord {
 /// # You are welcome to attempt to make sense of it though.
 #[allow(dead_code)]
 impl DatabaseRecord {
-
     pub fn new(name: String, backing: String) -> DatabaseRecord {
         DatabaseRecord {
             name,
             tables: HashMap::new(),
             backing,
-            backing_is_dir: false
+            backing_is_dir: false,
         }
     }
 
@@ -45,7 +44,7 @@ impl DatabaseRecord {
 
         if self.tables.len() > 0 {
             let last = self.tables.iter().last().unwrap().1;
-            start = last.end+1;
+            start = last.end + 1;
         }
         let table = TableRecord::new(name.as_str(), &columns, start);
 
@@ -53,9 +52,6 @@ impl DatabaseRecord {
     }
 
     pub fn read_table(&self, name: &str) {
-        if self.tables.contains_key(name) {
-
-        }
+        if self.tables.contains_key(name) {}
     }
-
 }

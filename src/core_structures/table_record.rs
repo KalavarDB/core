@@ -2,6 +2,7 @@
 use std::collections::HashMap;
 
 // External crate imports
+use serde_derive::{Serialize, Deserialize};
 
 // Internal crate imports
 use crate::core_structures::table::Table;
@@ -9,7 +10,7 @@ use crate::core_structures::row_record::RowRecord;
 use crate::core_structures::column::ColumnType;
 
 /// Helper structure used to locate specific rows for a specific table in a database
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TableRecord {
     /// A reference to the table that this record actually points to
     pub inner: Table,

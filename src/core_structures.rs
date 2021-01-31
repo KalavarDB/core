@@ -2,8 +2,6 @@
 pub mod database_record;
 /// Definition information for the table structure
 pub mod table;
-/// Definition information for the query structure
-pub mod query;
 /// Definition information for the query_result structure
 pub mod query_result;
 /// Definition information for the column structure

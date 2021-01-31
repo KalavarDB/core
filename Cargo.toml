@@ -14,19 +14,21 @@ tokio = { version = "1.0.1", features = ["full"] }
 # Logging dependencies
 chrono = "0.4.19"
 uuid = { version = "0.8.2", features = ["v4"] }
+dirs = "3.0.1"
 
 # (De)Serialization dependencies
 serde = "1.0.119"
 serde_derive = "1.0.119"
 toml = "0.5.8"
 bincode = "1.3.1"
+hex = "0.4.0"
 
 # Memory management dependencies
 jemallocator = "0.3.2"
 jemalloc-ctl = "0.3.3"
 
 # Encryption/Authentication dependencies
-# rcgen = {version = "0.8.9", features = ["pem"] }
+ rcgen = {version = "0.8.9", features = ["pem"] }
 # cidr = "0.1.1"
 # openssl = "0.10.32"
 tokio-rustls = "0.22.0"

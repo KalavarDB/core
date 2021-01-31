@@ -1,7 +1,5 @@
 use crate::core_structures::row::Cell;
 use std::fmt::Display;
-use serde::__private::Formatter;
-use crate::compilers::KQL::parser::format_err_message;
 
 /// A general structure matching a Query after it has been compiled
 #[derive(Debug, Clone)]
