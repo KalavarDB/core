@@ -48,7 +48,7 @@ impl ConnectionManager {
         let bind_result = TcpListener::bind(format!("{}:{}", &self.addr, &self.port)).await;
 
         // If the bind was successful, begin the server's core functionality
-        // If not, exit with a fatal error using code GXXX
+        // If not, exit with a fatal error using code G000
         if bind_result.is_ok() {
             // The protocol handler
             // Define a new logging manager for use within the protocol handler thread
@@ -62,7 +62,7 @@ impl ConnectionManager {
                     let incoming = receiver.recv().await;
 
                     // If the data was read successfully, process it accordingly
-                    // If not throw a GXXX error, and log the error message to the terminal
+                    // If not throw a G000 error, and log the error message to the terminal
                     if incoming.is_ok() {
                         let payload = incoming.unwrap();
                         // Verify that the protocol manager is the intended recipient of this broadcast
@@ -85,7 +85,7 @@ impl ConnectionManager {
                             //Payload is not for the protocol handler, thus should be ignored
                         }
                     } else {
-                        proclog.error(incoming.unwrap_err(), GXXX).await;
+                        proclog.error(incoming.unwrap_err(), G000).await;
                     }
                 }
             });
@@ -161,7 +161,7 @@ impl ConnectionManager {
                 });
             }
         } else {
-            logger.fatal(bind_result.unwrap_err(), GXXX, 1).await;
+            logger.fatal(bind_result.unwrap_err(), G000, 1).await;
         }
     }
 }

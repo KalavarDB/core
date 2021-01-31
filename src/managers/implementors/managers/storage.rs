@@ -12,6 +12,7 @@ use crate::core_structures::column::{ColumnType, ColumnTypeEnum};
 use crate::core_structures::row_record::RowRecord;
 use crate::core_structures::row::Row;
 use rcgen::generate_simple_self_signed;
+use std::env::consts::OS;
 
 impl StorageManager {
     /// Instantiates a new storage manager on behalf of the caller
@@ -23,7 +24,7 @@ impl StorageManager {
                 "linux" | "macos" => "/var/lib/kalavar".to_string(),
                 "windows" => "C:".to_string(),
                 _ => {
-                    l.fatal("Unable to choose data directory for unknown operating system", GXXX, 1).await;
+                    l.fatal("Unable to choose data directory for unknown operating system", G000, 1).await;
                     "unknown".to_string()
                 }
             },
@@ -58,8 +59,26 @@ async fn parse_incoming(s: StorageManager, l: &LoggingManager) -> StorageManager
                     let mut core = DatabaseRecord::new("k_core".to_string(), format!("{}/data/k_core/map.kdb", &s.dir));
                     core.new_table("users".to_string(), vec![("name".to_string(), ColumnType::new(ColumnTypeEnum::String, None, 100)), ("key".to_string(), ColumnType::new_prv(ColumnTypeEnum::String, None, 100)), ("permissions".to_string(), ColumnType::new_prv(ColumnTypeEnum::Array, Some(ColumnTypeEnum::Integer8), 8))]);
 
+                    let mut user = std::env::var("USER").unwrap_or("".to_string());
+                    let mut home_dir = "/home/".to_string();
+                    if OS == "linux" || OS == "darwin" {
+                        if user == "root" || user == "" {
+                            let u2 = std::env::var("SUDO_USER").unwrap_or("".to_string());
+                            if u2 == "" {
+                                l.fatal("Unable to determine home directory of user", G102, 1).await;
+                            } else {
+                                user = u2;
+                            }
+                        }
+                        home_dir = format!("{}{}", home_dir, user);
+                    } else {
+                        home_dir = dirs::home_dir().unwrap().to_string_lossy().to_string();
+                    }
+
+                    l.debug(&home_dir).await;
+
                     let mut user_file = OpenOptions::new().create(true).write(true).append(true).open(format!("{}/users/root", &s.dir)).await;
-                    let mut root_file = OpenOptions::new().create(true).write(true).append(true).open(format!("{}/kdb.root", dirs::home_dir().unwrap().to_str().unwrap())).await;
+                    let mut root_file = OpenOptions::new().create(true).write(true).append(true).open(format!("{}/kdb.root", home_dir)).await;
 
                     let cert = generate_simple_self_signed(vec!["localhost".to_string()]).unwrap();
                     let public = hex::encode(cert.serialize_pem().unwrap());
@@ -70,7 +89,7 @@ async fn parse_incoming(s: StorageManager, l: &LoggingManager) -> StorageManager
                             user.flush().await;
                             root.write_all(cert.serialize_private_key_pem().as_bytes()).await;
                             root.flush().await;
-                            l.warn(format!("The keyfile for the root user is currently located in {}/kdb.root", dirs::home_dir().unwrap().to_str().unwrap())).await;
+                            l.warn(format!("The keyfile for the root user is currently located in {}/kdb.root", home_dir)).await;
                         }
                     }
 
@@ -141,7 +160,7 @@ async fn handle_missing_data_dir(l: &LoggingManager, e: ErrorKind, root: &String
             }
         }
         _ => {
-            l.error(format!("Error type: {:?}", e), GXXX).await;
+            l.error(format!("Error type: {:?}", e), G000).await;
         }
     }
 }

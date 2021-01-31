@@ -7,10 +7,13 @@ use std::error::Error;
 pub enum ErrorMap {
     // General Errors
     /// Unknown error, needs to be mapped to error code
-    GXXX,
+    G000,
 
     /// Error connecting to database
     G101,
+
+    /// Error determining home directory of user due to missing environment variables
+    G102,
 
     /// Failed to generate required files (permissions error)
     G201,
@@ -48,8 +51,9 @@ struct GeneralError {
 impl Display for GeneralError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         let msg = match self.code {
-            ErrorMap::GXXX => "GXXX",
+            ErrorMap::G000 => "G000",
             ErrorMap::G101 => "G101",
+            ErrorMap::G102 => "G102",
             ErrorMap::G201 => "G201",
             ErrorMap::G202 => "G202",
             ErrorMap::G203 => "G203",
@@ -63,8 +67,9 @@ impl Display for GeneralError {
 impl Debug for GeneralError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         let msg = match self.code {
-            ErrorMap::GXXX => "GXXX",
+            ErrorMap::G000 => "G000",
             ErrorMap::G101 => "G101",
+            ErrorMap::G102 => "G102",
             ErrorMap::G201 => "G201",
             ErrorMap::G202 => "G202",
             ErrorMap::G203 => "G203",
