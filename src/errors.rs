@@ -25,7 +25,7 @@ pub enum ErrorMap {
     G203,
 
     /// Invalid configuration file
-    E204,
+    G204,
 
     // Connection Errors
 
@@ -34,6 +34,33 @@ pub enum ErrorMap {
 
 
     // Drive Errors
+    /// Unable to parse database file - It may be corrupted
+    D501,
+
+    /// Unable to parse database map file - It may be corrupted (This file can be rebuilt, but it will take a lot of time and memory to do so
+    D502,
+
+    /// Unable to open a data file (NotFound)
+    D503,
+
+    /// Unable to open a data file (PermissionDenied)
+    D504,
+
+    /// Unable to open a data file (WouldBlock)
+    D505,
+
+    /// Unable to open a data file (TimeOut)
+    D506,
+
+    /// Unable to open a data file (Interrupted)
+    D507,
+
+    /// Unable to open a data file (UnexpectedEOF)
+    D508,
+
+    /// Unable to open a data file (Other (Unknown))
+    D509,
+
 }
 
 impl Display for ErrorMap {
@@ -57,7 +84,16 @@ impl Display for GeneralError {
             ErrorMap::G201 => "G201",
             ErrorMap::G202 => "G202",
             ErrorMap::G203 => "G203",
-            ErrorMap::E204 => "G204",
+            ErrorMap::G204 => "G204",
+            ErrorMap::D501 => "D501",
+            ErrorMap::D502 => "D502",
+            ErrorMap::D503 => "D503",
+            ErrorMap::D504 => "D504",
+            ErrorMap::D505 => "D505",
+            ErrorMap::D506 => "D506",
+            ErrorMap::D507 => "D507",
+            ErrorMap::D508 => "D508",
+            ErrorMap::D509 => "D509",
         };
 
         write!(f, "{}", msg)
@@ -73,7 +109,16 @@ impl Debug for GeneralError {
             ErrorMap::G201 => "G201",
             ErrorMap::G202 => "G202",
             ErrorMap::G203 => "G203",
-            ErrorMap::E204 => "G204",
+            ErrorMap::G204 => "G204",
+            ErrorMap::D501 => "D501",
+            ErrorMap::D502 => "D502",
+            ErrorMap::D503 => "D503",
+            ErrorMap::D504 => "D504",
+            ErrorMap::D505 => "D505",
+            ErrorMap::D506 => "D506",
+            ErrorMap::D507 => "D507",
+            ErrorMap::D508 => "D508",
+            ErrorMap::D509 => "D509",
         };
 
         write!(f, "{}", msg)
