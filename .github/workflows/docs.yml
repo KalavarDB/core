@@ -33,22 +33,18 @@ jobs:
 #         rm -r ./docs/latest
 #         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
 #         mkdir -p ./docs/static
+    - uses: nelonoel/branch-name@v1
+    - run: echo ${BRANCH_NAME}
     - name: Rustdoc
       run: |
-        cargo rustdoc --target-dir './docs/latest'
-    - name: Commit changes
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add -A
-        git commit -m "Built docs for ${{ steps.vars.outputs.sha_short }}" -a
-        git pull --rebase
-#        cp -r ./docs/latest/doc/* ./docs/${{ steps.vars.outputs.sha_short }}
-#        rm -r ./docs/latest
-#        mkdir -p ./docs/latest
-#        cp -r ./docs/${{ steps.vars.outputs.sha_short }}/* ./docs/latest/
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+        cargo rustdoc --target-dir './docs/${BRANCH_NAME}/latest'
+    - name: Pushes to another repository
+      uses: cpina/github-action-push-to-another-repository@cp_instead_of_deleting
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
+        source-directory: './docs/${BRANCH_NAME}/latest'
+        destination-github-username: 'KalavarDB'
+        destination-repository-name: 'dev.kalavar.cf'
+        user-email: 41898282+github-actions[bot]@users.noreply.github.com
+        commit-message: See ORIGIN_COMMIT
