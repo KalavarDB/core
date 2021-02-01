@@ -2,6 +2,7 @@ use crate::core::utils::connection_handling::api::opcode_parser::OpCodes::*;
 use crate::core_structures::connection_protocol::ConnectionProtocolMessage;
 use crate::errors::ErrorMap::*;
 use crate::managers::{
+    analytics::AnalyticsManager,
     config::post::ConfigManager,
     connections::connection::Connection,
     connections::connection_manager::ConnectionManager,
@@ -9,11 +10,10 @@ use crate::managers::{
     storage::StorageManager,
 };
 
-use jemalloc_ctl::{epoch, stats};
+// use jemalloc_ctl::{epoch, stats};
 use tokio::net::TcpListener;
 use tokio::sync::broadcast::{channel, Receiver, Sender};
 use tokio::time::Duration;
-use crate::managers::analytics::AnalyticsManager;
 
 impl ConnectionManager {
     /// Helper function used to instantiate a new connection manager on behalf of a caller
@@ -90,6 +90,8 @@ impl ConnectionManager {
                 }
             });
 
+            /*
+            Memory management has been disabled for windows compatibility at this time no alternative has been configured
             // The memory manager
             // This manager reports the memory usage vs the memory available to the protocol thread, so it can make a judgement on
             // The state of the memory allocator, and the storage manager, and conduct itself accordingly
@@ -117,6 +119,7 @@ impl ConnectionManager {
                     tokio::time::sleep(Duration::from_secs(20)).await;
                 }
             });
+            */
 
             // create a new subscriber to the transmitter
             let analytics_receiver: Receiver<ConnectionProtocolMessage> = transmitter.subscribe();
