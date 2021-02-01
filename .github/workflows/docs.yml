@@ -1,7 +1,7 @@
 name: Build Docs
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 defaults:
   run:
     shell: bash
@@ -33,9 +33,14 @@ jobs:
 #         rm -r ./docs/latest
 #         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
 #         mkdir -p ./docs/static
+    - name: Extract branch name
+      shell: bash
+      run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
     - name: Rustdoc
       run: |
-        cargo rustdoc --target-dir './docs/latest'
+        echo "building docs for ${{ steps.vars.outputs.branch }} branch"
+        cargo rustdoc --target-dir './docs/${{ steps.vars.outputs.branch }}/latest'
     - name: Commit changes
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
