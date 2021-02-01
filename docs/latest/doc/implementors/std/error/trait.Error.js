@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["kalavar_core"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"struct\" href=\"kalavar_core/errors/struct.GeneralError.html\" title=\"struct kalavar_core::errors::GeneralError\">GeneralError</a>","synthetic":false,"types":["kalavar_core::errors::GeneralError"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

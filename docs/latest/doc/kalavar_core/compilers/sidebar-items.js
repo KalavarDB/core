@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["KQL","Module defining the KQL compiler, which will be the workhorse of the system."]]});

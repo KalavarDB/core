@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DatabaseReference","Helper structure for storing file references within the storeage manager for reading and writing at a later time"],["StorageManager","Utility structure whose only job is to manage the smooth transfer of data between memory and disk based on cache capacity, memory usage, and a number of other factors"]]});
