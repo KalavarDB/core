@@ -28,18 +28,19 @@ impl Kalloc {
     /// This method is unsafe because the caller must ensure that the given
     /// memory range is unused. Also, this method must be called only once.
     pub unsafe fn init(&mut self, heap_start: usize, heap_size: usize) {
-        self.heap_start = heap_start;
-        self.heap_end = heap_start + heap_size;
+        self.start = heap_start;
+        self.end = heap_start + heap_size;
         self.next = heap_start;
     }
 }
 
 unsafe impl GlobalAlloc for Kalloc {
-    unsafe fn alloc(&self, _layout: Layout) -> *mut u8 {
-        let alloc_start = self.next;
-        self.next = alloc_start + layout.size();
-        self.allocations += 1;
-        alloc_start as *mut u8
+    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+        // let alloc_start = self.next;
+        // self.next = alloc_start + layout.size();
+        // self.allocations += 1;
+        // alloc_start as *mut u8
+        null_mut()
     }
     unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {}
 }

@@ -23,7 +23,7 @@ use kalloc::Kalloc;
 // Memory management has been disabled for windows compatibility at this time no alternative has been configured
 // // The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.
 #[global_allocator]
-pub static ALLOC: Kalloc = Kalloc;
+pub static ALLOC: Kalloc = Kalloc::new();
 
 
 // The primary function of the program, called at runtime to start the server
