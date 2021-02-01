@@ -1,0 +1,1 @@
+{"rustc":15659260924478936792,"features":"[\"chrono\", \"default\"]","target":6010464049697961092,"profile":16668067249205866872,"path":18144875083931361480,"deps":[[8146038286185888119,"chrono",false,6363173323652790169]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/yasna-ca9589e9b626ae73/dep-lib-yasna"}}],"rustflags":[],"metadata":13858466307449200908,"config":0}
