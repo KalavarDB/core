@@ -17,11 +17,13 @@ use crate::managers::{
     config::post::ConfigManager,
 };
 use crate::managers::analytics::AnalyticsManager;
+use kalloc::Kalloc;
+
 
 // Memory management has been disabled for windows compatibility at this time no alternative has been configured
 // // The following basically just sets the global allocator to use the Jemalloc allocator so we can track memory usage.
-// #[global_allocator]
-// static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+#[global_allocator]
+pub static ALLOC: Kalloc = Kalloc;
 
 
 // The primary function of the program, called at runtime to start the server

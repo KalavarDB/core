@@ -25,11 +25,12 @@ hex = "0.4.0"
 
 # Memory management has been disabled for windows compatibility at this time no alternative has been configured
 ## Memory management dependencies
+kalloc = { path = "./kalloc" }
 #jemallocator = "0.3.2"
 #jemalloc-ctl = "0.3.3"
 
 # Encryption/Authentication dependencies
- rcgen = {version = "0.8.9", features = ["pem"] }
+rcgen = { version = "0.8.9", features = ["pem"] }
 # cidr = "0.1.1"
 # openssl = "0.10.32"
 tokio-rustls = "0.22.0"
@@ -41,3 +42,9 @@ raw-cpuid = "9.0.0"
 
 # Web UI information
 # rocket = { git = "https://github.com/SergioBenitez/Rocket" }
+
+
+[workspace]
+members = [
+    "kalloc"
+]
