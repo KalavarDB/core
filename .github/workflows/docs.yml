@@ -1,4 +1,4 @@
-name: Build Docs
+name: Build Documentation
 on: 'push'
 defaults:
   run:
