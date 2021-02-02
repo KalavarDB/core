@@ -37,7 +37,7 @@ jobs:
     - name: Rustdoc
       run: |
         cargo rustdoc --target-dir './docs/${BRANCH_NAME}/latest'
-    - name: Pushes to another repository
+    - name: Push docs to site
       uses: cpina/github-action-push-to-another-repository@cp_instead_of_deleting
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
