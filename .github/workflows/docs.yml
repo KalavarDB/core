@@ -42,6 +42,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
+        target-branch: 'main' 
         source-directory: './docs/${BRANCH_NAME}/latest'
         destination-github-username: 'KalavarDB'
         destination-repository-name: 'dev.kalavar.cf'
