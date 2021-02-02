@@ -46,5 +46,5 @@ jobs:
         source-directory: './docs/${BRANCH_NAME}/latest'
         destination-github-username: 'KalavarDB'
         destination-repository-name: 'dev.kalavar.cf'
-        user-email: 41898282+github-actions[bot]@users.noreply.github.com
+        user-email: tom.b.2k2@gmail.com
         commit-message: See ORIGIN_COMMIT
