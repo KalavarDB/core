@@ -33,7 +33,7 @@ jobs:
 #         rm -r ./docs/latest
 #         mkdir -p ./docs/${{ steps.vars.outputs.sha_short }}
 #         mkdir -p ./docs/static
-    - uses: nelonoel/branch-name@v1
+    - uses: nelonoel/branch-name@v1.0.1
     - run: echo ${BRANCH_NAME}
     - name: Rustdoc
       run: |
