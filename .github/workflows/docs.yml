@@ -1,7 +1,5 @@
 name: Build Docs
-on:
-  push:
-    branches: [main, dev]
+on: 'push'
 defaults:
   run:
     shell: bash
